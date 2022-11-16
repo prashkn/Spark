@@ -1,3 +1,11 @@
+GET http://localhost:4000/projects/
+
+###
+
+DELETE http://localhost:4000/projects/6374912fe6f7e60338cfd3c4
+
+###
+
 GET http://localhost:4000/users/login
 Content-Type: application/json
 
@@ -34,4 +42,11 @@ Content-Type: application/json
     "field": "skills",
     "content": ["C++", "Java"]
 }
+
+######################################################################
+GET http://localhost:4000/projects/
+
+###
+
+DELETE http://localhost:4000/projects/6374912fe6f7e60338cfd3c4
 

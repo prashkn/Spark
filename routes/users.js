@@ -4,6 +4,30 @@ const User = require('../models/user')
 const Project = require('../models/project')
 const mongoose = require('mongoose')
 
+// Get all users (testing purposes)
+router.get('/', async(req, res) => {
+    try {
+        const users = await User.find()
+        return res.status(200).json({message: "OK", data: users})
+    } catch (err) {
+        return res.status(500).json({message: err.message, data: {}})
+    }
+})
+
+// Delete user (testing purposes)
+router.delete('/:id', async(req, res) => {
+    try {
+        const user = await User.findById(req.params.id)
+        if (user == null) {
+            return res.status(404).json({message: "User does not exist", data: {}})
+        }
+        await user.remove()
+        return res.status(200).json({message: "User deleted", data: {}})
+    } catch (err) {
+        return res.status(500).json({message: err.message, data: {}})
+    }
+})
+
 // Login authentication
 // body: {email, password}
 router.get('/login', async(req, res) => {
