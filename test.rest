@@ -1,1 +1,37 @@
-GET http://localhost:4000/api
+GET http://localhost:4000/users/login
+Content-Type: application/json
+
+{
+    "email": "jtester2002@gmail.com",
+    "password": "verysecurepassword"
+}
+
+###
+
+POST http://localhost:4000/users/create
+Content-Type: application/json
+
+{
+    "name": "Joe Tester",
+    "username": "jtester2002",
+    "email": "jtester2002@gmail.com",
+    "password": "verysecurepassword",
+    "bio": "Very skilled individual",
+    "skills": ["C++", "Java"]
+}
+
+###
+
+GET http://localhost:4000/users/6374912fe6f7e60338cfd3c4
+Content-Type: application/json
+
+###
+
+PUT http://localhost:4000/users/6374912fe6f7e60338cfd3c4
+Content-Type: application/json
+
+{
+    "field": "skills",
+    "content": ["C++", "Java"]
+}
+
