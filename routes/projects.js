@@ -5,7 +5,6 @@ const Project = require('../models/project')
 const mongoose = require('mongoose')
 
 // TODO: homepage feed includes projects only with users skills
-// creator of projects gets applicants and can accept or not
 
 // Get all projects (testing purposes)
 router.get('/', async(req, res) => {
