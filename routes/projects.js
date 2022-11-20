@@ -4,8 +4,8 @@ const User = require('../models/user')
 const Project = require('../models/project')
 const mongoose = require('mongoose')
 
-// TODO: homepage feed includes projects only with users skills, creator of projects gets applicants
-// and can accept or not
+// TODO: homepage feed includes projects only with users skills
+// creator of projects gets applicants and can accept or not
 
 // Get all projects (testing purposes)
 router.get('/', async(req, res) => {
@@ -138,6 +138,59 @@ router.post('/create', async(req, res) => {
         await project.save()
         return res.status(201).json({message: "Project created", data: project})
     } catch {
+        return res.status(500).json({message: err.message, data:{}})
+    }
+})
+
+// Get the projects a user created
+// body: {userId}
+router.get('/createdprojects', async (req, res) => {
+    try {   
+        const projects = await Project.find()
+        let data = []
+        for (let i = 0; i < projects.length; i++) {
+            if (projects[i].creator == req.body.userId) {
+                data.push(projects[i])
+            }
+        }
+        return res.status(200).json({message: "OK", data: data})
+    } catch (err) {
+        return res.status(500).json({message: err.message, data:{}})
+    }
+})
+
+// Accept an applicant into project
+// body: {userId, projectId}
+router.put('/check', async(req, res) => {
+    try {   
+        const project = await Project.findById(req.body.projectId)
+        for (let i = 0; i < project.applicants.length; i++) {
+            if (project.applicants[i] == req.body.userId) {
+                project.applicants.splice(i, 1)
+            }
+        }
+        project.participants.push(req.body.userId)
+        await project.save()
+        return res.status(200).json({message: "OK", data: {}})
+    } catch (err) {
+        return res.status(500).json({message: err.message, data:{}})
+    }
+})
+
+// Uncheck an applicant from project
+// body: {userId, projectId}
+router.put('/uncheck', async(req, res) => {
+    try {   
+        const project = await Project.findById(req.body.projectId)
+        for (let i = 0; i < project.participants.length; i++) {
+            if (project.participants[i] == req.body.userId) {
+                project.participants.splice(i, 1)
+            }
+        }
+        project.applicants.push(req.body.userId)
+        await project.save()
+        return res.status(200).json({message: "OK", data: {}})
+    } catch (err) {
         return res.status(500).json({message: err.message, data:{}})
     }
 })
