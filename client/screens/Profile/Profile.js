@@ -4,8 +4,8 @@ import { StatusBar } from 'expo-status-bar';
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ProfileInfoBox from './ProfileInfoBox';
-import poppinsFontMapping from '../../poppins-font-mapping';
-import styles from './profile-styles';
+import poppinsFontMapping from '../../styles/poppins-font-mapping';
+import styles from './Profile-styles';
 import { BLOND, MIDNIGHT_GREEN } from '../../styles/palette';
 
 export default function Profile() {
