@@ -3,10 +3,10 @@ import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ProfileInfoBox from './components/ProfileInfoBox';
-import poppinsFontMapping from './poppins-font-mapping';
-import styles from './components/Profile/profile-styles';
-import { BLOND, MIDNIGHT_GREEN } from './styles/palette';
+import ProfileInfoBox from './ProfileInfoBox';
+import poppinsFontMapping from '../../poppins-font-mapping';
+import styles from './profile-styles';
+import { BLOND, MIDNIGHT_GREEN } from '../../styles/palette';
 
 export default function Profile() {
   const [fontsLoaded] = useFonts(poppinsFontMapping);
@@ -32,7 +32,7 @@ export default function Profile() {
         <View style={styles.userInfoContainer}>
           {/* Profile pic */}
           <Image
-            source={require('./assets/george-washington.jpg')}
+            source={require('../../assets/george-washington.jpg')}
             style={styles.profilePic}
           />
 

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { MIDNIGHT_GREEN } from '../styles/palette';
+import { MIDNIGHT_GREEN } from '../../styles/palette';
 
 export default function ProfileInfoBox(props) {
   return (

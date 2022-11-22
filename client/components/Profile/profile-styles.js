@@ -1,3 +1,6 @@
+import { StyleSheet } from "react-native";
+import { BLOND, MIDNIGHT_GREEN } from "../../styles/palette";
+
 const profilePicSize = 125;
 
 export default StyleSheet.create({
