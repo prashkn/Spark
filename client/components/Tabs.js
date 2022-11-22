@@ -31,11 +31,7 @@ export default function Tabs() {
         tabBarShowLabel: false,
       })}
     >
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        screenOptions={{ headerStyle: { color: 'red' } }}
-      />
+      <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Projects" component={Projects} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
