@@ -8,6 +8,7 @@ export default StyleSheet.create({
 
   // TODO: Use navigation stack bar instead
   topBar: {
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-end',
     paddingHorizontal: 10,

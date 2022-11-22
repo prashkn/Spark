@@ -17,20 +17,19 @@ export default function Profile() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      {/* Top bar area */}
-      <View style={styles.topBar}>
-        <Button
-          color={MIDNIGHT_GREEN}
-          radius={10}
-          icon={<Icon name="gear" size={30} color={BLOND} />}
-          // TODO: Link to settings page with navigation
-        />
-      </View>
-
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
+        {/* Top bar area */}
+        <View style={styles.topBar}>
+          <Button
+            color={MIDNIGHT_GREEN}
+            radius={10}
+            icon={<Icon name="gear" size={30} color={BLOND} />}
+            // TODO: Link to settings page with navigation
+          />
+        </View>
         {/* User info container with pic, name, username, and location */}
         <View style={styles.userInfoContainer}>
           {/* Profile pic */}
