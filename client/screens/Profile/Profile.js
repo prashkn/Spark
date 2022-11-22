@@ -16,7 +16,7 @@ export default function Profile() {
   }
 
   return (
-    <SafeAreaView style={styles.safeContainer}>
+    <SafeAreaView style={styles.safeArea}>
       {/* Top bar area */}
       <View style={styles.topBar}>
         <Button
@@ -27,7 +27,10 @@ export default function Profile() {
         />
       </View>
 
-      <ScrollView style={styles.safeContainer}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+      >
         {/* User info container with pic, name, username, and location */}
         <View style={styles.userInfoContainer}>
           {/* Profile pic */}

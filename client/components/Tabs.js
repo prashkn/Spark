@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "../screens/Home";
 import Projects from "../screens/Projects";
-import Profile from "../screens/Profile";
+import Profile from "../screens/Profile/Profile";
 
 export default function Tabs() {
   const Tab = createBottomTabNavigator();

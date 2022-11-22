@@ -1,9 +1,11 @@
-import { StyleSheet } from "react-native";
-import { BLOND, MIDNIGHT_GREEN } from "../../styles/palette";
+import { StyleSheet } from 'react-native';
+import { BLOND, MIDNIGHT_GREEN } from '../../styles/palette';
 
 const profilePicSize = 125;
 
 export default StyleSheet.create({
+  safeArea: { flex: 1, backgroundColor: BLOND },
+
   // TODO: Use navigation stack bar instead
   topBar: {
     flexDirection: 'row',
@@ -11,12 +13,12 @@ export default StyleSheet.create({
     paddingHorizontal: 10,
   },
 
-  safeContainer: {
+  scrollView: {
     flex: 1,
-    backgroundColor: BLOND,
-    color: '#4da896',
     paddingHorizontal: 18,
   },
+
+  scrollContent: { alignItems: 'center' },
 
   // Container for profile pic, name, username, and location
   userInfoContainer: {
