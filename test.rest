@@ -49,7 +49,7 @@ GET http://localhost:4000/projects/
 
 ###
 
-DELETE http://localhost:4000/projects/63756d3afffc51284ca25e0d
+DELETE http://localhost:4000/projects/63756d1cfffc51284ca25e02
 
 ###
 
@@ -66,7 +66,7 @@ PUT http://localhost:4000/projects/swiperight
 Content-Type: application/json
 
 {
-    "projectId": "637aba5ea1f3323f58512f0d",
+    "projectId": "63756d1cfffc51284ca25e02",
     "userId": "63756a08cded4b52ec7c165d"
 }
 
@@ -90,30 +90,4 @@ Content-Type: application/json
     "skillset": ["C++", "Java"],
     "timeline": "3 months",
     "creator": "6375665d12675b2ff4af2405"
-}
-
-###
-GET http://localhost:4000/projects/createdprojects
-Content-Type: application/json
-
-{
-    "userId": "6375665d12675b2ff4af2405"
-}
-
-###
-PUT http://localhost:4000/projects/check
-Content-Type: application/json
-
-{
-    "userId": "63756a08cded4b52ec7c165d",
-    "projectId": "637aba5ea1f3323f58512f0d"
-}
-
-###
-PUT http://localhost:4000/projects/uncheck
-Content-Type: application/json
-
-{
-    "userId": "63756a08cded4b52ec7c165d",
-    "projectId": "637aba5ea1f3323f58512f0d"
 }
