@@ -4,10 +4,9 @@ image: node:lts
 before_script:
   - cd client
   - npm i
-  - npm i -g expo
 pages:
   script:
-    - npx expo export:web
+    - export NODE_OPTIONS=--openssl-legacy-provider && npx expo export:web
     - mv web-build public
   artifacts:
     paths:
