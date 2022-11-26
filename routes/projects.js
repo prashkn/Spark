@@ -140,16 +140,25 @@ router.post("/create", async (req, res) => {
       uninterested: [],
       participants: [],
     });
-    await project.save();
-    return res.status(201).json({ message: "Project created", data: project });
-  } catch {
+
+    //save to a var so we can access the id
+    const savedProject = await project.save();
+
+    //update user to include the project id in their project list
+    await User.findOneAndUpdate(
+      { _id: req.body.creator },
+      {
+        $push: { projects: savedProject._id },
+      }
+    );
+
+    return res
+      .status(201)
+      .json({ message: "Project created", data: savedProject });
+  } catch (err) {
     return res.status(500).json({ message: err.message, data: {} });
   }
 });
-
-module.exports = router;
-
-module.exports = router;
 
 // Get the projects a user created
 // body: {userId}
