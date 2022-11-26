@@ -3,8 +3,8 @@ image: node:lts
 # Functions that should be executed before the build script is run
 before_script:
   - cd client
-  - npm ci --force
-  - npm i -g expo --force
+  - npm i
+  - npm i -g expo
 pages:
   script:
     - npx expo export:web
