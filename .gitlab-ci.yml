@@ -3,12 +3,11 @@ image: node:lts
 # Functions that should be executed before the build script is run
 before_script:
   - npm ci --force
-#   - npm i -g expo
+  - npm i -g expo --force
 pages:
   script:
-    - echo fix this later
-    # - npx expo export:web
-    # - mv web-build public
+    - npx expo export:web
+    - mv web-build public
   artifacts:
     paths:
       # The folder that contains the files to be exposed at the Page URL
