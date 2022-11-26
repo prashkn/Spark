@@ -2,6 +2,15 @@ import { View, Text, StyleSheet } from "react-native";
 import ProjectCardFeed from "../components/ProjectCardFeed";
 
 export default function Home() {
+  const getCardInfo = async (user_id) => {
+    try {
+      const info = await fetch(`/projects/${user_id}`);
+      console.log(info.json());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ProjectCardFeed
