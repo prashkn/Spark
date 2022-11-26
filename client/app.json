@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "clinet",
-    "slug": "clinet",
+    "name": "Spark",
+    "slug": "spark-client",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
