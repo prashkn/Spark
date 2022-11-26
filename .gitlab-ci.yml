@@ -4,6 +4,7 @@ image: node:lts
 before_script:
   - npm ci --force
   - npm i -g expo --force
+  - npm install expo-cli --global
 pages:
   script:
     - npx expo export:web
