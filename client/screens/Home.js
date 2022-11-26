@@ -1,7 +1,16 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 import ProjectCardFeed from "../components/ProjectCardFeed";
 
 export default function Home() {
+  const getCardInfo = async (u_id) => {
+    try {
+      const info = await fetch(`/api/projects/homepage`);
+      console.log(info.json());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ProjectCardFeed
@@ -16,6 +25,7 @@ export default function Home() {
         title={"Project Title/Idea"}
         members_needed={"5 Members"}
       />
+      <Button onPress={() => getCardInfo()} title="click" />
     </View>
   );
 }
