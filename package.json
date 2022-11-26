@@ -1,10 +1,12 @@
 {
-  "name": "mp3_starter_19",
+  "name": "409_final_project",
   "version": "1.0.0",
-  "description": "MP3 Starter for CS498RK Spring 2019",
+  "description": "Spark. 409 Final Project.",
   "authors": [
-    "James Lee <jwlee11@illinois.edu>",
-    "Sujay Khandekar <khandek2@illinois.edu>"
+    "Anjolee Rice",
+    "Neil Prabhu",
+    "Owen Hayes",
+    "Prashant Naganaboyina"
   ],
   "scripts": {
     "start": "nodemon --exec node server.js"
@@ -24,5 +26,6 @@
     "express": "^4.15.3",
     "mongoose": "^5.4.18",
     "nodemon": "^1.11.0"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }
