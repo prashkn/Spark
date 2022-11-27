@@ -19,7 +19,7 @@ export default function Tabs() {
           // Display icons based on which screen is focused
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'ProfileAndSettings') {
+          } else if (route.name === 'Profile/Settings') {
             iconName = focused ? 'person' : 'person-outline';
           } else if (route.name === 'Projects') {
             iconName = focused ? 'documents' : 'documents-outline';
