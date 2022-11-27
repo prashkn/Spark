@@ -7,11 +7,19 @@ before_script:
   - npm i
   - npm i -g firebase-tools
 
+build-client:
+  stage: build
+  script: 
+    - export NODE_OPTIONS=--openssl-legacy-provider
+    - npx expo export:web
+
 deploy-client:
+  needs: [build-client]
   stage: deploy
   script:
-    - export NODE_OPTIONS=--openssl-legacy-provider && npx expo export:web
-    - firebase deploy --token "$FIREBASE_TOKEN"
+    - echo $FIREBASE_SERVICE_ACCOUNT > "service_account.json"
+    - export GOOGLE_APPLICATION_CREDENTIALS="service_account.json"
+    - firebase deploy
   only:
     refs:
       - master
