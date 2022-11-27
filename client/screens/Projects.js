@@ -1,45 +1,46 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import React from "react";
-import Project from "../components/Project";
+import React from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import Project from '../components/Project';
+import { BLOND, MIDNIGHT_GREEN } from '../styles/palette';
 
 export default function Projects() {
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.header}>My Projects</Text>
-      <View style={styles.projects}>
-        <Project />
-        <Project />
-        <Project />
-        <Project />
-        <Project />
-        <Project />
-        <Project />
-        <Project />
-        <Project />
-      </View>
-    </ScrollView>
+    <SafeAreaView
+      style={{
+        backgroundColor: BLOND,
+        flex: 1,
+      }}
+    >
+      <ScrollView style={styles.container}>
+        <Text style={styles.header}>My Projects</Text>
+        <View style={styles.projects}>
+          <Project />
+          <Project />
+          <Project />
+          <Project />
+          <Project />
+          <Project />
+          <Project />
+          <Project />
+          <Project />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    width: '100%',
-    backgroundColor: "#FFF3B5",
+    flex: 1,
+    paddingHorizontal: 18,
   },
   projects: {
-    width: '100%',
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
     display: 'flex',
-    position: 'absolute',
-    top: '100px',
   },
   header: {
     fontSize: 30,
-    fontWeight: 'bold',
-    position: 'absolute',
-    top: '50px',
-    left: '20px',
-  }
-})
+    fontFamily: 'Poppins-SemiBold',
+    color: MIDNIGHT_GREEN,
+  },
+});
