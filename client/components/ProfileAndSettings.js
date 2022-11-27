@@ -9,8 +9,6 @@ import Security from '../screens/Settings/Security';
 import Settings from '../screens/Settings/Settings';
 import { MIDNIGHT_GREEN } from '../styles/palette';
 
-// TODO: Add comments
-
 export default function ProfileAndSettings() {
   const Stack = createNativeStackNavigator();
 
@@ -21,6 +19,8 @@ export default function ProfileAndSettings() {
           fontFamily: 'Poppins-SemiBold',
           color: MIDNIGHT_GREEN,
         },
+
+        // Make header back button green
         headerLeft: () => (
           <HeaderBackButton
             tintColor={MIDNIGHT_GREEN}
@@ -32,7 +32,10 @@ export default function ProfileAndSettings() {
       <Stack.Screen
         name="Profile"
         component={Profile}
-        options={{ headerShown: false }}
+        options={{
+          // Hide header on profile page
+          headerShown: false,
+        }}
       />
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="Account Information" component={AccountInformation} />
