@@ -6,7 +6,7 @@ import { BLOND, MIDNIGHT_GREEN } from '../../styles/palette';
 import styles from './Profile-styles';
 import ProfileInfoBox from './ProfileInfoBox';
 
-export default function Profile() {
+export default function Profile({ navigation }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView
@@ -19,7 +19,7 @@ export default function Profile() {
             color={MIDNIGHT_GREEN}
             radius={10}
             icon={<Icon name="gear" size={30} color={BLOND} />}
-            // TODO: Link to settings page with navigation
+            onPress={() => navigation.navigate('Settings')}
           />
         </View>
         {/* User info container with pic, name, username, and location */}

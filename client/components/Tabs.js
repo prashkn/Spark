@@ -1,9 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import Home from '../screens/Home';
-import Profile from '../screens/Profile/Profile';
 import Projects from '../screens/Projects';
 import { MIDNIGHT_GREEN } from '../styles/palette';
+import ProfileAndSettings from './ProfileAndSettings';
 
 export default function Tabs() {
   const Tab = createBottomTabNavigator();
@@ -18,7 +19,7 @@ export default function Tabs() {
           // Display icons based on which screen is focused
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Profile') {
+          } else if (route.name === 'ProfileAndSettings') {
             iconName = focused ? 'person' : 'person-outline';
           } else if (route.name === 'Projects') {
             iconName = focused ? 'documents' : 'documents-outline';
@@ -33,7 +34,7 @@ export default function Tabs() {
     >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Projects" component={Projects} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="Profile/Settings" component={ProfileAndSettings} />
     </Tab.Navigator>
   );
 }
