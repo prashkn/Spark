@@ -11,7 +11,6 @@ export default StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    paddingHorizontal: 10,
   },
 
   scrollView: {
