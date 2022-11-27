@@ -1,18 +1,17 @@
 # The Docker image that will be used to build your app
-image: node:lts
+image: node:lts-alpine
+
 # Functions that should be executed before the build script is run
 before_script:
   - cd client
   - npm i
-pages:
+  - npm i -g firebase-tools
+
+deploy-client:
+  stage: deploy
   script:
     - export NODE_OPTIONS=--openssl-legacy-provider && npx expo export:web
-    - mv web-build ../public
-  artifacts:
-    paths:
-      # The folder that contains the files to be exposed at the Page URL
-      - public
-  rules:
-    # This ensures that only pushes to the default branch will trigger
-    # a pages deploy
-    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    - firebase deploy --token "$FIREBASE_TOKEN"
+  only:
+    refs:
+      - master
