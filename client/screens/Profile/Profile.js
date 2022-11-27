@@ -1,7 +1,7 @@
 import { Button } from '@rneui/themed';
 import { StatusBar } from 'expo-status-bar';
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { BLOND, MIDNIGHT_GREEN } from '../../styles/palette';
 import styles from './Profile-styles';
 import ProfileInfoBox from './ProfileInfoBox';
@@ -18,7 +18,7 @@ export default function Profile({ navigation }) {
           <Button
             color={MIDNIGHT_GREEN}
             radius={10}
-            icon={<Icon name="settings-outline" size={30} color={BLOND} />}
+            icon={<Icon name="gear" size={30} color={BLOND} />}
             onPress={() => navigation.navigate('Settings')}
           />
         </View>
