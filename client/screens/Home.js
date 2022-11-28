@@ -1,5 +1,6 @@
 import { View, Image, StyleSheet, Button } from 'react-native';
 import AcceptProject from '../components/AcceptProject';
+import CreatePostButton from '../components/CreatePostButton';
 import DeclineProject from '../components/DeclineProject';
 import ProjectCardFeed from '../components/ProjectCardFeed';
 import { BLOND } from '../styles/palette';
@@ -45,6 +46,7 @@ export default function Home() {
         <DeclineProject />
         <AcceptProject />
       </View>
+      <CreatePostButton style={styles.createPost} />
     </View>
   );
 }
@@ -61,11 +63,5 @@ const styles = StyleSheet.create({
   },
   actions: {
     flexDirection: 'row',
-  },
-  leftbtn: {
-    marginRight: 15,
-  },
-  rightbtn: {
-    marginLeft: 15,
   },
 });
