@@ -32,11 +32,27 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// Get project info
+router.get("/:id", async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (project == null) {
+      return res.status(404).json({ message: "Cannot find project", data: {} });
+    }
+    return res.status(200).json({ message: "OK", data: project });
+  } catch (err) {
+    return res.status(500).json({ message: err.message, data: {} });
+  }
+});
+
 // Get home feed
-// body: {userId}
+// query: {userId}
 router.get("/homepage", async (req, res) => {
   try {
-    const userId = req.body.userId;
+    if (req.query.userId == null) {
+      return res.status(400).json({ message: "userId must be in query params"})
+    }
+    const userId = req.query.userId;
     const projects = await Project.find();
     let data = [];
     for (let i = 0; i < projects.length; i++) {
@@ -161,13 +177,16 @@ router.post("/create", async (req, res) => {
 });
 
 // Get the projects a user created
-// body: {userId}
+// query: {userId}
 router.get("/createdprojects", async (req, res) => {
   try {
+    if (req.query.userId == null) {
+      return res.status(400).json({ message: "userId must be in query params"})
+    }
     const projects = await Project.find();
     let data = [];
     for (let i = 0; i < projects.length; i++) {
-      if (projects[i].creator == req.body.userId) {
+      if (projects[i].creator == req.query.userId) {
         data.push(projects[i]);
       }
     }

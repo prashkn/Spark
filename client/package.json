@@ -35,8 +35,7 @@
     "react-native-web": "~0.18.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9",
-    "cross-env": "^7.0.3"
+    "@babel/core": "^7.12.9"
   },
   "private": true
 }
