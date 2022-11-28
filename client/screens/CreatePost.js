@@ -15,20 +15,20 @@ export default function CreatePost() {
       <TextInput
         style={styles.input}
         value={title}
-        onChange={setTitle}
+        onChangeText={setTitle}
         placeholder={'Title'}
       />
       <TextInput
         style={styles.input}
         value={biography}
-        onChange={setBiography}
+        onChangeText={setBiography}
         placeholder={'Biography'}
       />
       <TextInput
         multiline
         style={styles.input}
         value={description}
-        onChange={setDescription}
+        onChangeText={setDescription}
         placeholder={'Description'}
       />
     </View>
