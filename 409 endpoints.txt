@@ -1,0 +1,42 @@
+Login authentication:
+GET /users/login?email=XXX&password=XXX
+
+Create new user:
+POST /users/create
+body: {name, username, email, password, bio, [skills]}
+
+Get user info:
+GET /users/:id
+
+Change user info:
+PUT /users/:id
+body: {field, content}
+
+Load home feed:
+GET /projects/homepage?userId=XXX
+
+Swipe right on project:
+PUT /projects/swiperight
+body: {projectId, userId}
+
+Swipe left on project:
+PUT /projects/swipeleft
+body: {projectId, userId}
+
+Creating a new project:
+POST /projects/create
+body: {title, description, skillset, timeline, creator}
+
+Get the projects a user created:
+GET /projects/createdprojects?userId=XXX
+
+Accept an applicant into project
+PUT /projects/check
+body: {userId, projectId}
+
+Uncheck an applicant from project
+PUT /projects/uncheck
+body: {userId, projectId}
+
+Get project info
+GET /projects/:id
