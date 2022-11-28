@@ -29,16 +29,19 @@ router.delete("/:id", async (req, res) => {
 });
 
 // Login authentication
-// body: {email, password}
+// query: {email, password}
 router.get("/login", async (req, res) => {
   try {
-    const user = await User.find({ email: req.body.email });
+    if (req.query.email == null || req.query.password == null) {
+      return res.status(400).json({ message: "Email and password must be in query params"})
+    }
+    const user = await User.find({ email: req.query.email });
     if (user.length == 0) {
       return res
         .status(200)
         .json({ message: "Email does not exist", data: {} });
     } else {
-      if (user[0].password != req.body.password) {
+      if (user[0].password != req.query.password) {
         return res
           .status(200)
           .json({ message: "Password is incorrect", data: {} });
