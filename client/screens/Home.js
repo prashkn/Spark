@@ -1,13 +1,16 @@
 import { View, Image, StyleSheet } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AcceptProject from '../components/AcceptProject';
 import CreatePostButton from '../components/CreatePostButton';
 import DeclineProject from '../components/DeclineProject';
 import ProjectCardFeed from '../components/ProjectCardFeed';
 import { BLOND } from '../styles/palette';
+import { Button } from '@rneui/base';
 
 export default function Home({ navigation }) {
   const [cardInfo, setCardInfo] = useState({});
+  const [creator, setCreator] = useState({});
+  const [counter, setCounter] = useState(0); //determines where in the array of projects we should
 
   const MOCK_DATA = {
     description:
@@ -22,28 +25,55 @@ export default function Home({ navigation }) {
     members_needed: 5,
   };
 
-  const getCardInfo = async (u_id) => {
+  const getHomeInfo = async (user_id) => {
     try {
-      const info = await fetch(`/api/projects/homepage`);
-      console.log(info.json());
+      getCardInfo(user_id);
+      getCreatorInfo(user_id);
     } catch (err) {
       console.log(err);
     }
   };
 
+  const getCardInfo = async (user_id) => {
+    try {
+      const info = await fetch(
+        `http://localhost:4000/api/projects/homepage?userId=${user_id}`
+      );
+      const result = await info.json();
+      setCardInfo(result.data[0]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getCreatorInfo = async (creator_id) => {
+    try {
+      const info = await fetch(`http://localhost:4000/api/users/${creator_id}`);
+      const result = await info.json();
+      setCreator(result.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getHomeInfo('63823c924a0de95cddc54052');
+  }, []);
+
   return (
     <View style={styles.container}>
+      {console.log(cardInfo)}
       <Image style={styles.img} source={require('../assets/spark_logo.png')} />
       <ProjectCardFeed
-        description={MOCK_DATA.description}
-        skillset={MOCK_DATA.skillset}
-        bio={MOCK_DATA.bio}
-        creator_name={MOCK_DATA.creator_name}
-        creator_username={MOCK_DATA.creator_username}
-        image={MOCK_DATA.image}
-        title={MOCK_DATA.title}
-        timeline={MOCK_DATA.timeline}
-        members_needed={`${MOCK_DATA.members_needed} members`}
+        description={cardInfo.description}
+        skillset={cardInfo.skillset}
+        bio={cardInfo.bio || 'Project bio here'}
+        creator_name={creator.name}
+        creator_username={`@${creator.username}`}
+        image={creator.image}
+        title={cardInfo.title}
+        timeline={`${cardInfo.timeline} months`}
+        members_needed={`${cardInfo.members_needed || 5} members`}
       />
       <View style={styles.actions}>
         <DeclineProject />

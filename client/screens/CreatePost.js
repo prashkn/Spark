@@ -1,13 +1,6 @@
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import { View, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
 import { POLISHED_PINE, GAINSBORO } from '../styles/palette';
-import Tags from 'react-native-tags';
 
 export default function CreatePost() {
   const [title, setTitle] = React.useState('');
@@ -38,44 +31,6 @@ export default function CreatePost() {
         onChange={setDescription}
         placeholder={'Description'}
       />
-      <Tags
-        maxNumberOfTags={10}
-        style={styles.tagInput}
-        initialText=""
-        textInputProps={{
-          placeholder: 'Skill set required',
-        }}
-        onChangeTags={(tags) => (skills = tags)}
-        containerStyle={{ justifyContent: 'center' }}
-        tagContainerStyle={{ fontSize: 15 }}
-        inputStyle={{
-          backgroundColor: GAINSBORO,
-          borderRadius: '5%',
-          fontSize: 14,
-          color: POLISHED_PINE,
-        }}
-        renderTag={({ tag, index, onPress, deleteTagOnPress, readonly }) => (
-          <TouchableOpacity key={`${tag}-${index}`} onPress={onPress}>
-            <View
-              style={{
-                borderRadius: '5%',
-                backgroundColor: '#F1F1F1',
-                padding: 5,
-                marginRight: 5,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: POLISHED_PINE,
-                }}
-              >
-                {tag}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        )}
-      />
     </View>
   );
 }
@@ -94,12 +49,5 @@ const styles = StyleSheet.create({
     borderRadius: '5%',
     marginBottom: '5%',
     color: POLISHED_PINE,
-  },
-  tagInput: {
-    borderRadius: '5%',
-    width: '80%',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    paddingVertical: 10,
   },
 });
