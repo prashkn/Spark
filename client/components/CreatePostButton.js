@@ -1,12 +1,16 @@
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, TouchableHighlight } from 'react-native';
 import React from 'react';
 import { POLISHED_PINE } from '../styles/palette';
 
-export default function CreatePostButton() {
+export default function CreatePostButton({ navigation }) {
   return (
-    <View style={styles.btn}>
+    //fix this
+    <TouchableHighlight
+      style={styles.btn}
+      onPress={() => navigation.navigate('Create a Brainstorm')}
+    >
       <Image source={require('../assets/create.png')} />
-    </View>
+    </TouchableHighlight>
   );
 }
 
@@ -18,5 +22,9 @@ const styles = StyleSheet.create({
     width: 60,
     justifyContent: 'center',
     alignItems: 'center',
+    elevation: 5,
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: '#333',
+    shadowOpacity: 0.7,
   },
 });

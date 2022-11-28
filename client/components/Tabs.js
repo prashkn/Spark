@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Home from '../screens/Home';
 import Projects from '../screens/Projects';
 import { MIDNIGHT_GREEN } from '../styles/palette';
+import HomeAndPost from './HomeAndPost';
 import ProfileAndSettings from './ProfileAndSettings';
 
 export default function Tabs() {
@@ -17,7 +18,7 @@ export default function Tabs() {
           let iconName;
 
           // Display icons based on which screen is focused
-          if (route.name === 'Home') {
+          if (route.name === 'Home/Create') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Profile/Settings') {
             iconName = focused ? 'person' : 'person-outline';
@@ -32,7 +33,7 @@ export default function Tabs() {
         tabBarShowLabel: false,
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Home/Create" component={HomeAndPost} />
       <Tab.Screen name="Projects" component={Projects} />
 
       {/* Use nested navigator to display profile and settings sub-pages */}
