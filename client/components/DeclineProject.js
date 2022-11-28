@@ -1,6 +1,7 @@
 //button on homepage to decline the project
 import { View, Image, StyleSheet } from 'react-native';
 import React from 'react';
+import { GAINSBORO } from '../styles/palette';
 
 export default function DeclineProject() {
   return (
@@ -12,7 +13,7 @@ export default function DeclineProject() {
 
 const styles = StyleSheet.create({
   btn: {
-    backgroundColor: '#D9D9D9',
+    backgroundColor: GAINSBORO,
     padding: 20,
     marginTop: '5%',
     borderRadius: 5,

@@ -6,6 +6,7 @@ import {
   Image,
   TouchableHighlight,
 } from 'react-native';
+import { BLOND, POLISHED_PINE } from '../styles/palette';
 
 export default function ProjectCardFeed({
   title,
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
   },
   singleSkill: {
     padding: 5,
-    backgroundColor: '#FFF3B5',
+    backgroundColor: BLOND,
     marginRight: 15,
     marginTop: 15,
     marginBottom: 29,
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   members: {
-    backgroundColor: '#4DA896',
+    backgroundColor: POLISHED_PINE,
     color: 'white',
   },
   pill: {

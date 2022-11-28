@@ -2,6 +2,7 @@ import { View, Image, StyleSheet, Button } from 'react-native';
 import AcceptProject from '../components/AcceptProject';
 import DeclineProject from '../components/DeclineProject';
 import ProjectCardFeed from '../components/ProjectCardFeed';
+import { BLOND } from '../styles/palette';
 
 export default function Home() {
   const MOCK_DATA = {
@@ -51,7 +52,7 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF3B5',
+    backgroundColor: BLOND,
     alignItems: 'center',
     justifyContent: 'center',
   },
