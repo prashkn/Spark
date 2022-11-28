@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Image,
   TouchableHighlight,
-} from "react-native";
+} from 'react-native';
 
 export default function ProjectCardFeed({
   title,
@@ -24,13 +24,13 @@ export default function ProjectCardFeed({
         <View style={styles.header}>
           <Image
             style={styles.profilepic}
-            source={require("../assets/profile_pic_placeholder.png")}
+            source={require('../assets/profile_pic_placeholder.png')}
           />
           <View>
             <Text style={styles.title}>{title}</Text>
             <Text style={{ fontSize: 14 }}>
               {creator_name}•
-              <Text style={{ fontStyle: "italic" }}>{creator_username}</Text>
+              <Text style={{ fontStyle: 'italic' }}>{creator_username}</Text>
             </Text>
             <Text style={{ fontSize: 11 }}>Timeline: {timeline}</Text>
           </View>
@@ -59,15 +59,16 @@ export default function ProjectCardFeed({
 const styles = StyleSheet.create({
   card: {
     flex: 0.55,
-    width: "90%",
-    backgroundColor: "white",
+    width: '90%',
+    backgroundColor: 'white',
+    minHeight: '35%',
     borderRadius: 30,
     elevation: 5,
     shadowOffset: { width: 1, height: 1 },
-    shadowColor: "#333",
+    shadowColor: '#333',
     shadowOpacity: 0.7,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cardContent: {
     marginHorizontal: 18,
@@ -75,24 +76,26 @@ const styles = StyleSheet.create({
     marginTop: 25,
     flex: 1,
     marginBottom: 25,
-    width: "85%",
+    width: '85%',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
   },
   title: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   profilepic: {
     marginRight: 20,
   },
   header: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   skills: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   singleSkill: {
     padding: 5,
-    backgroundColor: "#FFF3B5",
+    backgroundColor: '#FFF3B5',
     marginRight: 15,
     marginTop: 15,
     marginBottom: 29,
@@ -104,8 +107,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   members: {
-    backgroundColor: "#4DA896",
-    color: "white",
+    backgroundColor: '#4DA896',
+    color: 'white',
   },
   pill: {
     paddingLeft: 5,
