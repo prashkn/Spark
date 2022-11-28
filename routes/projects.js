@@ -50,7 +50,9 @@ router.get("/:id", async (req, res) => {
 router.get("/homepage", async (req, res) => {
   try {
     if (req.query.userId == null) {
-      return res.status(400).json({ message: "userId must be in query params"})
+      return res
+        .status(400)
+        .json({ message: "userId must be in query params" });
     }
     const userId = req.query.userId;
     const projects = await Project.find();
@@ -181,15 +183,22 @@ router.post("/create", async (req, res) => {
 router.get("/createdprojects", async (req, res) => {
   try {
     if (req.query.userId == null) {
-      return res.status(400).json({ message: "userId must be in query params"})
+      return res
+        .status(400)
+        .json({ message: "userId must be in query params" });
+    } else if (!mongoose.Types.ObjectId.isValid(req.query.userId)) {
+      return res.status(400).json({ message: "userId is invalid." });
     }
-    const projects = await Project.find();
+
+    const data = await Project.find({ creator: req.query.userId });
+    /*
     let data = [];
     for (let i = 0; i < projects.length; i++) {
       if (projects[i].creator == req.query.userId) {
         data.push(projects[i]);
       }
     }
+    */
     return res.status(200).json({ message: "OK", data: data });
   } catch (err) {
     return res.status(500).json({ message: err.message, data: {} });
