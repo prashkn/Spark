@@ -7,6 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default function DeclineProject({ setCounter, counter }) {
   return (
     <TouchableOpacity
+      activeOpacity={0.8}
       style={styles.btn}
       onPress={() => setCounter(counter + 1)}
     >
