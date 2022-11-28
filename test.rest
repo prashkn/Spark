@@ -41,6 +41,9 @@ Content-Type: application/json
 GET http://localhost:4000/api/projects/
 
 ###
+GET http://localhost:4000/api/projects/createdprojects?userId=63823c924a0de95cddc54052
+
+###
 
 DELETE http://localhost:4000/api/projects/63756d1cfffc51284ca25e02
 
