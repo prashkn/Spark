@@ -1,6 +1,13 @@
-import { View, TextInput, StyleSheet } from 'react-native';
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import React from 'react';
-import { POLISHED_PINE } from '../styles/palette';
+import { POLISHED_PINE, GAINSBORO } from '../styles/palette';
+import Tags from 'react-native-tags';
 
 export default function CreatePost() {
   const [title, setTitle] = React.useState('');
@@ -8,7 +15,7 @@ export default function CreatePost() {
   const [description, setDescription] = React.useState('');
   const [members, setMembers] = React.useState(0);
   const [timeline, setTimeline] = React.useState(); //https://github.com/miblanchard/react-native-slider
-  const [skillsets, setSkillsets] = React.useState([]);
+  let skills = [];
 
   return (
     <View style={styles.form}>
@@ -31,6 +38,44 @@ export default function CreatePost() {
         onChange={setDescription}
         placeholder={'Description'}
       />
+      <Tags
+        maxNumberOfTags={10}
+        style={styles.tagInput}
+        initialText=""
+        textInputProps={{
+          placeholder: 'Skill set required',
+        }}
+        onChangeTags={(tags) => (skills = tags)}
+        containerStyle={{ justifyContent: 'center' }}
+        tagContainerStyle={{ fontSize: 15 }}
+        inputStyle={{
+          backgroundColor: GAINSBORO,
+          borderRadius: '5%',
+          fontSize: 14,
+          color: POLISHED_PINE,
+        }}
+        renderTag={({ tag, index, onPress, deleteTagOnPress, readonly }) => (
+          <TouchableOpacity key={`${tag}-${index}`} onPress={onPress}>
+            <View
+              style={{
+                borderRadius: '5%',
+                backgroundColor: '#F1F1F1',
+                padding: 5,
+                marginRight: 5,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: POLISHED_PINE,
+                }}
+              >
+                {tag}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      />
     </View>
   );
 }
@@ -42,12 +87,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    backgroundColor: 'lightgray',
+    backgroundColor: GAINSBORO,
     paddingHorizontal: 15,
     paddingVertical: 7,
     width: '80%',
     borderRadius: '5%',
     marginBottom: '5%',
     color: POLISHED_PINE,
+  },
+  tagInput: {
+    borderRadius: '5%',
+    width: '80%',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
   },
 });
