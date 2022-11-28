@@ -13,11 +13,10 @@ export default function Settings({ navigation }) {
         { name: 'Help', icon: 'help-outline' },
         { name: 'About', icon: 'information-circle-outline' },
       ].map((setting, i) => (
-        <>
+        <View key={i}>
           <Pressable
             // Navigate to menu when pressed
             onPress={() => navigation.push(setting.name)}
-            key={i}
             style={({ pressed, hovered }) => [
               {
                 ...styles.menuButton,
@@ -41,7 +40,7 @@ export default function Settings({ navigation }) {
 
           {/* Separator */}
           <View style={styles.separator} />
-        </>
+        </View>
       ))}
     </ScrollView>
   );
