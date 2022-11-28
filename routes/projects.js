@@ -125,6 +125,7 @@ router.post("/create", async (req, res) => {
       skillset: req.body.skillset,
       timeline: req.body.timeline,
       creator: req.body.creator,
+      membersNeeded: req.body.membersNeeded,
       applicants: [],
       uninterested: [],
       participants: [],
@@ -161,16 +162,7 @@ router.get("/createdprojects", async (req, res) => {
         .status(400)
         .json({ message: "userId must be in present and valid." });
     }
-
     const data = await Project.find({ creator: req.query.userId });
-    /*
-    let data = [];
-    for (let i = 0; i < projects.length; i++) {
-      if (projects[i].creator == req.query.userId) {
-        data.push(projects[i]);
-      }
-    }
-    */
     return res.status(200).json({ message: "OK", data: data });
   } catch (err) {
     return res.status(500).json({ message: err.message, data: {} });

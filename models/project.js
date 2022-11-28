@@ -8,6 +8,7 @@ var ProjectSchema = new mongoose.Schema({
     skillset: [String],
     timeline: String,
     creator: String,
+    membersNeeded: Number,
     applicants: [String],
     uninterested: [String],
     participants: [String]
