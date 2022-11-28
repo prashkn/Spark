@@ -7,14 +7,14 @@ import ProjectCardFeed from '../components/ProjectCardFeed';
 import { BLOND } from '../styles/palette';
 
 export default function Home({ navigation }) {
-  const [cardInfo, setCardInfo] = useState({});
+  const [projectInfo, setProjectInfo] = useState({}); //returns a single project
   const [creator, setCreator] = useState({});
   const [counter, setCounter] = useState(0); //determines where in the array of projects we should
 
   const getAllInfo = async (user_id) => {
     try {
-      getProjectInfo(user_id);
-      getCreatorInfo(user_id);
+      const res = await getProjectInfo(user_id);
+      await getCreatorInfo(res.data[counter].creator);
     } catch (err) {
       console.log(err);
     }
@@ -26,9 +26,10 @@ export default function Home({ navigation }) {
         `http://localhost:4000/api/projects/homepage?userId=${user_id}`
       );
       const result = await info.json();
-      setCardInfo(
+      setProjectInfo(
         result.data[counter] || result.data[result.data.length() - 1]
       );
+      return result;
     } catch (err) {
       console.log(err);
     }
@@ -38,6 +39,7 @@ export default function Home({ navigation }) {
     try {
       const info = await fetch(`http://localhost:4000/api/users/${creator_id}`);
       const result = await info.json();
+      console.log(result);
       setCreator(result.data);
     } catch (err) {
       console.log(err);
@@ -45,24 +47,24 @@ export default function Home({ navigation }) {
   };
 
   useEffect(() => {
-    getAllInfo('63823c924a0de95cddc54052');
-  }, []);
+    getAllInfo('6385431e23ef81b2d1b8ad14');
+  }, [counter]);
 
   return (
     <View style={styles.container}>
-      {console.log(cardInfo)}
+      {console.log(projectInfo)}
       {console.log(counter)}
       <Image style={styles.img} source={require('../assets/spark_logo.png')} />
       <ProjectCardFeed
-        description={cardInfo.description}
-        skillset={cardInfo.skillset}
-        bio={cardInfo.bio || 'Project bio here'}
+        description={projectInfo.description}
+        skillset={projectInfo.skillset}
+        bio={projectInfo.bio || 'Project bio here'}
         creator_name={creator.name}
         creator_username={`@${creator.username}`}
         image={creator.image}
-        title={cardInfo.title}
-        timeline={`${cardInfo.timeline} months`}
-        members_needed={`${cardInfo.members_needed || 5} members`}
+        title={projectInfo.title}
+        timeline={`${projectInfo.timeline} months`}
+        members_needed={`${projectInfo.members_needed || 5} members`}
       />
       <View style={styles.actions}>
         <DeclineProject counter={counter} setCounter={setCounter} />
