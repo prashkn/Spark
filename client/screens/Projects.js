@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Project from '../components/Project';
 import { BLOND, MIDNIGHT_GREEN } from '../styles/palette';
 
 export default function Projects() {
+  const [projects, setProjects] = useState([])
+
+  const getProjects = async (id) => {
+    try {
+      const info = await fetch(`../api/projects/createdprojects?userId=${id}`);
+      const result = await info.json()
+      console.log(result);
+      // setProjects(info.json())
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    //! change to variable
+    getProjects("638409bfed11c73d0818e5a5")
+  }, [])
+
   return (
     <SafeAreaView
       style={{
