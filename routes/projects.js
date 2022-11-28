@@ -16,35 +16,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Delete project (testing purposes)
-router.delete("/:id", async (req, res) => {
-  try {
-    const project = await Project.findById(req.params.id);
-    if (project == null) {
-      return res
-        .status(404)
-        .json({ message: "Project does not exist", data: {} });
-    }
-    await project.remove();
-    return res.status(200).json({ message: "Project deleted", data: {} });
-  } catch (err) {
-    return res.status(500).json({ message: err.message, data: {} });
-  }
-});
-
-// Get project info
-router.get("/:id", async (req, res) => {
-  try {
-    const project = await Project.findById(req.params.id);
-    if (project == null) {
-      return res.status(404).json({ message: "Cannot find project", data: {} });
-    }
-    return res.status(200).json({ message: "OK", data: project });
-  } catch (err) {
-    return res.status(500).json({ message: err.message, data: {} });
-  }
-});
-
 // Get home feed
 // query: {userId}
 router.get("/homepage", async (req, res) => {
@@ -180,7 +151,7 @@ router.post("/create", async (req, res) => {
 // query: {userId}
 router.get("/createdprojects", async (req, res) => {
   try {
-    if (req.query.userId == null) {
+    if (req.query.userId == null || !mongoose.Types.ObjectId.isValid(req.query.userId)) {
       return res.status(400).json({ message: "userId must be in query params"})
     }
     const projects = await Project.find();
@@ -227,6 +198,35 @@ router.put("/uncheck", async (req, res) => {
     project.applicants.push(req.body.userId);
     await project.save();
     return res.status(200).json({ message: "OK", data: {} });
+  } catch (err) {
+    return res.status(500).json({ message: err.message, data: {} });
+  }
+});
+
+// Get project info
+router.get("/:id", async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (project == null) {
+      return res.status(404).json({ message: "Cannot find project", data: {} });
+    }
+    return res.status(200).json({ message: "OK", data: project });
+  } catch (err) {
+    return res.status(500).json({ message: err.message, data: {} });
+  }
+});
+
+// Delete project (testing purposes)
+router.delete("/:id", async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (project == null) {
+      return res
+        .status(404)
+        .json({ message: "Project does not exist", data: {} });
+    }
+    await project.remove();
+    return res.status(200).json({ message: "Project deleted", data: {} });
   } catch (err) {
     return res.status(500).json({ message: err.message, data: {} });
   }
