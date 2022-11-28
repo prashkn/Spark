@@ -18,3 +18,5 @@ deploy-client:
   only:
     refs:
       - master
+    changes:
+      - "client/**/*"
