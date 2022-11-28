@@ -1,4 +1,5 @@
-import { View, Image, StyleSheet, Button } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
+import { useState } from 'react';
 import AcceptProject from '../components/AcceptProject';
 import CreatePostButton from '../components/CreatePostButton';
 import DeclineProject from '../components/DeclineProject';
@@ -6,10 +7,12 @@ import ProjectCardFeed from '../components/ProjectCardFeed';
 import { BLOND } from '../styles/palette';
 
 export default function Home({ navigation }) {
+  const [cardInfo, setCardInfo] = useState({});
+
   const MOCK_DATA = {
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    skillset: ['skill1', 'skill2'],
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.',
+    skillset: ['Skill 1', 'Skill 2'],
     bio: 'Project bio here',
     creator_name: 'Project Creator',
     creator_username: '@username',
@@ -65,6 +68,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   createPost: {
-    marginTop: '2%',
+    position: 'absolute',
+    marginTop: '3%',
   },
 });

@@ -4,7 +4,6 @@ import { POLISHED_PINE } from '../styles/palette';
 
 export default function CreatePostButton({ navigation }) {
   return (
-    //fix this
     <TouchableHighlight
       style={styles.btn}
       onPress={() => navigation.navigate('Create a Brainstorm')}
