@@ -1,22 +1,16 @@
-GET http://localhost:4000/users/
+GET http://localhost:4000/api/users/
 
 ###
 
-DELETE http://localhost:4000/users/6374912fe6f7e60338cfd3c4
+DELETE http://localhost:4000/api/users/6374912fe6f7e60338cfd3c4
 
 ###
 
-GET http://localhost:4000/users/login
-Content-Type: application/json
-
-{
-    "email": "jtester2002@gmail.com",
-    "password": "verysecurepassword"
-}
+GET http://localhost:4000/api/users/login?email=prashant2@test.com&password=test
 
 ###
 
-POST http://localhost:4000/users/create
+POST http://localhost:4000/api/users/create
 Content-Type: application/json
 
 {
@@ -30,12 +24,11 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:4000/users/6374912fe6f7e60338cfd3c4
-Content-Type: application/json
+GET http://localhost:4000/api/users/63823c924a0de95cddc54052
 
 ###
 
-PUT http://localhost:4000/users/6374912fe6f7e60338cfd3c4
+PUT http://localhost:4000/api/users/6374912fe6f7e60338cfd3c4
 Content-Type: application/json
 
 {
@@ -45,24 +38,23 @@ Content-Type: application/json
 
 ######################################################################
 
-GET http://localhost:4000/projects/
+GET http://localhost:4000/api/projects/
 
 ###
 
-DELETE http://localhost:4000/projects/63756d1cfffc51284ca25e02
+DELETE http://localhost:4000/api/projects/63756d1cfffc51284ca25e02
 
 ###
 
-GET http://localhost:4000/projects/homepage
-Content-Type: application/json
+GET http://localhost:4000/api/projects/63824654ed8f6d6f567dbbc9
 
-{
-    "userId": "63756a08cded4b52ec7c165d"
-}
+###
+
+GET http://localhost:4000/api/projects/homepage?userId=63824654ed8f6d6f567dbbc9
 
 ### 
 
-PUT http://localhost:4000/projects/swiperight
+PUT http://localhost:4000/api/projects/swiperight
 Content-Type: application/json
 
 {
@@ -72,7 +64,7 @@ Content-Type: application/json
 
 ### 
 
-PUT http://localhost:4000/projects/swipeleft
+PUT http://localhost:4000/api/projects/swipeleft
 Content-Type: application/json
 
 {
@@ -81,7 +73,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:4000/projects/create
+POST http://localhost:4000/api/projects/create
 Content-Type: application/json
 
 {
