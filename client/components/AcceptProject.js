@@ -4,12 +4,21 @@ import React from 'react';
 import { POLISHED_PINE } from '../styles/palette';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function AcceptProject({ setCounter, counter }) {
+export default function AcceptProject({
+  setCounter,
+  counter,
+  swipeRight,
+  project_id,
+  user_id,
+}) {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       style={styles.btn}
-      onPress={() => setCounter(counter + 1)}
+      onPress={() => {
+        setCounter(counter + 1);
+        swipeRight(project_id, user_id);
+      }}
     >
       <Image source={require('../assets/accept.png')} />
     </TouchableOpacity>

@@ -4,12 +4,21 @@ import React from 'react';
 import { GAINSBORO } from '../styles/palette';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function DeclineProject({ setCounter, counter }) {
+export default function DeclineProject({
+  setCounter,
+  counter,
+  swipeLeft,
+  project_id,
+  user_id,
+}) {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       style={styles.btn}
-      onPress={() => setCounter(counter + 1)}
+      onPress={() => {
+        setCounter(counter + 1);
+        swipeLeft(project_id, user_id);
+      }}
     >
       <Image source={require('../assets/reject.png')} />
     </TouchableOpacity>

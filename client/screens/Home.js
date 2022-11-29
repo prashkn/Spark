@@ -6,14 +6,18 @@ import DeclineProject from '../components/DeclineProject';
 import ProjectCardFeed from '../components/ProjectCardFeed';
 import { BLOND } from '../styles/palette';
 
-export default function Home({ navigation }) {
-  const [projectInfo, setProjectInfo] = useState({}); //returns a single project
-  const [creator, setCreator] = useState({});
+export default function Home({ navigation, user_id }) {
+  const [projectInfo, setProjectInfo] = useState({}); //holds a single project
+  const [creator, setCreator] = useState({}); //holds the creator of the project
   const [counter, setCounter] = useState(0); //determines where in the array of projects we should
 
+  //initialize home screen with information
   const getAllInfo = async (user_id) => {
     try {
+      //grab the project
       const res = await getProjectInfo(user_id);
+
+      //...and then grab the creator of the project
       await getCreatorInfo(res.data[counter].creator);
     } catch (err) {
       console.log(err);
@@ -35,9 +39,9 @@ export default function Home({ navigation }) {
     }
   };
 
-  const getCreatorInfo = async (creator_id) => {
+  const getCreatorInfo = async (user_id) => {
     try {
-      const info = await fetch(`http://localhost:4000/api/users/${creator_id}`);
+      const info = await fetch(`http://localhost:4000/api/users/${user_id}`);
       const result = await info.json();
       console.log(result);
       setCreator(result.data);
@@ -46,8 +50,46 @@ export default function Home({ navigation }) {
     }
   };
 
+  //call endpoint on rejection
+  const swipeLeft = async (project_id, user_id) => {
+    /*
+    try {
+      const requestOptions = {
+        method: 'PUT',
+        body: JSON.stringify({ projectId: project_id, userId: user_id }),
+      };
+      const res = await fetch(
+        `http://localhost:4000/api/projects/swipeleft`,
+        requestOptions
+      );
+      console.log('WORKED');
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }*/
+  };
+
+  //call endpoint on accept
+  const swipeRight = async (project_id, user_id) => {
+    /*
+    try {
+      const requestOptions = {
+        method: 'PUT',
+        body: JSON.stringify({ projectId: project_id, userId: user_id }),
+      };
+      const res = await fetch(
+        `http://localhost:4000/api/projects/swiperight`,
+        requestOptions
+      );
+      console.log('WORKED');
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }*/
+  };
+
   useEffect(() => {
-    getAllInfo('6385431e23ef81b2d1b8ad14');
+    getAllInfo(user_id);
   }, [counter]);
 
   return (
@@ -67,8 +109,20 @@ export default function Home({ navigation }) {
         members_needed={`${projectInfo.members_needed || 5} members`}
       />
       <View style={styles.actions}>
-        <DeclineProject counter={counter} setCounter={setCounter} />
-        <AcceptProject counter={counter} setCounter={setCounter} />
+        <DeclineProject
+          counter={counter}
+          setCounter={setCounter}
+          swipeLeft={swipeLeft}
+          project_id={projectInfo._id}
+          user_id={user_id}
+        />
+        <AcceptProject
+          counter={counter}
+          setCounter={setCounter}
+          swipeRight={swipeRight}
+          project_id={projectInfo._id}
+          user_id={user_id}
+        />
       </View>
       <CreatePostButton style={styles.createPost} navigation={navigation} />
     </View>
