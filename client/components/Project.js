@@ -1,23 +1,21 @@
-import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
-import React, { useState } from "react";
+import { View, Text, StyleSheet, Pressable } from "react-native";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight'
 
-export default function Project() {
-    const [openProj, setOpenProj] = useState("");
+export default function Project(project) {
+    const proj = project.project
 
     return (
-        <TouchableHighlight onPress={() => setOpenProj("projectID")}>
-            <View style={styles.card}>
-                <View style={styles.info}>
-                    <Text style={styles.title}>Project Title</Text>
-                    <Text numberOfLines={2} style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
-                </View>
-                <Text style={styles.arrow} >
-                    <FontAwesomeIcon icon={faChevronRight} />
-                </Text>
+        <View style={styles.card}>
+            <View style={styles.info}>
+                <Text style={styles.title}>{proj.title}</Text>
+                <Text numberOfLines={2} style={styles.description}>{proj.description}</Text>
             </View>
-        </TouchableHighlight>
+            <Text style={styles.arrow} >
+                <FontAwesomeIcon icon={faChevronRight} />
+            </Text>
+        </View>
     )
 }
 

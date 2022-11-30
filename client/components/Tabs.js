@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import Home from '../screens/Home';
+import { MyProjects } from '../screens/MyProjects';
 import Projects from '../screens/Projects';
 import { MIDNIGHT_GREEN } from '../styles/palette';
 import HomeAndPost from './HomeAndPost';
@@ -22,7 +23,7 @@ export default function Tabs() {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Profile/Settings') {
             iconName = focused ? 'person' : 'person-outline';
-          } else if (route.name === 'Projects') {
+          } else if (route.name === 'MyProjects') {
             iconName = focused ? 'documents' : 'documents-outline';
           }
 
@@ -34,7 +35,7 @@ export default function Tabs() {
       })}
     >
       <Tab.Screen name="Home/Create" component={HomeAndPost} />
-      <Tab.Screen name="Projects" component={Projects} />
+      <Tab.Screen name="MyProjects" component={MyProjects} />
 
       {/* Use nested navigator to display profile and settings sub-pages */}
       <Tab.Screen name="Profile/Settings" component={ProfileAndSettings} />
