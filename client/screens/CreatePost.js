@@ -1,6 +1,6 @@
 import { View, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
-import { POLISHED_PINE } from '../styles/palette';
+import { POLISHED_PINE, GAINSBORO } from '../styles/palette';
 
 export default function CreatePost() {
   const [title, setTitle] = React.useState('');
@@ -8,27 +8,27 @@ export default function CreatePost() {
   const [description, setDescription] = React.useState('');
   const [members, setMembers] = React.useState(0);
   const [timeline, setTimeline] = React.useState(); //https://github.com/miblanchard/react-native-slider
-  const [skillsets, setSkillsets] = React.useState([]);
+  let skills = [];
 
   return (
     <View style={styles.form}>
       <TextInput
         style={styles.input}
         value={title}
-        onChange={setTitle}
+        onChangeText={setTitle}
         placeholder={'Title'}
       />
       <TextInput
         style={styles.input}
         value={biography}
-        onChange={setBiography}
+        onChangeText={setBiography}
         placeholder={'Biography'}
       />
       <TextInput
         multiline
         style={styles.input}
         value={description}
-        onChange={setDescription}
+        onChangeText={setDescription}
         placeholder={'Description'}
       />
     </View>
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    backgroundColor: 'lightgray',
+    backgroundColor: GAINSBORO,
     paddingHorizontal: 15,
     paddingVertical: 7,
     width: '80%',
