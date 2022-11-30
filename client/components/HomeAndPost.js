@@ -1,13 +1,14 @@
-import { View, Text } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '../screens/Home';
 import CreatePost from '../screens/CreatePost';
-import { MIDNIGHT_GREEN } from '../styles/palette';
+import { MIDNIGHT_GREEN, MUSTARD } from '../styles/palette';
 import { HeaderBackButton } from '@react-navigation/elements';
 
 export default function HomeAndPost() {
   const Stack = createNativeStackNavigator();
+
   return (
     <Stack.Navigator
       screenOptions={({ navigation }) => ({
@@ -37,3 +38,12 @@ export default function HomeAndPost() {
     </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  btn: {
+    backgroundColor: MUSTARD,
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+    borderRadius: 30,
+  },
+});

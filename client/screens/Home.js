@@ -85,9 +85,8 @@ export default function Home({ navigation, user_id }) {
   };
 
   //on first render
-  useEffect(async () => {
-    await getAllInfo(user_id);
-    setLoading(false);
+  useEffect(() => {
+    getAllInfo(user_id).then(setLoading(false));
   }, []);
 
   //on counter changing
@@ -113,8 +112,8 @@ export default function Home({ navigation, user_id }) {
             description={projectInfo[counter].description}
             skillset={projectInfo[counter].skillset}
             bio={projectInfo[counter].bio || 'Project bio here'}
-            creator_name={creator.name}
-            creator_username={`@${creator.username}`}
+            creator_name={creator.name || 'No User'}
+            creator_username={creator.username ? `@${creator.username}` : ''}
             image={creator.image}
             title={projectInfo[counter].title}
             timeline={`${projectInfo[counter].timeline} months`}
@@ -127,22 +126,38 @@ export default function Home({ navigation, user_id }) {
               counter={counter}
               setCounter={setCounter}
               swipeLeft={swipeLeft}
-              project_id={projectInfo._id}
+              project_id={projectInfo[counter]._id}
               user_id={user_id}
             />
             <AcceptProject
               counter={counter}
               setCounter={setCounter}
               swipeRight={swipeRight}
-              project_id={projectInfo._id}
+              project_id={projectInfo[counter]._id}
               user_id={user_id}
             />
           </View>
         </>
       )}
       {!loading && counter >= projectInfo.length && (
-        <View>
-          <Text>all projects done</Text>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignContent: 'center',
+            width: '80%',
+          }}
+        >
+          <Image
+            style={{
+              width: 200,
+              height: 200,
+            }}
+            source={require('../assets/feed_empty.png')}
+          />
+          <Text style={{ fontWeight: 'bold', marginVertical: 10 }}>
+            This is the end of everyone's brainstorms. Why not create your own?
+          </Text>
         </View>
       )}
       <CreatePostButton style={styles.createPost} navigation={navigation} />
