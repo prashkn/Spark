@@ -9,17 +9,14 @@ import { BLOND } from '../styles/palette';
 export default function Home({ navigation, user_id }) {
   const [projectInfo, setProjectInfo] = useState([]); //holds all projects
   const [creator, setCreator] = useState({}); //holds the creator of the project
-  const [counter, setCounter] = useState(0); //determines where in the array of projects we should
+  const [counter, setCounter] = useState(-1); //determines where in the array of projects we should
   const [loading, setLoading] = useState(true);
 
   //initialize home screen with information
   const getAllInfo = async (user_id) => {
     try {
-      //grab the project
-      const res = await getProjectInfo(user_id);
-
-      //...and then grab the creator of the project
-      await getCreatorInfo(res[counter].creator);
+      await getProjectInfo(user_id);
+      setCounter(counter + 1);
     } catch (err) {
       console.log(err);
     }
@@ -32,9 +29,7 @@ export default function Home({ navigation, user_id }) {
         `http://localhost:4000/api/projects/homepage?userId=${user_id}`
       );
       const result = await info.json();
-      console.log(result.data);
       setProjectInfo(result.data);
-      return result.data;
     } catch (err) {
       console.log(err);
     }
@@ -45,7 +40,6 @@ export default function Home({ navigation, user_id }) {
     try {
       const info = await fetch(`http://localhost:4000/api/users/${user_id}`);
       const result = await info.json();
-      console.log(result.data);
       setCreator(result.data);
     } catch (err) {
       console.log(err);
