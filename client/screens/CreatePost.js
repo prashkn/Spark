@@ -167,7 +167,6 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     width: '85%',
-    marginBottom: '5%',
     alignSelf: 'center',
     borderRadius: '5%',
     borderWidth: 0,

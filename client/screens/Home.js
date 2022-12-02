@@ -5,6 +5,8 @@ import CreatePostButton from '../components/CreatePostButton';
 import DeclineProject from '../components/DeclineProject';
 import ProjectCardFeed from '../components/ProjectCardFeed';
 import { BLOND } from '../styles/palette';
+import FeedEmpty from '../assets/feed_empty.svg';
+import Logo from '../assets/spark_logo.svg';
 
 export default function Home({ navigation, user_id }) {
   const [projectInfo, setProjectInfo] = useState([]); //holds all projects
@@ -96,7 +98,7 @@ export default function Home({ navigation, user_id }) {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.img} source={require('../assets/spark_logo.png')} />
+      <Logo width={'15%'} />
       {loading && (
         <>
           <ProjectCardFeed />
@@ -148,14 +150,15 @@ export default function Home({ navigation, user_id }) {
             width: '80%',
           }}
         >
-          <Image
+          <FeedEmpty height={'50%'} />
+          <Text
             style={{
-              width: 200,
-              height: 200,
+              fontWeight: 'bold',
+              marginVertical: 10,
+              textAlign: 'center',
+              fontSize: 20,
             }}
-            source={require('../assets/feed_empty.png')}
-          />
-          <Text style={{ fontWeight: 'bold', marginVertical: 10 }}>
+          >
             This is the end of everyone's brainstorms. Why not create your own?
           </Text>
         </View>
