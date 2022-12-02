@@ -98,7 +98,7 @@ export default function Home({ navigation, user_id }) {
 
   return (
     <View style={styles.container}>
-      <Logo width={'15%'} />
+      <Logo width={'15%'} style={styles.img} />
       {loading && (
         <>
           <ProjectCardFeed />
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   img: {
-    marginBottom: '2%',
+    marginTop: '-5%',
   },
   actions: {
     flexDirection: 'row',
