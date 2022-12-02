@@ -4,8 +4,9 @@ import { POLISHED_PINE, GAINSBORO, MUSTARD } from '../styles/palette';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Slider } from '@miblanchard/react-native-slider';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { useToast } from 'react-native-toast-notifications';
 
-export default function CreatePost({ navigation }) {
+export default function CreatePost({ navigation, user_id }) {
   DropDownPicker.setMode('BADGE');
   const [title, setTitle] = React.useState('');
   const [biography, setBiography] = React.useState('');
@@ -32,6 +33,8 @@ export default function CreatePost({ navigation }) {
     },
   ]);
   const [timeline, setTimeline] = React.useState(6); //https://github.com/miblanchard/react-native-slider
+  const [showToast, setShowToast] = React.useState(false);
+  const toast = useToast();
 
   const verify = () => {
     if (title === '' || biography === '') {
@@ -39,17 +42,47 @@ export default function CreatePost({ navigation }) {
         { text: 'Ok' },
         { text: 'Cancel', style: 'cancel' },
       ]);
-      return;
+      return false;
     }
 
-    if (description.length < 50)
+    if (description.length < 50) {
       Alert.alert('Invalid Form', 'Please write a longer description.', [
         { text: 'Ok' },
         { text: 'Cancel', style: 'cancel' },
       ]);
+      return false;
+    }
+
+    return true;
   };
 
-  const postToDB = () => {};
+  const postToDB = async () => {
+    const shouldPost = verify();
+    if (shouldPost) {
+      await fetch(`http://localhost:4000/api/projects/create`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: title,
+          description: description,
+          skillset: skillsets,
+          timeline: timeline,
+          creator: user_id,
+          membersNeeded: members,
+        }),
+      }).catch((error) => console.log(error));
+      toast.show('Brainstorm Posted!', {
+        type: 'success',
+        placement: 'top',
+        duration: 'zoom-in',
+        duration: 2500,
+      });
+      navigation.navigate('Home');
+    }
+  };
 
   return (
     <ScrollView
@@ -118,7 +151,7 @@ export default function CreatePost({ navigation }) {
             borderRadius: '5%',
           }}
         >
-          <Text style={{ color: 'gray' }}>Timeline: {timeline}</Text>
+          <Text style={{ color: 'gray' }}>Timeline: {timeline} months</Text>
           <Slider
             value={timeline}
             onValueChange={setTimeline}
@@ -142,7 +175,7 @@ export default function CreatePost({ navigation }) {
           textStyle={styles.dd_text}
         />
       </View>
-      <TouchableOpacity style={styles.btn} onPress={verify}>
+      <TouchableOpacity style={styles.btn} onPress={postToDB}>
         <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
           Post Brainstorm
         </Text>
