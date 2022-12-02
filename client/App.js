@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import Tabs from './components/Tabs';
 import poppinsFontMapping from './styles/poppins-font-mapping';
 import { useFonts } from 'expo-font';
+import { ToastProvider } from 'react-native-toast-notifications';
+import { POLISHED_PINE } from './styles/palette';
 
 export default function App() {
   const [fontsLoaded] = useFonts(poppinsFontMapping);
@@ -12,8 +14,10 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Tabs />
-    </NavigationContainer>
+    <ToastProvider offsetTop={50} successColor={POLISHED_PINE}>
+      <NavigationContainer>
+        <Tabs />
+      </NavigationContainer>
+    </ToastProvider>
   );
 }
