@@ -6,17 +6,18 @@ export default function LoginButton(props) {
       style={({ pressed, hovered }) => [
         {
           backgroundColor:
-            pressed || hovered
-              ? props.backgroundColorPressed
+            pressed ?
+              props.backgroundColorPressed
               : props.backgroundColor,
           width: '100%',
           height: 50,
           borderRadius: 30,
           justifyContent: 'center',
           alignItems: 'center',
-          marginBottom: 10,
-        },
+          marginBottom: 10
+        }
       ]}
+
     >
       {/* <View> */}
       <Text style={{ fontFamily: 'Poppins-SemiBold', fontSize: 22 }}>

@@ -35,12 +35,12 @@ export default function Tabs() {
         tabBarShowLabel: false,
       })}
     >
+      <Tab.Screen name="Login" component={Login} />
       <Tab.Screen name="Home/Create" component={HomeAndPost} />
       <Tab.Screen name="Projects" component={Projects} />
 
       {/* Use nested navigator to display profile and settings sub-pages */}
       <Tab.Screen name="Profile/Settings" component={ProfileAndSettings} />
-      <Tab.Screen name="Login" component={Login} />
     </Tab.Navigator>
   );
 }
