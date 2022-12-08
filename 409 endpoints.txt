@@ -27,6 +27,10 @@ Creating a new project:
 POST /projects/create
 body: {title, description, skillset, timeline, creator}
 
+Modify a project:
+PUT /projects/:id
+body: Any combination of: {title, description, skillset, timeline, membersNeeded}
+
 Get the projects a user created:
 GET /projects/createdprojects?userId=XXX
 

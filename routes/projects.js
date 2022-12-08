@@ -91,11 +91,6 @@ router.put("/:id", async (req, res) => {
   } catch (err) {
     return res.status(500).json({ message: err.message, data: {} });
   }
-  /*title: req.body.title,
-  description: req.body.description,
-  skillset: req.body.skillset,
-  timeline: req.body.timeline,
-  membersNeeded: req.body.membersNeeded*/
 })
 
 // Swipe right on project
