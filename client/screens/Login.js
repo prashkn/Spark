@@ -9,6 +9,7 @@ export default function Login() {
       <Image source={require('../assets/spark_logo.png')} style={styles.logo} />
       <View style={styles.container}>
         <Text style={styles.title}>Spark</Text>
+
         <LoginTextInput placeholder="Email" keyboardType="email-address" />
         <LoginTextInput placeholder="Password" secureTextEntry />
         <LoginButton
@@ -38,6 +39,8 @@ export default function Login() {
 
       {/* Spacer (same height as logo) to keep input text and login buttons centered */}
       <View style={styles.bottomSpacer}></View>
+
+      <StatusBar style="dark" />
     </SafeAreaView>
   );
 }
@@ -47,21 +50,21 @@ const logoSize = 80;
 const styles = StyleSheet.create({
   safeAreaContainer: {
     backgroundColor: 'white',
-    height: '100%',
+    flex: 1,
 
     // Put logo on top, input and buttons in center, and spacer at bottom
     justifyContent: 'space-between',
-    
+
     // Horizontally center items
     alignItems: 'center',
   },
 
   container: {
     paddingHorizontal: 20,
-    
+
     // Horizontally center items that don't take up 100% width
     alignItems: 'center',
-    
+
     // Width should be 400 px max
     maxWidth: 400,
     width: '100%',

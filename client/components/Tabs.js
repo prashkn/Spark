@@ -1,11 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import YourBasicInformation from '../screens/YourBasicInformation';
 import Login from '../screens/Login';
 import Projects from '../screens/Projects';
 import { MIDNIGHT_GREEN } from '../styles/palette';
 import HomeAndPost from './HomeAndPost';
 import ProfileAndSettings from './ProfileAndSettings';
+import YourBackground from '../screens/YourBackground';
 
 export default function Tabs() {
   const Tab = createBottomTabNavigator();
@@ -35,7 +37,7 @@ export default function Tabs() {
         tabBarShowLabel: false,
       })}
     >
-      <Tab.Screen name="Login" component={Login} />
+      <Tab.Screen name="Login" component={YourBasicInformation} />
       <Tab.Screen name="Home/Create" component={HomeAndPost} />
       <Tab.Screen name="Projects" component={Projects} />
 
