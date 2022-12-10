@@ -25,14 +25,18 @@ export function MyProjects() {
             })}
         >
             <Stack.Screen
-                name="MyProjects"
+                name="Projects"
                 component={Projects}
                 options={{
-                    // Hide header on profile page
                     headerShown: false,
                 }}
             />
-            <Stack.Screen name="Details" component={ProjectDetail} />
+            <Stack.Screen
+                name="Details"
+                component={ProjectDetail}
+                options={{
+                    headerShown: false,
+                }} />
         </Stack.Navigator>
     )
 }

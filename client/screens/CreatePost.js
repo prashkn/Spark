@@ -2,7 +2,7 @@ import { View, TextInput, StyleSheet, Text, Alert } from 'react-native';
 import React from 'react';
 import { POLISHED_PINE, GAINSBORO, MUSTARD } from '../styles/palette';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { Slider } from '@miblanchard/react-native-slider';
+// import { Slider } from '@miblanchard/react-native-slider';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
 
