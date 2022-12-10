@@ -102,7 +102,7 @@ export default function Home({ navigation, user_id }) {
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
-        <Logo width={'15%'} style={styles.img} />
+        <Logo width={'15%'} height={'15%'} style={styles.img} />
         {loading && (
           <>
             <ProjectCardFeed />
