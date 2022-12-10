@@ -1,15 +1,20 @@
 # The Docker image that will be used to build your app
-image: node:lts-alpine
+image: google/cloud-sdk:alpine
 
-# Functions that should be executed before the build script is run
+# Functions that should be executed before the  script is run
 before_script:
-  - cd client
-  - npm i
+  - apk add nodejs npm
   - npm i -g firebase-tools
+
+  # Copy service account details
+  - echo $FIREBASE_SERVICE_ACCOUNT > "service_account.json"
 
 deploy-client:
   stage: deploy
+
   script:
+    - cd client
+    - npm i
     - export NODE_OPTIONS=--openssl-legacy-provider
     - npx expo export:web
     - echo $FIREBASE_SERVICE_ACCOUNT > "service_account.json"
@@ -20,3 +25,20 @@ deploy-client:
       - master
     changes:
       - "client/**/*"
+
+deploy-api:
+  stage: deploy
+  script:
+    # Install Docker
+    # - apk add --update docker openrc
+
+    # Sign in to Google Cloud
+    - gcloud auth activate-service-account --key-file=service_account.json
+
+    # Use Cloud Build to build container
+    - gcloud run deploy spark-api --project cs409-spark --region us-central1 --source .
+
+    # Build and push Docker image
+    # - docker buildx build --platform linux/amd64 . --tag us-central1-docker.pkg.dev/cs409-spark/cloud-run-source-deploy/spark-api:latest
+    # - docker push us-central1-docker.pkg.dev/cs409-spark/cloud-run-source-deploy/spark-api
+    # - gcloud run deploy spark-api --project cs409-spark --image us-central1-docker.pkg.dev/cs409-spark/cloud-run-source-deploy/spark-api:latest --region us-central1

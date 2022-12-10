@@ -23,7 +23,7 @@ export default function Tabs() {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Profile/Settings') {
             iconName = focused ? 'person' : 'person-outline';
-          } else if (route.name === 'MyProjects') {
+          } else if (route.name === 'My Projects') {
             iconName = focused ? 'documents' : 'documents-outline';
           }
 
@@ -35,7 +35,7 @@ export default function Tabs() {
       })}
     >
       <Tab.Screen name="Home/Create" component={HomeAndPost} />
-      <Tab.Screen name="MyProjects" component={MyProjects} />
+      <Tab.Screen name="My Projects" component={MyProjects} />
 
       {/* Use nested navigator to display profile and settings sub-pages */}
       <Tab.Screen name="Profile/Settings" component={ProfileAndSettings} />

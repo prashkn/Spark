@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Project from '../components/Project';
 import { BLOND, MIDNIGHT_GREEN } from '../styles/palette';
-import { Skeleton, LinearGradient } from '@rneui/themed';
+import { Skeleton } from '@rneui/themed';
 
 
 export default function Projects({ navigation }) {
   const [projects, setProjects] = useState([])
+  const [noProjects, setNoProjects] = useState()
   const NUM_OF_SKELETONS = 7;
 
   const getProjects = async (id) => {
@@ -14,10 +15,15 @@ export default function Projects({ navigation }) {
       const info = await fetch(`http://localhost:4000/api/projects/createdprojects?userId=${id}`);
       const result = await info.json()
       const projects = []
-      for (let i = 0; i < result.data.length; i++) {
-        projects.push(result.data[i])
+      if (result.data.length === 0) {
+        setNoProjects(true)
+      } else {
+        setNoProjects(false)
+        for (let i = 0; i < result.data.length; i++) {
+          projects.push(result.data[i])
+        }
+        setProjects(projects)
       }
-      setProjects(projects)
     } catch (err) {
       console.log(err);
     }
@@ -29,7 +35,6 @@ export default function Projects({ navigation }) {
       <View style={styles.projects} key={i}>
         <View style={styles.card}>
           <Skeleton
-            LinearGradientComponent={LinearGradient}
             animation="wave"
             width={345}
             height={90}
@@ -41,8 +46,12 @@ export default function Projects({ navigation }) {
 
   useEffect(() => {
     //! change to variable
-    getProjects("63824360149a7a6b1f4eea69")
+    getProjects("63823c924a0de95cddc54052")
   }, [])
+
+  // if (projects.length !== 0) {
+  //   setNoProjects(false)
+  // }
 
   return (
     <SafeAreaView
@@ -54,18 +63,21 @@ export default function Projects({ navigation }) {
       <ScrollView style={styles.container}>
         <Text style={styles.header}>My Projects</Text>
         <View style={styles.projects}>
-          {projects.map((proj, i) => (
-            <Pressable onPress={() => navigation.navigate("Details")} key={i}>
-              <Project project={proj} />
-            </Pressable>
-          ))}
+          {noProjects?
+            <Text>You currently have no projects.</Text>
+            :
+            (!noProjects && projects.length === 0?
+              skeletons
+              :
+              projects.map((proj, i) => (
+                <Pressable onPress={() => navigation.navigate("Details", {projectInfo: proj})} key={i}>
+                  <Project project={proj} />
+                </Pressable>
+              ))
+            )
+          }
         </View>
       </ScrollView>
-      {projects.length === 0 &&
-        <View style={styles.projects}>
-          {skeletons}
-        </View>
-      }
     </SafeAreaView>
   );
 }

@@ -3,6 +3,7 @@ import { HeaderBackButton } from '@react-navigation/elements';
 import { MIDNIGHT_GREEN } from '../styles/palette';
 import Projects from "./Projects";
 import { ProjectDetail } from "../components/ProjectDetail";
+import { EditingProject } from "../components/EditingProject";
 
 export function MyProjects() {
     const Stack = createNativeStackNavigator();
@@ -25,14 +26,24 @@ export function MyProjects() {
             })}
         >
             <Stack.Screen
-                name="MyProjects"
+                name="Projects"
                 component={Projects}
                 options={{
-                    // Hide header on profile page
                     headerShown: false,
                 }}
             />
-            <Stack.Screen name="Details" component={ProjectDetail} />
+            <Stack.Screen
+                name="Details"
+                component={ProjectDetail}
+                options={{
+                    headerShown: false,
+                }} />
+            <Stack.Screen
+                name="Editing Project"
+                component={EditingProject}
+                options={{
+                    headerShown: false,
+                }} />
         </Stack.Navigator>
     )
 }

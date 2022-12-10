@@ -5,7 +5,7 @@ import CreatePostButton from '../components/CreatePostButton';
 import DeclineProject from '../components/DeclineProject';
 import ProjectCardFeed from '../components/ProjectCardFeed';
 import { BLOND } from '../styles/palette';
-import Logo from '../assets/spark_logo.svg';
+import Logo from '../assets/spark_logo.png';
 import EmptyFeed from '../components/EmptyFeed';
 
 export default function Home({ navigation, user_id }) {
@@ -102,7 +102,7 @@ export default function Home({ navigation, user_id }) {
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
-        <Logo width={'15%'} height={'15%'} style={styles.img} />
+        {/* <Logo width={'15%'} height={'15%'} style={styles.img} /> */}
         {loading && (
           <>
             <ProjectCardFeed />
