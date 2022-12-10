@@ -5,12 +5,13 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { Applicant } from './Applicant';
 
-export function ProjectDetail({ navigation, route }) {
+export function EditingProject({ navigation, route }) {
     const projectInfo = route.params.projectInfo
-    const [onApplicants, setOnApplicants] = useState(true)
-    const [accepted, setAccepted] = useState(projectInfo.participants)
-    const [applicants, setApplicants] = useState(projectInfo.applicants)
 
+    function handleSaveProject() {
+        console.log('saved')
+    }
+    
     return (
         <SafeAreaView
             style={{
@@ -24,8 +25,8 @@ export function ProjectDetail({ navigation, route }) {
                         <FontAwesomeIcon style={project.backIcon} icon={faChevronLeft} />
                         <Text style={project.header}>{projectInfo.title}</Text>
                     </Pressable>
-                    <Pressable style={{ display: 'flex', justifyContent: 'center' }} onPress={() => navigation.navigate('Editing Project', {projectInfo: projectInfo})}>
-                        <Text style={{ color: MIDNIGHT_GREEN, alignSelf: 'center' }}>Edit</Text>
+                    <Pressable style={{ display: 'flex', justifyContent: 'center' }} onPress={handleSaveProject}>
+                        <Text style={{ color: MIDNIGHT_GREEN, alignSelf: 'center' }}>Save</Text>
                     </Pressable>
                 </View>
                 <View style={project.card}>
@@ -51,24 +52,6 @@ export function ProjectDetail({ navigation, route }) {
                             <Text>{`Approx. ${projectInfo.timeline} months`}</Text>
                         </Text>
                     </View>
-                </View>
-                <View style={{ display: 'flex' }}>
-                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', paddingHorizontal: '10px', paddingBottom: '15px' }}>
-                        <Pressable onPress={() => setOnApplicants(true)} style={{ flex: 1, textAlign: 'center', borderBottomColor: 'black', borderBottomWidth: (onApplicants ? 3 : 1) }}>
-                            <Text>Applicants</Text>
-                        </Pressable>
-                        <Pressable onPress={() => setOnApplicants(false)} style={{ flex: 1, textAlign: 'center', borderBottomColor: 'black', borderBottomWidth: (!onApplicants ? 3 : 1) }}>
-                            <Text>Accepted</Text>
-                        </Pressable>
-                    </View>
-                    {onApplicants ? applicants.map((applicant, i) => (
-                        <Applicant key={i} userId={applicant} navigation={navigation} isAccepted={false} projectInfo={projectInfo} setAccepted={setAccepted} setApplicants={setApplicants} applicants={applicants} accepted={accepted}/>
-                    ))
-                        :
-                        accepted.map((applicant, i) => (
-                            <Applicant key={i} userId={applicant} navigation={navigation} isAccepted={true} projectInfo={projectInfo} setAccepted={setAccepted} setApplicants={setApplicants} applicants={applicants} accepted={accepted}/>
-                        ))
-                    }
                 </View>
             </ScrollView>
         </SafeAreaView>
