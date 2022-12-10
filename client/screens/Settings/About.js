@@ -5,7 +5,6 @@ export default function About() {
     <View>
       <Text>About</Text>
       <Text>Testing deploy</Text>
-      <Text>Testing deploy again</Text>
     </View>
   );
 }
