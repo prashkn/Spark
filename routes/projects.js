@@ -61,38 +61,6 @@ router.get("/homepage", async (req, res) => {
   }
 });
 
-// Modify a project
-//body: {}
-router.put("/:id", async (req, res) => {
-  try {
-    const project = await Project.findById(req.params.id);
-    if (project == null) {
-      return res
-        .status(404)
-        .json({ message: "Project does not exist", data: {} });
-    }
-    if (req.body.title != null) {
-      project.title = req.body.title;
-    }
-    if (req.body.description != null) {
-      project.description = req.body.description;
-    }
-    if (req.body.skillset != null) {
-      project.skillset = req.body.skillset;
-    }
-    if (req.body.timeline != null) {
-      project.timeline = req.body.timeline;
-    }
-    if (req.body.membersNeeded != null) {
-      project.membersNeeded = req.body.membersNeeded;
-    }
-    await project.save()
-    return res.status(200).json({ message: "Project modified", data: project })
-  } catch (err) {
-    return res.status(500).json({ message: err.message, data: {} });
-  }
-})
-
 // Swipe right on project
 // body: {projectId, userId}
 router.put("/swiperight", async (req, res) => {
@@ -249,6 +217,38 @@ router.get("/:id", async (req, res) => {
     return res.status(500).json({ message: err.message, data: {} });
   }
 });
+
+// Modify a project
+//body: {}
+router.put("/:id", async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (project == null) {
+      return res
+        .status(404)
+        .json({ message: "Project does not exist", data: {} });
+    }
+    if (req.body.title != null) {
+      project.title = req.body.title;
+    }
+    if (req.body.description != null) {
+      project.description = req.body.description;
+    }
+    if (req.body.skillset != null) {
+      project.skillset = req.body.skillset;
+    }
+    if (req.body.timeline != null) {
+      project.timeline = req.body.timeline;
+    }
+    if (req.body.membersNeeded != null) {
+      project.membersNeeded = req.body.membersNeeded;
+    }
+    await project.save()
+    return res.status(200).json({ message: "Project modified", data: project })
+  } catch (err) {
+    return res.status(500).json({ message: err.message, data: {} });
+  }
+})
 
 // Delete project (testing purposes)
 router.delete("/:id", async (req, res) => {

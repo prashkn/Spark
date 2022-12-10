@@ -67,6 +67,16 @@ Content-Type: application/json
 
 ### 
 
+PUT http://localhost:4000/api/projects/6385435223ef81b2d1b8ad1e
+Content-Type: application/json
+
+{
+    "title": "Sparky",
+    "membersNeeded": 5
+}
+
+### 
+
 PUT http://localhost:4000/api/projects/swipeleft
 Content-Type: application/json
 
@@ -85,4 +95,14 @@ Content-Type: application/json
     "skillset": ["C++", "Java"],
     "timeline": "3 months",
     "creator": "6375665d12675b2ff4af2405"
+}
+
+### 
+
+PUT http://localhost:4000/api/projects/uncheck
+Content-Type: application/json
+
+{
+    "projectId": "6385435223ef81b2d1b8ad1e",
+    "userId": "63824360149a7a6b1f4eea69"
 }
