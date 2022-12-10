@@ -33,7 +33,6 @@ export default function CreatePost({ navigation, user_id }) {
     },
   ]);
   const [timeline, setTimeline] = React.useState(6); //https://github.com/miblanchard/react-native-slider
-  const [showToast, setShowToast] = React.useState(false);
   const toast = useToast();
 
   const verify = () => {
