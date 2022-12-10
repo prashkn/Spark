@@ -2,7 +2,7 @@ import { View, TextInput, StyleSheet, Text, Alert } from 'react-native';
 import React from 'react';
 import { POLISHED_PINE, GAINSBORO, MUSTARD } from '../styles/palette';
 import DropDownPicker from 'react-native-dropdown-picker';
-// import { Slider } from '@miblanchard/react-native-slider';
+import NumericInput from 'react-native-numeric-input';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
 
@@ -37,6 +37,7 @@ export default function CreatePost({ navigation, user_id }) {
   const toast = useToast();
 
   const verify = () => {
+    console.log(members);
     if (title === '' || biography === '') {
       Alert.alert('Invalid Form', 'All fields must be non-empty.', [
         { text: 'Ok' },
@@ -110,71 +111,62 @@ export default function CreatePost({ navigation, user_id }) {
       />
       <View
         style={{
-          backgroundColor: GAINSBORO,
-          borderRadius: '5%',
-          justifyContent: 'center',
-          alignItems: 'center',
           width: '80%',
-          paddingVertical: '5%',
+          alignItems: 'stretch',
+          justifyContent: 'center',
+          marginBottom: '5%',
+          backgroundColor: 'white',
+          padding: '5%',
+          borderRadius: '5%',
         }}
       >
-        <View
-          style={{
-            width: '85%',
-            alignItems: 'stretch',
-            justifyContent: 'center',
-            marginBottom: '5%',
-            backgroundColor: 'white',
-            padding: '5%',
-            borderRadius: '5%',
-          }}
-        >
-          <Text style={{ color: 'gray' }}>Members needed: {members}</Text>
-          <Slider
-            value={members}
-            onValueChange={setMembers}
-            minimumValue={1}
-            maximumValue={10}
-            step={1}
-            thumbTintColor={POLISHED_PINE}
-            minimumTrackTintColor={POLISHED_PINE}
-          />
-        </View>
-        <View
-          style={{
-            width: '85%',
-            alignItems: 'stretch',
-            justifyContent: 'center',
-            marginBottom: '5%',
-            backgroundColor: 'white',
-            padding: '5%',
-            borderRadius: '5%',
-          }}
-        >
-          <Text style={{ color: 'gray' }}>Timeline: {timeline} months</Text>
-          <Slider
-            value={timeline}
-            onValueChange={setTimeline}
-            minimumValue={1}
-            maximumValue={24}
-            step={1}
-            thumbTintColor={POLISHED_PINE}
-            minimumTrackTintColor={POLISHED_PINE}
-          />
-        </View>
-        <DropDownPicker
-          multiple={true}
-          min={1}
-          open={open}
-          value={skillsets}
-          items={possibleSkills}
-          setOpen={setOpen}
-          setValue={setSkillsets}
-          setItems={setPossibleSkills}
-          style={styles.dropdown}
-          textStyle={styles.dd_text}
+        <Text style={{ color: 'gray', marginBottom: '1%' }}>
+          Members needed: {members}
+        </Text>
+        <NumericInput
+          value={members}
+          onChange={(value) => setMembers(value)}
+          totalWidth={240}
+          totalHeight={30}
+          iconSize={25}
+          step={1}
+          valueType="real"
+          rounded
+          textColor={POLISHED_PINE}
+          iconStyle={{ color: 'white' }}
+          rightButtonBackgroundColor={POLISHED_PINE}
+          leftButtonBackgroundColor={POLISHED_PINE}
+        />
+        <Text style={{ color: 'gray', marginTop: '10%', marginBottom: '1%' }}>
+          Timeline: {timeline} months
+        </Text>
+        <NumericInput
+          value={timeline}
+          onChange={(value) => setTimeline(value)}
+          totalWidth={240}
+          totalHeight={30}
+          iconSize={25}
+          step={1}
+          valueType="real"
+          rounded
+          textColor={POLISHED_PINE}
+          iconStyle={{ color: 'white' }}
+          rightButtonBackgroundColor={POLISHED_PINE}
+          leftButtonBackgroundColor={POLISHED_PINE}
         />
       </View>
+      <DropDownPicker
+        multiple={true}
+        min={1}
+        open={open}
+        value={skillsets}
+        items={possibleSkills}
+        setOpen={setOpen}
+        setValue={setSkillsets}
+        setItems={setPossibleSkills}
+        style={styles.dropdown}
+        textStyle={styles.dd_text}
+      />
       <TouchableOpacity style={styles.btn} onPress={postToDB}>
         <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
           Post Brainstorm
@@ -199,7 +191,7 @@ const styles = StyleSheet.create({
     color: POLISHED_PINE,
   },
   dropdown: {
-    width: '85%',
+    width: '80%',
     alignSelf: 'center',
     borderRadius: '5%',
     borderWidth: 0,

@@ -1,24 +1,24 @@
-import { View, Image, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { useEffect, useState } from 'react';
 import AcceptProject from '../components/AcceptProject';
 import CreatePostButton from '../components/CreatePostButton';
 import DeclineProject from '../components/DeclineProject';
 import ProjectCardFeed from '../components/ProjectCardFeed';
 import { BLOND } from '../styles/palette';
-import FeedEmpty from '../assets/feed_empty.svg';
-import Logo from '../assets/spark_logo.svg';
+import Logo from '../assets/spark_logo.png';
+import EmptyFeed from '../components/EmptyFeed';
 
 export default function Home({ navigation, user_id }) {
   const [projectInfo, setProjectInfo] = useState([]); //holds all projects
   const [creator, setCreator] = useState({}); //holds the creator of the project
-  const [counter, setCounter] = useState(-1); //determines where in the array of projects we should
+  const [counter, setCounter] = useState(0); //determines where in the array of projects we should
   const [loading, setLoading] = useState(true);
 
   //initialize home screen with information
   const getAllInfo = async (user_id) => {
     try {
-      await getProjectInfo(user_id);
-      setCounter(counter + 1);
+      const tmp_proj_info = await getProjectInfo(user_id);
+      await getCreatorInfo(tmp_proj_info[counter].creator);
     } catch (err) {
       console.log(err);
     }
@@ -32,6 +32,7 @@ export default function Home({ navigation, user_id }) {
       );
       const result = await info.json();
       setProjectInfo(result.data);
+      return result.data;
     } catch (err) {
       console.log(err);
     }
@@ -94,76 +95,63 @@ export default function Home({ navigation, user_id }) {
   //on counter changing
   useEffect(() => {
     if (projectInfo[counter]) getCreatorInfo(projectInfo[counter].creator);
+    console.log(counter);
+    console.log(projectInfo[counter]);
   }, [counter]);
 
   return (
-    <View style={styles.container}>
-      {/* <Logo width={'15%'} style={styles.img} /> */}
-      {loading && (
-        <>
-          <ProjectCardFeed />
-          <View style={styles.actions}>
-            <DeclineProject />
-            <AcceptProject />
-          </View>
-        </>
-      )}
-      {!loading && projectInfo[counter] && (
-        <>
-          <ProjectCardFeed
-            description={projectInfo[counter].description}
-            skillset={projectInfo[counter].skillset}
-            bio={projectInfo[counter].bio || 'Project bio here'}
-            creator_name={creator.name || 'No User'}
-            creator_username={creator.username ? `@${creator.username}` : ''}
-            image={creator.image}
-            title={projectInfo[counter].title}
-            timeline={`${projectInfo[counter].timeline} months`}
-            members_needed={`${
-              projectInfo[counter].members_needed || 5
-            } members`}
-          />
-          <View style={styles.actions}>
-            <DeclineProject
-              counter={counter}
-              setCounter={setCounter}
-              swipeLeft={swipeLeft}
-              project_id={projectInfo[counter]._id}
-              user_id={user_id}
+    <View style={styles.screen}>
+      <View style={styles.container}>
+        {/* <Logo width={'15%'} height={'15%'} style={styles.img} /> */}
+        {loading && (
+          <>
+            <ProjectCardFeed />
+            <View style={styles.actions}>
+              <DeclineProject />
+              <AcceptProject />
+            </View>
+          </>
+        )}
+        {!loading && projectInfo[counter] && (
+          <>
+            <ProjectCardFeed
+              description={projectInfo[counter].description}
+              skillset={projectInfo[counter].skillset}
+              bio={projectInfo[counter].bio || 'Project bio here'}
+              creator_name={creator.name || 'No User'}
+              creator_username={creator.username ? `@${creator.username}` : ''}
+              image={creator.image}
+              title={projectInfo[counter].title}
+              timeline={`${projectInfo[counter].timeline} months`}
+              members_needed={`${
+                projectInfo[counter].members_needed || 5
+              } members`}
             />
-            <AcceptProject
-              counter={counter}
-              setCounter={setCounter}
-              swipeRight={swipeRight}
-              project_id={projectInfo[counter]._id}
-              user_id={user_id}
-            />
-          </View>
-        </>
-      )}
-      {!loading && counter >= projectInfo.length && (
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            alignContent: 'center',
-            width: '80%',
-          }}
-        >
-          <FeedEmpty height={'50%'} />
-          <Text
-            style={{
-              fontWeight: 'bold',
-              marginVertical: 10,
-              textAlign: 'center',
-              fontSize: 20,
-            }}
-          >
-            This is the end of everyone's brainstorms. Why not create your own?
-          </Text>
-        </View>
-      )}
-      <CreatePostButton style={styles.createPost} navigation={navigation} />
+
+            <View style={styles.actions}>
+              <DeclineProject
+                counter={counter}
+                setCounter={setCounter}
+                swipeLeft={swipeLeft}
+                project_id={projectInfo[counter]._id}
+                user_id={user_id}
+              />
+              <AcceptProject
+                counter={counter}
+                setCounter={setCounter}
+                swipeRight={swipeRight}
+                project_id={projectInfo[counter]._id}
+                user_id={user_id}
+              />
+            </View>
+          </>
+        )}
+        {!loading && counter >= projectInfo.length && <EmptyFeed />}
+      </View>
+
+      <View style={styles.createPost}>
+        <CreatePostButton navigation={navigation} />
+      </View>
     </View>
   );
 }
@@ -171,14 +159,22 @@ export default function Home({ navigation, user_id }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: BLOND,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  createPost: {
+    alignSelf: 'flex-end',
+    marginRight: '3%',
+    marginBottom: '3%',
   },
   img: {
     marginTop: '-5%',
   },
   actions: {
     flexDirection: 'row',
+  },
+  screen: {
+    flex: 1,
+    backgroundColor: BLOND,
   },
 });
