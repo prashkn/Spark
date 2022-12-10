@@ -29,6 +29,9 @@ deploy-client:
 
 deploy-api:
   stage: deploy
+  except:
+    changes:
+      - "client/**/*"
   script:
     # Install Docker
     # - apk add --update docker openrc
