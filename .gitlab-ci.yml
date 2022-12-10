@@ -16,7 +16,7 @@ deploy-client:
   script:
     - cd client
     - npm i
-    - export NODE_OPTIONS=--openssl-legacy-provider
+    # - export NODE_OPTIONS=--openssl-legacy-provider
     - npx expo export:web
     - echo $FIREBASE_SERVICE_ACCOUNT > "service_account.json"
     - export GOOGLE_APPLICATION_CREDENTIALS="service_account.json"
