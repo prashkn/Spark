@@ -2,7 +2,7 @@ import { View, TextInput, StyleSheet, Text, Alert } from 'react-native';
 import React from 'react';
 import { POLISHED_PINE, GAINSBORO, MUSTARD } from '../styles/palette';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { Slider } from '@miblanchard/react-native-slider';
+//import { Slider } from '@miblanchard/react-native-slider';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
 
@@ -130,6 +130,7 @@ export default function CreatePost({ navigation, user_id }) {
           }}
         >
           <Text style={{ color: 'gray' }}>Members needed: {members}</Text>
+          {/* 
           <Slider
             value={members}
             onValueChange={setMembers}
@@ -139,6 +140,7 @@ export default function CreatePost({ navigation, user_id }) {
             thumbTintColor={POLISHED_PINE}
             minimumTrackTintColor={POLISHED_PINE}
           />
+          */}
         </View>
         <View
           style={{
@@ -152,6 +154,7 @@ export default function CreatePost({ navigation, user_id }) {
           }}
         >
           <Text style={{ color: 'gray' }}>Timeline: {timeline} months</Text>
+          {/*
           <Slider
             value={timeline}
             onValueChange={setTimeline}
@@ -161,6 +164,7 @@ export default function CreatePost({ navigation, user_id }) {
             thumbTintColor={POLISHED_PINE}
             minimumTrackTintColor={POLISHED_PINE}
           />
+          */}
         </View>
         <DropDownPicker
           multiple={true}

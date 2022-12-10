@@ -5,8 +5,8 @@ import CreatePostButton from '../components/CreatePostButton';
 import DeclineProject from '../components/DeclineProject';
 import ProjectCardFeed from '../components/ProjectCardFeed';
 import { BLOND } from '../styles/palette';
-import FeedEmpty from '../assets/feed_empty.svg';
 import Logo from '../assets/spark_logo.svg';
+import EmptyFeed from '../components/EmptyFeed';
 
 export default function Home({ navigation, user_id }) {
   const [projectInfo, setProjectInfo] = useState([]); //holds all projects
@@ -127,6 +127,7 @@ export default function Home({ navigation, user_id }) {
                 projectInfo[counter].members_needed || 5
               } members`}
             />
+
             <View style={styles.actions}>
               <DeclineProject
                 counter={counter}
@@ -145,29 +146,7 @@ export default function Home({ navigation, user_id }) {
             </View>
           </>
         )}
-        {!loading && counter >= projectInfo.length && (
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              alignContent: 'center',
-              width: '80%',
-            }}
-          >
-            <FeedEmpty height={'50%'} />
-            <Text
-              style={{
-                fontWeight: 'bold',
-                marginVertical: 10,
-                textAlign: 'center',
-                fontSize: 20,
-              }}
-            >
-              This is the end of everyone's brainstorms. Why not create your
-              own?
-            </Text>
-          </View>
-        )}
+        {!loading && counter >= projectInfo.length && <EmptyFeed />}
       </View>
 
       <View style={styles.createPost}>
