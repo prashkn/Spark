@@ -18,15 +18,6 @@ export function EditingProject({ navigation, route }) {
             }}
         >
             <ScrollView style={project.container}>
-                <View style={{ display: 'flex', flexDirection: 'row' }}>
-                    <Pressable style={{ display: 'flex', flexDirection: 'row', flex: 2 }} onPress={() => navigation.navigate('Projects')}>
-                        <FontAwesomeIcon style={project.backIcon} icon={faChevronLeft} />
-                        <Text style={project.header}>{projectInfo.title}</Text>
-                    </Pressable>
-                    <Pressable style={{ display: 'flex', justifyContent: 'center' }} onPress={handleSaveProject}>
-                        <Text style={{ color: MIDNIGHT_GREEN, alignSelf: 'center' }}>Save</Text>
-                    </Pressable>
-                </View>
                 <View style={project.card}>
                     <View style={project.information}>
                         <Text style={details.container}>

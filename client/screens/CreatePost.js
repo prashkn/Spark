@@ -81,7 +81,7 @@ export default function CreatePost({ navigation, user_id }) {
         duration: 'zoom-in',
         duration: 2500,
       });
-      navigation.navigate('Home');
+      navigation.navigate('Home Pages');
     }
   };
 

@@ -27,7 +27,7 @@ export default function HomeAndPost() {
       })}
     >
       <Stack.Screen
-        name="Home"
+        name="Home Page"
         component={Home}
         options={{
           // Hide header on profile page
