@@ -3,6 +3,7 @@ import { View, Image, StyleSheet } from 'react-native';
 import React from 'react';
 import { GAINSBORO } from '../styles/palette';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function DeclineProject({
   setCounter,
@@ -22,7 +23,7 @@ export default function DeclineProject({
         console.log(user_id);
       }}
     >
-      <Image source={require('../assets/reject.png')} />
+      <Icon name={'close'} color={'white'} size={55} />
     </TouchableOpacity>
   );
 }
@@ -30,7 +31,7 @@ export default function DeclineProject({
 const styles = StyleSheet.create({
   btn: {
     backgroundColor: GAINSBORO,
-    padding: 20,
+    padding: 15,
     marginTop: '20%',
     borderRadius: 5,
     marginRight: 35,

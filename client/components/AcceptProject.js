@@ -2,6 +2,7 @@
 import { View, Image, StyleSheet } from 'react-native';
 import React from 'react';
 import { POLISHED_PINE } from '../styles/palette';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function AcceptProject({
@@ -20,7 +21,7 @@ export default function AcceptProject({
         swipeRight(project_id, user_id);
       }}
     >
-      <Image source={require('../assets/accept.png')} />
+      <Icon name={'done'} color={'white'} size={55} />
     </TouchableOpacity>
   );
 }
@@ -28,8 +29,8 @@ export default function AcceptProject({
 const styles = StyleSheet.create({
   btn: {
     backgroundColor: POLISHED_PINE,
-    paddingVertical: 21,
-    paddingHorizontal: 19,
+    paddingVertical: 15,
+    paddingHorizontal: 15,
     marginTop: '20%',
     borderRadius: 5,
     marginLeft: 35,

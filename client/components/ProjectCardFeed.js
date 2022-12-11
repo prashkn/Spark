@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import { BLOND, POLISHED_PINE } from '../styles/palette';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function ProjectCardFeed({
   title,
@@ -23,9 +24,11 @@ export default function ProjectCardFeed({
     <View style={styles.card}>
       <View style={styles.cardContent}>
         <View style={styles.header}>
-          <Image
+          <Icon
             style={styles.profilepic}
-            source={require('../assets/profile_pic_placeholder.png')}
+            name={'face'}
+            color={'gray'}
+            size={55}
           />
           <View>
             <Text style={styles.title}>{title}</Text>

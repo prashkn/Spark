@@ -27,7 +27,7 @@ export default function Tabs() {
           } else if (route.name === 'My Brainstorms') {
             iconName = focused ? 'documents' : 'documents-outline';
           } else if (route.name === 'My Applications') {
-            iconName = focused ? 'albums' : 'albums-outline'
+            iconName = focused ? 'albums' : 'albums-outline';
           }
 
           return <Icon name={iconName} size={30} color={MIDNIGHT_GREEN} />;
