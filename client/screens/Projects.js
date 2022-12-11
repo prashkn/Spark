@@ -66,7 +66,7 @@ export default function Projects({ navigation }) {
           {noProjects?
             <Text>You currently have no projects.</Text>
             :
-            (!noProjects && projects.length === 0?
+            (!noProjects && projects.length === 0 ?
               skeletons
               :
               projects.map((proj, i) => (

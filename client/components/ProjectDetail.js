@@ -32,7 +32,7 @@ export function ProjectDetail({ navigation, route }) {
                     <View style={project.information}>
                         <Text style={details.container}>
                             <Text style={{ fontWeight: 'bold' }}>Description: </Text>
-                            <Text style={{ fontWeight: '200', fontStyle: 'italic' }}>{projectInfo.description}</Text>
+                            <Text style={{ fontWeight: 200, fontStyle: 'italic' }}>{projectInfo.description}</Text>
                         </Text>
                         <Text style={details.container}>
                             <Text style={{ fontWeight: 'bold' }}>Number of people wanted: </Text>
@@ -41,7 +41,7 @@ export function ProjectDetail({ navigation, route }) {
                         <Text style={details.container}>
                             <Text style={{ fontWeight: 'bold' }}>Skills wanted: </Text>
                             {projectInfo.skillset.map((skill, i) => (
-                                <View style={{ margin: '5px' }} key={i}>
+                                <View style={{ margin: 5 }} key={i}>
                                     <Text style={details.yellowButton}>{skill}</Text>
                                 </View>
                             ))}
@@ -94,11 +94,11 @@ export const project = StyleSheet.create({
         fontFamily: 'Poppins-SemiBold',
         color: MIDNIGHT_GREEN,
         alignSelf: 'center',
-        paddingRight: '5px'
+        paddingRight: 5
     },
     information: {
-        margin: '20px',
-        padding: '10px',
+        margin: 20,
+        padding: 10,
         backgroundColor: 'white',
         borderRadius: 8,
         shadowOffset: { width: 3, height: 4 },
@@ -106,11 +106,11 @@ export const project = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 5,
         display: 'flex',
-        width: '345px'
+        width: 345
     },
     applicant: {
-        margin: '20px',
-        padding: '10px',
+        margin: 20,
+        padding: 10,
         backgroundColor: 'white',
         borderRadius: 8,
         shadowOffset: { width: 3, height: 4 },
@@ -118,7 +118,7 @@ export const project = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 5,
         display: 'flex',
-        width: '345px',
+        width: 345,
         flexDirection: 'row'
     }
 });
@@ -126,22 +126,22 @@ export const project = StyleSheet.create({
 const details = StyleSheet.create({
     container: {
         color: MIDNIGHT_GREEN,
-        paddingBottom: '20px',
+        paddingBottom: 20,
         fontSize: 14
     },
     timeline: {
         color: MIDNIGHT_GREEN,
-        paddingBottom: '10px'
+        paddingBottom: 10
     },
     greenButton: {
-        padding: '5px',
-        marginLeft: '5px',
+        padding: 5,
+        marginLeft: 5,
         backgroundColor: POLISHED_PINE,
         borderRadius: 5,
         color: 'white'
     },
     yellowButton: {
-        padding: '5px',
+        padding: 5,
         backgroundColor: BLOND,
         borderRadius: 5
     }

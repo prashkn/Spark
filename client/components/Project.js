@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         marginBottom: 10,
-        width: '345px'
+        width: 345
     },
     info: {
         flex: 1,

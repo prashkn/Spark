@@ -102,9 +102,9 @@ const styles = StyleSheet.create({
         display: 'flex',
     },
     applicant: {
-        margin: '20px',
-        marginVertical: '5px',
-        padding: '10px',
+        margin: 20,
+        marginVertical: 5,
+        padding: 10,
         backgroundColor: 'white',
         borderRadius: 8,
         shadowOffset: { width: 3, height: 4 },
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 5,
         display: 'flex',
-        width: '345px',
+        width: 345,
         flexDirection: 'row'
     }
 })
