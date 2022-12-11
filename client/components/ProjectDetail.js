@@ -7,16 +7,37 @@ import {
   StyleSheet,
 } from 'react-native';
 import { BLOND, MIDNIGHT_GREEN, POLISHED_PINE } from '../styles/palette';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Applicant } from './Applicant';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { BASE_URL } from '../data/util';
 
 export function ProjectDetail({ navigation, route }) {
-  const projectInfo = route.params.projectInfo;
+  const id = route.params.id;
+  const [projectInfo, setProjectInfo] = useState();
   const [onApplicants, setOnApplicants] = useState(true);
-  const [accepted, setAccepted] = useState(projectInfo.participants);
-  const [applicants, setApplicants] = useState(projectInfo.applicants);
+  const [accepted, setAccepted] = useState();
+  const [applicants, setApplicants] = useState();
+
+  async function getProject(id) {
+    try {
+      const info = await fetch(
+        `${BASE_URL}/projects/${id}`
+      );
+      const result = await info.json();
+      setProjectInfo(result.data)
+      setAccepted(result.data.participants)
+      setApplicants(result.data.applicants)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getProject(id)
+  }, [])
+
 
   return (
     <SafeAreaView
@@ -25,99 +46,98 @@ export function ProjectDetail({ navigation, route }) {
         flex: 1,
       }}
     >
-      <ScrollView style={project.container}>
-        <View style={{ display: 'flex', flexDirection: 'row' }}>
-          <Pressable
-            style={{ display: 'flex', flexDirection: 'row', flex: 2 }}
-            onPress={() => navigation.navigate('Projects')}
-          >
-            <FontAwesomeIcon style={project.backIcon} icon={faChevronLeft} />
-            <Text style={project.header}>{projectInfo.title}</Text>
-          </Pressable>
-          <Pressable
-            style={{ display: 'flex', justifyContent: 'center' }}
-            onPress={() =>
-              navigation.navigate('Editing Project', {
-                projectInfo: projectInfo,
-              })
-            }
-          >
-            <Text
-              style={{
-                color: MIDNIGHT_GREEN,
-                alignSelf: 'center',
-                fontSize: 16,
-              }}
+      {projectInfo &&
+        <ScrollView style={project.container}>
+          <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <Pressable
+              style={{ display: 'flex', flexDirection: 'row', flex: 2 }}
+              onPress={() => navigation.navigate('Projects')}
             >
-              Edit
-            </Text>
-          </Pressable>
-        </View>
-        <View style={project.card}>
-          <View style={project.information}>
-            <Text style={details.container}>
-              <Text style={{ fontWeight: 'bold' }}>Description: </Text>
-              <Text style={{ fontWeight: 200, fontStyle: 'italic' }}>
-                {projectInfo.description}
-              </Text>
-            </Text>
-            <Text style={details.container}>
-              <Text style={{ fontWeight: 'bold' }}>
-                Number of people wanted:{' '}
-              </Text>
+              <FontAwesomeIcon style={project.backIcon} icon={faChevronLeft} />
+              <Text style={project.header}>{projectInfo.title}</Text>
+            </Pressable>
+            <Pressable
+              style={{ display: 'flex', justifyContent: 'center' }}
+              onPress={() =>
+                navigation.navigate('Editing Project', {
+                  projectInfo: projectInfo,
+                })
+              }
+            >
               <Text
-                style={details.greenButton}
-              >{`${projectInfo.membersNeeded} Members`}</Text>
-            </Text>
-            <Text style={details.container}>
-              <Text style={{ fontWeight: 'bold' }}>Skills wanted: </Text>
-              {projectInfo.skillset.map((skill, i) => (
-                <View style={{ margin: 5 }} key={i}>
-                  <Text style={details.yellowButton}>{skill}</Text>
+                style={{
+                  color: MIDNIGHT_GREEN,
+                  alignSelf: 'center',
+                  fontSize: 16,
+                }}
+              >
+                Edit
+              </Text>
+            </Pressable>
+          </View>
+          <View style={project.card}>
+            <View style={project.information}>
+              <Text style={details.container}>
+                <Text style={{ fontWeight: 'bold' }}>Description: </Text>
+                <Text style={{ fontWeight: '200', fontStyle: 'italic' }}>
+                  {projectInfo.description}
+                </Text>
+              </Text>
+              <View style={details.container}>
+                <Text style={{ fontWeight: 'bold', color: MIDNIGHT_GREEN, alignSelf: 'center' }}>
+                  Number of people wanted:{' '}
+                </Text>
+                <View style={details.greenButton}>
+                  <Text style={{ color: 'white' }}>{`${projectInfo.membersNeeded} Members`}</Text>
                 </View>
-              ))}
-            </Text>
-            <Text style={details.timeline}>
-              <Text style={{ fontWeight: 'bold' }}>Timeline: </Text>
-              <Text>{`Approx. ${projectInfo.timeline} months`}</Text>
-            </Text>
+              </View>
+              <View style={details.container}>
+                <Text style={{ fontWeight: 'bold', color: MIDNIGHT_GREEN, alignSelf: 'center' }}>Skills wanted: </Text>
+                {projectInfo.skillset.map((skill, i) => (
+                  <View style={{ ...details.yellowButton, margin: 5 }} key={i}>
+                    <Text >{skill}</Text>
+                  </View>
+                ))}
+              </View>
+              <Text style={details.timeline}>
+                <Text style={{ fontWeight: 'bold' }}>Timeline: </Text>
+                <Text>{`Approx. ${projectInfo.timeline} months`}</Text>
+              </Text>
+            </View>
           </View>
-        </View>
-        <View style={{ display: 'flex' }}>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              paddingHorizontal: 10,
-              paddingBottom: 15,
-            }}
-          >
-            <Pressable
-              onPress={() => setOnApplicants(true)}
+          <View style={{ display: 'flex' }}>
+            <View
               style={{
-                flex: 1,
-                textAlign: 'center',
-                borderBottomColor: 'black',
-                borderBottomWidth: onApplicants ? 3 : 1,
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                paddingHorizontal: 10,
+                paddingBottom: 15,
               }}
             >
-              <Text>Applicants</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => setOnApplicants(false)}
-              style={{
-                flex: 1,
-                textAlign: 'center',
-                borderBottomColor: 'black',
-                borderBottomWidth: !onApplicants ? 3 : 1,
-              }}
-            >
-              <Text>Accepted</Text>
-            </Pressable>
-          </View>
-          {onApplicants
-            ? applicants.map((applicant, i) => (
+              <Pressable
+                onPress={() => setOnApplicants(true)}
+                style={{
+                  flex: 1,
+                  borderBottomColor: 'black',
+                  borderBottomWidth: onApplicants ? 3 : 1,
+                }}
+              >
+                <Text style={{ alignSelf: 'center' }}>Applicants</Text>
+              </Pressable>
+              <Pressable
+                onPress={() => setOnApplicants(false)}
+                style={{
+                  flex: 1,
+                  borderBottomColor: 'black',
+                  borderBottomWidth: !onApplicants ? 3 : 1,
+                }}
+              >
+                <Text style={{ alignSelf: 'center' }}>Accepted</Text>
+              </Pressable>
+            </View>
+            {onApplicants
+              ? (applicants && applicants.map((applicant, i) => (
                 <Applicant
                   key={i}
                   userId={applicant}
@@ -129,8 +149,8 @@ export function ProjectDetail({ navigation, route }) {
                   applicants={applicants}
                   accepted={accepted}
                 />
-              ))
-            : accepted.map((applicant, i) => (
+              )))
+              : (accepted && accepted.map((applicant, i) => (
                 <Applicant
                   key={i}
                   userId={applicant}
@@ -142,9 +162,10 @@ export function ProjectDetail({ navigation, route }) {
                   applicants={applicants}
                   accepted={accepted}
                 />
-              ))}
-        </View>
-      </ScrollView>
+              )))}
+          </View>
+        </ScrollView>
+      }
     </SafeAreaView>
   );
 }
@@ -202,6 +223,8 @@ const details = StyleSheet.create({
     color: MIDNIGHT_GREEN,
     paddingBottom: 20,
     fontSize: 14,
+    display: 'flex',
+    flexDirection: 'row',
   },
   timeline: {
     color: MIDNIGHT_GREEN,
@@ -212,7 +235,7 @@ const details = StyleSheet.create({
     marginLeft: 5,
     backgroundColor: POLISHED_PINE,
     borderRadius: 5,
-    color: 'white',
+    alignItems: 'center'
   },
   yellowButton: {
     padding: 5,

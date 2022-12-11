@@ -3,6 +3,7 @@ import { faCheck, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { Text, View, Pressable, StyleSheet } from 'react-native';
 import { MIDNIGHT_GREEN } from '../styles/palette';
 import { useEffect, useState } from 'react';
+import { BASE_URL } from '../data/util';
 
 export const Applicant = ({
   navigation,
@@ -44,11 +45,12 @@ export const Applicant = ({
             projectId: projectInfo._id,
           }),
         });
-        setAccepted([...accepted, userId]);
+        setAccepted(accepted => [...accepted, userId]);
+        // remove from applicants
         const index = applicants.indexOf(userId);
         if (index > -1) {
           // only splice array when item is found
-          applicants.splice(index, 1); // 2nd parameter means remove one item only
+          applicants.splice(index, 1); 
         }
         setApplicants(applicants);
       } catch (err) {
@@ -68,18 +70,18 @@ export const Applicant = ({
             projectId: projectInfo._id,
           }),
         });
-        setApplicants([...applicants, userId]);
+        setApplicants(applicants => [...applicants, userId]);
+        // remove from accepted
         const index = accepted.indexOf(userId);
         if (index > -1) {
           // only splice array when item is found
-          accepted.splice(index, 1); // 2nd parameter means remove one item only
+          accepted.splice(index, 1);
         }
         setAccepted(accepted);
       } catch (err) {
         console.log(err);
       }
     }
-    setAccepted(accepted);
   };
 
   useEffect(() => {
