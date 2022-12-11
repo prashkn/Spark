@@ -35,4 +35,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginRight: 35,
   },
+  img: {
+    width: '15%',
+    height: '15%',
+  },
 });

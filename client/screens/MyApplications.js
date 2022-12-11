@@ -1,12 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { HeaderBackButton } from '@react-navigation/elements';
+import { Applications } from './Applications';
 import { MIDNIGHT_GREEN } from '../styles/palette';
-import Projects from "./Projects";
 import { ProjectDetail } from "../components/ProjectDetail";
-import { EditingProject } from "../components/EditingProject";
-import { OtherUser } from "../components/OtherUser";
 
-export function MyProjects() {
+
+export const MyApplications = () => {
     const Stack = createNativeStackNavigator();
 
     return (
@@ -27,8 +26,8 @@ export function MyProjects() {
             })}
         >
             <Stack.Screen
-                name="Projects"
-                component={Projects}
+                name="Applications"
+                component={Applications}
                 options={{
                     headerShown: false,
                 }}
@@ -36,16 +35,6 @@ export function MyProjects() {
             <Stack.Screen
                 name="Details"
                 component={ProjectDetail}
-                options={{
-                    headerShown: false,
-                }} />
-            <Stack.Screen
-                name="Editing Project"
-                component={EditingProject}
-                />
-            <Stack.Screen
-                name="Other User"
-                component={OtherUser}
                 options={{
                     headerShown: false,
                 }} />

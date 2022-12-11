@@ -89,8 +89,8 @@ export function ProjectDetail({ navigation, route }) {
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'center',
-              paddingHorizontal: '10px',
-              paddingBottom: '15px',
+              paddingHorizontal: 10,
+              paddingBottom: 15,
             }}
           >
             <Pressable

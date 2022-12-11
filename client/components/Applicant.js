@@ -19,7 +19,7 @@ export const Applicant = ({
 
   const getUserInfo = async () => {
     try {
-      const info = await fetch(`http://localhost:4000/api/users/${userId}`);
+      const info = await fetch(`${BASE_URL}/users/${userId}`);
       const result = await info.json();
       setUserInfo(result.data);
       setStatus(isAccepted ? true : false);
@@ -33,7 +33,7 @@ export const Applicant = ({
     // if wasn't originally accepted, add to participants
     if (!isAccepted) {
       try {
-        await fetch(`http://localhost:4000/api/projects/check?`, {
+        await fetch(`${BASE_URL}/projects/check?`, {
           method: 'PUT',
           headers: {
             Accept: 'application/json',
@@ -57,7 +57,7 @@ export const Applicant = ({
     } else {
       // remove from participants
       try {
-        await fetch(`http://localhost:4000/api/projects/uncheck?`, {
+        await fetch(`${BASE_URL}/projects/uncheck?`, {
           method: 'PUT',
           headers: {
             Accept: 'application/json',
@@ -93,8 +93,8 @@ export const Applicant = ({
           onPress={handleCheck}
           style={{
             backgroundColor: MIDNIGHT_GREEN,
-            height: '20px',
-            width: '20px',
+            height: 20,
+            width: 20,
             alignSelf: 'center',
             justifyContent: 'center',
           }}
@@ -108,7 +108,7 @@ export const Applicant = ({
         </Pressable>
         {userInfo && (
           <Pressable
-            style={{ flex: 2, marginLeft: '10px' }}
+            style={{ flex: 2, marginLeft: 10 }}
             onPress={() =>
               navigation.navigate('Other User', {
                 projectInfo: projectInfo,

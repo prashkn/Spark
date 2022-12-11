@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { useEffect, useState } from 'react';
 import AcceptProject from '../components/AcceptProject';
 import CreatePostButton from '../components/CreatePostButton';
@@ -8,11 +8,9 @@ import { BLOND } from '../styles/palette';
 import Logo from '../assets/spark_logo.svg';
 import { Skeleton } from '@rneui/themed';
 import EmptyFeed from '../components/EmptyFeed';
+import { BASE_URL } from '../data/util';
 
-export default function Home({
-  navigation,
-  user_id = '63824360149a7a6b1f4eea69',
-}) {
+export default function Home({ navigation, user_id = 'x' }) {
   const [projectInfo, setProjectInfo] = useState([]); //holds all projects
   const [creator, setCreator] = useState({}); //holds the creator of the project
   const [counter, setCounter] = useState(0); //determines where in the array of projects we should
@@ -23,7 +21,7 @@ export default function Home({
     try {
       console.log(user_id);
       const tmp_proj_info = await getProjectInfo(user_id);
-      consolel;
+      console.log(tmp_proj_info);
       await getCreatorInfo(tmp_proj_info[counter].creator);
     } catch (err) {
       console.log(err);
@@ -34,14 +32,7 @@ export default function Home({
   const getProjectInfo = async (user_id) => {
     try {
       const info = await fetch(
-        `https://spark-api.owenhay.es/api/projects/homepage?userId=${user_id}`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-        }
+        `${BASE_URL}/projects/homepage?userId=${user_id}`
       );
       const result = await info.json();
       setProjectInfo(result.data);
@@ -53,10 +44,9 @@ export default function Home({
 
   //gets the creator info on the curr project shown
   const getCreatorInfo = async (user_id) => {
+    console.log(user_id);
     try {
-      const info = await fetch(
-        `http://spark-api.owenhay.es/api/users/${user_id}`
-      );
+      const info = await fetch(`${BASE_URL}/users/${user_id}`);
       const result = await info.json();
       setCreator(result.data);
     } catch (err) {
@@ -75,10 +65,7 @@ export default function Home({
         },
         body: JSON.stringify({ projectId: project_id, userId: user_id }),
       };
-      const res = await fetch(
-        `http://spark-api.owenhay.es/api/projects/swipeleft`,
-        requestOptions
-      );
+      const res = await fetch(`${BASE_URL}/projects/swipeleft`, requestOptions);
       console.log('WORKED');
       console.log(res);
     } catch (err) {
@@ -98,7 +85,7 @@ export default function Home({
         body: JSON.stringify({ projectId: project_id, userId: user_id }),
       };
       const res = await fetch(
-        `http://spark-api.owenhay.es/api/projects/swiperight`,
+        `${BASE_URL}/projects/swiperight`,
         requestOptions
       );
       console.log(res.json());
@@ -123,7 +110,12 @@ export default function Home({
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
-        {/*<Logo width={'15%'} height={'15%'} style={styles.img} />*/}
+        <Logo width={'15%'} height={'15%'} />
+        {/*
+        <Image
+          style={styles.img}
+          source={require('../assets/spark_logo.png')}
+        />*/}
         {loading && (
           <>
             <Skeleton animation="wave" width={'80%'} height={'50%'} />
@@ -190,6 +182,8 @@ const styles = StyleSheet.create({
   },
   img: {
     marginTop: '-5%',
+    width: '20%',
+    height: '10%',
   },
   actions: {
     flexDirection: 'row',
