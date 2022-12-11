@@ -10,7 +10,7 @@ import { BASE_URL } from '../data/util';
 
 export default function CreatePost({
   navigation,
-  user_id,
+  route,
   default_title = '',
   default_biography = '',
   default_description = '',
@@ -30,6 +30,9 @@ export default function CreatePost({
   const [possibleSkills, setPossibleSkills] = React.useState(skillset_list);
   const [timeline, setTimeline] = React.useState(default_timeline);
   const toast = useToast();
+  const user_id = route.params.user_id
+    ? route.params.user_id
+    : '63824360149a7a6b1f4eea69';
 
   const verify = () => {
     console.log(members);
