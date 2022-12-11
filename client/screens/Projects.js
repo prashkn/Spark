@@ -19,7 +19,7 @@ export default function Projects({ navigation }) {
   const getProjects = async (id) => {
     try {
       const info = await fetch(
-        `http://localhost:4000/api/projects/createdprojects?userId=${id}`
+        `${BASE_URL}/projects/createdprojects?userId=${id}`
       );
       const result = await info.json();
       const projects = [];

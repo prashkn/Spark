@@ -55,7 +55,7 @@ export default function CreatePost({
     const shouldPost = verify();
     if (shouldPost) {
       console.log(skillsets);
-      await fetch(`http://localhost:4000/api/projects/create`, {
+      await fetch(`${BASE_URL}/projects/create`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
