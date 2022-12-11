@@ -1,23 +1,22 @@
 # The Docker image that will be used to build your app
 image: google/cloud-sdk:alpine
 
-before_script:
-  - apk add nodejs npm
-  - npm i -g firebase-tools
+default:
+  # Functions that should be executed before the script is run
+  before_script:
+    - apk add nodejs npm
+    - npm i -g firebase-tools
 
-  # Copy service account details
-  - echo $FIREBASE_SERVICE_ACCOUNT > "service_account.json"
+    # Copy service account details
+    - echo $FIREBASE_SERVICE_ACCOUNT > "service_account.json"
 
 deploy-client:
   stage: deploy
 
-  # Functions that should be executed before the build script is run
-  before_script:
+  script:
     - cd client
     - npm i
-
-  script:
-    - export NODE_OPTIONS=--openssl-legacy-provider
+    # - export NODE_OPTIONS=--openssl-legacy-provider
     - npx expo export:web
     - echo $FIREBASE_SERVICE_ACCOUNT > "service_account.json"
     - export GOOGLE_APPLICATION_CREDENTIALS="service_account.json"
@@ -30,6 +29,9 @@ deploy-client:
 
 deploy-api:
   stage: deploy
+  except:
+    changes:
+      - "client/**/*"
   script:
     # Install Docker
     # - apk add --update docker openrc
