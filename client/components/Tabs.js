@@ -38,7 +38,7 @@ export default function Tabs() {
       })}
     >
       <Tab.Screen name="Home" component={HomeAndPost} />
-      <Tab.Screen name="My Projects" component={MyProjects} />
+      <Tab.Screen name="My Brainstorms" component={MyProjects} />
       <Tab.Screen name="My Applications" component={MyApplications} />
 
       {/* Use nested navigator to display profile and settings sub-pages */}
