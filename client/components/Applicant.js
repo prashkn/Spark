@@ -86,12 +86,12 @@ export const Applicant = ({ navigation, userId, isAccepted, projectInfo, setAcce
                     }
                 </Pressable>
                 {userInfo &&
-                    <View style={{ flex: 2, marginLeft: '10px' }}>
+                    <Pressable style={{ flex: 2, marginLeft: '10px' }} onPress={() => navigation.navigate('Other User', { projectInfo: projectInfo, userInfo: userInfo })}>
                         <Text>{userInfo.username}</Text>
                         <Text numberOfLines={2} style={{ color: 'grey' }}>{userInfo.bio}</Text>
-                    </View>
+                    </Pressable>
                 }
-                <Pressable style={{ alignSelf: 'center' }}>
+                <Pressable style={{ alignSelf: 'center' }} onPress={() => navigation.navigate('Other User', { projectInfo: projectInfo, userInfo: userInfo })}>
                     <FontAwesomeIcon icon={faChevronRight} />
                 </Pressable>
             </View>

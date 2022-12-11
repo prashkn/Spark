@@ -4,6 +4,7 @@ import { MIDNIGHT_GREEN } from '../styles/palette';
 import Projects from "./Projects";
 import { ProjectDetail } from "../components/ProjectDetail";
 import { EditingProject } from "../components/EditingProject";
+import { OtherUser } from "../components/OtherUser";
 
 export function MyProjects() {
     const Stack = createNativeStackNavigator();
@@ -41,6 +42,12 @@ export function MyProjects() {
             <Stack.Screen
                 name="Editing Project"
                 component={EditingProject}
+                options={{
+                    headerShown: false,
+                }} />
+            <Stack.Screen
+                name="Other User"
+                component={OtherUser}
                 options={{
                     headerShown: false,
                 }} />

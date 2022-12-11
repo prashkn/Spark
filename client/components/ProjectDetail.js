@@ -1,9 +1,9 @@
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { Text, View, Pressable, SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 import { BLOND, MIDNIGHT_GREEN, POLISHED_PINE } from '../styles/palette';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { Applicant } from './Applicant';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 export function ProjectDetail({ navigation, route }) {
     const projectInfo = route.params.projectInfo
@@ -75,7 +75,7 @@ export function ProjectDetail({ navigation, route }) {
     )
 }
 
-const project = StyleSheet.create({
+export const project = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 18,
