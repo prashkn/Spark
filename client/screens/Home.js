@@ -10,7 +10,7 @@ import { Skeleton } from '@rneui/themed';
 import EmptyFeed from '../components/EmptyFeed';
 import { BASE_URL } from '../data/util';
 
-export default function Home({ navigation, user_id = 'x' }) {
+export default function Home({ navigation, user_id = 'r' }) {
   const [projectInfo, setProjectInfo] = useState([]); //holds all projects
   const [creator, setCreator] = useState({}); //holds the creator of the project
   const [counter, setCounter] = useState(0); //determines where in the array of projects we should
@@ -96,7 +96,7 @@ export default function Home({ navigation, user_id = 'x' }) {
   //on first render
   useEffect(() => {
     getAllInfo(user_id);
-    if (projectInfo) setLoading(false);
+    if (projectInfo.length) setLoading(false);
   }, []);
 
   //on counter changing
