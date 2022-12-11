@@ -66,8 +66,7 @@ export default function Home({ navigation, user_id = 'x' }) {
         body: JSON.stringify({ projectId: project_id, userId: user_id }),
       };
       const res = await fetch(`${BASE_URL}/projects/swipeleft`, requestOptions);
-      console.log('WORKED');
-      console.log(res);
+      console.log(res.json());
     } catch (err) {
       console.log(err);
     }
