@@ -88,6 +88,8 @@ const styles = StyleSheet.create({
   },
   profilepic: {
     marginRight: 20,
+    paddingLeft: 3,
+    paddingRight: 3,
   },
   header: {
     flexDirection: 'row',

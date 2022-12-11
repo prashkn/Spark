@@ -10,7 +10,7 @@ import { Skeleton } from '@rneui/themed';
 import EmptyFeed from '../components/EmptyFeed';
 import { BASE_URL } from '../data/util';
 
-export default function Home({ navigation, user_id = 'r' }) {
+export default function Home({ navigation, user_id = 't' }) {
   const [projectInfo, setProjectInfo] = useState([]); //holds all projects
   const [creator, setCreator] = useState({}); //holds the creator of the project
   const [counter, setCounter] = useState(0); //determines where in the array of projects we should
