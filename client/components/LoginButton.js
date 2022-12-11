@@ -7,7 +7,7 @@ export default function LoginButton(props) {
       style={({ pressed, hovered }) => [
         {
           backgroundColor: pressed
-            ? props.backgroundColorPressed
+            ? props.backgroundColorPressed || "#ffd333"
             : props.backgroundColor || MUSTARD,
           width: '100%',
           height: 50,

@@ -1,5 +1,6 @@
 import { Button } from '@rneui/themed';
 import { StatusBar } from 'expo-status-bar';
+import { getAuth, signOut } from 'firebase/auth';
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { BLOND, MIDNIGHT_GREEN } from '../../styles/palette';
@@ -13,6 +14,12 @@ export default function Profile({ navigation }) {
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
+        <Button
+          title="Log out"
+          onPress={() => {
+            signOut(getAuth());
+          }}
+        ></Button>
         {/* Top bar area */}
         <View style={styles.topBar}>
           <Button
@@ -51,7 +58,7 @@ export default function Profile({ navigation }) {
           {
             header: 'About me',
             content:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in est ex. Nulla lacinia tortor sed ultrices vulputate. Mauris at mi nisi. Integer lobortis, diam et accumsan feugiat, lacus orci tempus felis, id iaculis nunc nulla ut nisi. Nunc eget enim sem. ',
+              'OWEN Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in est ex. Nulla lacinia tortor sed ultrices vulputate. Mauris at mi nisi. Integer lobortis, diam et accumsan feugiat, lacus orci tempus felis, id iaculis nunc nulla ut nisi. Nunc eget enim sem. ',
           },
           {
             header: 'Skills',

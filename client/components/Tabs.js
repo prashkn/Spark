@@ -9,8 +9,9 @@ import HomeAndPost from './HomeAndPost';
 import ProfileAndSettings from './ProfileAndSettings';
 import YourBackground from '../screens/YourBackground';
 
-export default function Tabs() {
+
   const Tab = createBottomTabNavigator();
+export default function Tabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -37,7 +38,7 @@ export default function Tabs() {
         tabBarShowLabel: false,
       })}
     >
-      <Tab.Screen name="Login" component={YourBasicInformation} />
+      {/* <Tab.Screen name="Login" component={YourBasicInformation} /> */}
       <Tab.Screen name="Home/Create" component={HomeAndPost} />
       <Tab.Screen name="Projects" component={Projects} />
 

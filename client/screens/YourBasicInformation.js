@@ -1,11 +1,62 @@
-import { useState } from 'react';
-import { SafeAreaView, StatusBar, Text, View } from 'react-native';
+import { useContext, useState } from 'react';
+import { SafeAreaView, ScrollView, StatusBar, Text, View } from 'react-native';
 import LoginButton from '../components/LoginButton';
 import LoginTextInput from '../components/LoginTextInput';
+import ProgressBar from '../components/ProgressBar';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { NewUserInfoContext } from '../components/SignUp';
 import { GAINSBORO, MUSTARD } from '../styles/palette';
+import * as EmailValidator from 'email-validator';
+import WarningMessage from '../components/WarningMessage';
 
-export default function YourBasicInformation(props) {
+export default function YourBasicInformation({ navigation }) {
+  const { newUserInfo, setNewUserInfo } = useContext(NewUserInfoContext);
+
+  const [nameValid, setNameValid] = useState(null);
+  const [emailValid, setEmailValid] = useState(null);
+  const [passwordValid, setPasswordValid] = useState(null);
+
   const [progress, setProgress] = useState(20);
+
+  function submitForm() {
+    let allFieldsValid = true;
+
+    // Check if email is valid
+    if (!EmailValidator.validate(newUserInfo.email)) {
+      setEmailValid(false);
+      allFieldsValid = false;
+    } else {
+      // Set back to true in case user comes back
+      setEmailValid(true);
+    }
+
+    // Check if name is valid
+    if (
+      newUserInfo.name === undefined ||
+      newUserInfo.name.length === 0
+    ) {
+      setNameValid(false);
+      allFieldsValid = false;
+    } else {
+      setNameValid(true);
+    }
+
+    // Check if password is valid
+    if (
+      newUserInfo.password === undefined ||
+      newUserInfo.password.length < 8
+    ) {
+      setPasswordValid(false);
+      allFieldsValid = false;
+    } else {
+      setPasswordValid(true);
+    }
+
+    if (allFieldsValid) {
+      navigation.navigate('YourBackground');
+    }
+  }
+
   return (
     <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
       <View
@@ -16,70 +67,83 @@ export default function YourBasicInformation(props) {
           marginHorizontal: 'auto',
         }}
       >
-        {/* Progress bar */}
-        <View
+        <ProgressBar progress={progress} />
+        <ScrollView
           style={{
-            display: 'flex',
-            alignSelf: 'center',
-            width: '100%',
-            height: 20,
-            backgroundColor: GAINSBORO,
-            borderRadius: 10,
-
-            marginTop: 25,
-            marginBottom: 20,
+            height: '100%',
           }}
         >
+          <Text style={{ fontFamily: 'Poppins-Bold', fontSize: 24 }}>
+            Your Basic Information
+          </Text>
+
+          <Text
+            style={{
+              fontFamily: 'Poppins-Regular',
+              fontSize: 14,
+              color: '#989898',
+            }}
+          >
+            Welcome to Spark! We can't wait to see what amazing ideas you turn
+            into reality.
+          </Text>
+
           <View
             style={{
-              backgroundColor: MUSTARD,
-              width: `${progress}%`,
-              height: '100%',
-              borderRadius: 10,
+              marginTop: 20,
             }}
-          ></View>
-        </View>
+          >
+            {/* TODO: Add asterisks */}
+            <LoginTextInput
+              placeholder="Name"
+              onChangeText={(text) => {
+                setNewUserInfo({ ...newUserInfo, name: text });
+              }}
+              onSubmitEditing={submitForm}
+              returnKeyType='done'
+            />
 
-        <Text style={{ fontFamily: 'Poppins-Bold', fontSize: 24 }}>
-          Your Basic Information
-        </Text>
+            {nameValid === false && (
+              <WarningMessage message="Please enter your full name." />
+            )}
 
-        <Text
-          style={{
-            fontFamily: 'Poppins-Regular',
-            fontSize: 14,
-            color: '#989898',
-          }}
-        >
-          Welcome to Spark! We can't wait to see what amazing ideas you turn
-          into reality.
-        </Text>
+            <LoginTextInput
+              placeholder="Email"
+              keyboardType="email-address"
+              onChangeText={(text) => {
+                setNewUserInfo({ ...newUserInfo, email: text });
+              }}
+              onSubmitEditing={submitForm}
+              returnKeyType='done'
+            />
 
-        <View
-          style={{
-            marginTop: 20,
-          }}
-        >
-          {/* TODO: Add asterisks */}
-          <LoginTextInput placeholder="Name"></LoginTextInput>
-          <LoginTextInput
-            placeholder="Email"
-            keyboardType="email-address"
-          ></LoginTextInput>
-          <LoginTextInput
-            placeholder="Password"
-            secureTextEntry
-          ></LoginTextInput>
-        </View>
-        <LoginButton
-          title="Continue"
-          onPress={() => {
-            props.navigation.navigate('Home/Create');
-          }}
-        />
+            {emailValid === false && (
+              <WarningMessage message="Please enter a valid email address." />
+            )}
+
+            <LoginTextInput
+              placeholder="Password"
+              secureTextEntry
+              onChangeText={(text) => {
+                setNewUserInfo({ ...newUserInfo, password: text });
+              }}
+              onSubmitEditing={submitForm}
+              returnKeyType='done'
+            />
+            
+
+            {passwordValid === false && (
+              <WarningMessage message="Please enter a password with at least 8 characters." />
+            )}
+          </View>
+          <LoginButton
+            title="Continue"
+            onPress={submitForm}
+          />
+        </ScrollView>
       </View>
 
-      <StatusBar style="dark" />
+      <StatusBar barStyle="dark-content" />
     </SafeAreaView>
   );
 }

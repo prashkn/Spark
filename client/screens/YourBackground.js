@@ -1,11 +1,29 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, StatusBar, Text, View } from 'react-native';
 import LoginButton from '../components/LoginButton';
 import LoginTextInput from '../components/LoginTextInput';
+import { NewUserInfoContext } from '../components/SignUp';
 import { GAINSBORO, MUSTARD } from '../styles/palette';
 
-export default function YourBackground(props) {
+export default function YourBackground({ navigation }) {
+  const { newUserInfo, setNewUserInfo } = useContext(NewUserInfoContext);
   const [progress, setProgress] = useState(90);
+
+  useEffect(() => {
+    // Redirect to signup flow page 1 if missing basic info (should be handled 
+    // in previous page, but in case someone goes to the URL for this page
+    // directly without inputting basic info, we should redirect them)
+    if (
+      Object.keys(newUserInfo).length === 0 ||
+      newUserInfo.name === undefined ||
+      newUserInfo.email === undefined ||
+      newUserInfo.password === undefined
+    ) {
+      navigation.navigate('YourBasicInformation');
+      return;
+    }
+  }, []);
+
   return (
     <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
       <View
@@ -52,6 +70,7 @@ export default function YourBackground(props) {
           paddingHorizontal: 20,
         }}
       >
+        <Text>{JSON.stringify(newUserInfo)}</Text>
         <Text style={{ fontFamily: 'Poppins-Bold', fontSize: 24 }}>
           Your Background
         </Text>
@@ -103,13 +122,13 @@ export default function YourBackground(props) {
         <LoginButton
           title="Start Brainstorming!"
           onPress={() => {
-            props.navigation.navigate('Home/Create');
+            navigation.navigate('Root', { screen: 'Home' });
           }}
         />
       </ScrollView>
       {/* </View> */}
 
-      <StatusBar style="dark-content" />
+      <StatusBar barStyle="dark-content" />
     </SafeAreaView>
   );
 }

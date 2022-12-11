@@ -1,21 +1,92 @@
-import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth';
+import { useEffect, useState } from 'react';
+import {
+  Image,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import LoginButton from '../components/LoginButton';
 import LoginTextInput from '../components/LoginTextInput';
 import { BLOND, GAINSBORO, MUSTARD } from '../styles/palette';
 
-export default function Login() {
+export default function Login({ navigation }) {
+  const [user, setUser] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const auth = getAuth();
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const data = await fetch('https://spark-api.owenhay.es/api/projects/homepage?userId=63824360149a7a6b1f4eea69');
+  //     console.log(await data.text());
+  //   }
+  //   fetchData();
+  // }, []);
+
+  // useEffect(() => {
+  //   signOut(auth)
+  // }, [])
+
+  onAuthStateChanged(auth, (user) => {
+    setUser(user);
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      const uid = user.uid;
+      user.getIdToken(true).then((thing) => {
+        console.log(thing);
+      })
+      // ...
+    } else {
+      // User is signed out
+      // ...
+    }
+  });
+
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
+      {/* <View> */}
       <Image source={require('../assets/spark_logo.png')} style={styles.logo} />
       <View style={styles.container}>
         <Text style={styles.title}>Spark</Text>
+        <Text style={{ maxWidth: '100%' }}>{JSON.stringify(user)}</Text>
 
-        <LoginTextInput placeholder="Email" keyboardType="email-address" />
-        <LoginTextInput placeholder="Password" secureTextEntry />
+        <LoginTextInput
+          placeholder="Email"
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <LoginTextInput
+          placeholder="Password"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+
         <LoginButton
           title="Log in"
           backgroundColor={MUSTARD}
           backgroundColorPressed="#ffd333"
+          onPress={() => {
+            const auth = getAuth();
+            signInWithEmailAndPassword(auth, email, password)
+              .then((userCredential) => {
+                console.log(userCredential);
+              })
+              .catch((error) => {
+                console.log(JSON.stringify(error));
+              });
+          }}
         />
 
         <LoginButton
@@ -34,13 +105,15 @@ export default function Login() {
           title="Create account"
           backgroundColor={MUSTARD}
           backgroundColorPressed="#ffd333"
+          onPress={() => navigation.navigate('SignUpRoot')}
         />
       </View>
 
       {/* Spacer (same height as logo) to keep input text and login buttons centered */}
       <View style={styles.bottomSpacer}></View>
 
-      <StatusBar style="dark" />
+      <StatusBar barStyle="dark-content" />
+      {/* </View> */}
     </SafeAreaView>
   );
 }
