@@ -10,7 +10,7 @@ export default function CreatePostButton({ navigation }) {
       style={styles.btn}
       onPress={() => navigation.navigate('Create a Brainstorm')}
     >
-      <Image source={require('../assets/create.png')} />
+      <Image style={styles.pencil} source={require('../assets/create.png')} />
     </TouchableOpacity>
   );
 }
@@ -27,5 +27,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 1 },
     shadowColor: '#333',
     shadowOpacity: 0.7,
+  },
+  pencil: {
+    width: '40%',
+    height: '40%',
   },
 });

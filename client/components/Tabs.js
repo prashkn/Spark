@@ -24,7 +24,7 @@ export default function Tabs() {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
-          } else if (route.name === 'My Projects') {
+          } else if (route.name === 'My Brainstorms') {
             iconName = focused ? 'documents' : 'documents-outline';
           } else if (route.name === 'My Applications') {
             iconName = focused ? 'albums' : 'albums-outline'
