@@ -9,7 +9,8 @@ var UserSchema = new mongoose.Schema({
     password: String,
     bio: String,
     skills: [String],
-    projects: [String]  // TODO: image?
+    projects: [String],  // TODO: image?
+    applications: [{projectId: String, status: String}]
 },{versionKey: false});
 
 // Export the Mongoose model

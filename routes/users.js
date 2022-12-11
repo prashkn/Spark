@@ -54,6 +54,23 @@ router.get("/login", async (req, res) => {
   }
 });
 
+// Get Applications
+// query: {userId}
+router.get("/applications", async (req,res) => {
+  try {
+    if (req.query.userId == null) {
+      return res.status(400).json({ message: "userId must be in query params" });
+    }
+    const user = await User.findById(req.query.userId);
+    if (user == null) {
+      return res.status(404).json({ message: "Cannot find user", data: {} });
+    }
+    return res.status(200).json({ message: "OK", data: user.applications });
+  } catch (err) {
+    return res.status(500).json({ message: err.message, data: {} });
+  }
+});
+
 // Create user
 // body: {name, username, email, password, bio, [skills]}
 router.post("/create", async (req, res) => {
@@ -74,6 +91,7 @@ router.post("/create", async (req, res) => {
       bio: req.body.bio,
       skills: req.body.skills,
       projects: [],
+      applications: []
     });
 
     await user.save();
