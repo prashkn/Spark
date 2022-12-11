@@ -1,8 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCheck, faChevronRight } from "@fortawesome/free-solid-svg-icons"
-import { Text, View, Pressable, SafeAreaView, ScrollView, StyleSheet } from 'react-native'
-import { BLOND, MIDNIGHT_GREEN, POLISHED_PINE } from '../styles/palette';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { Text, View, Pressable, StyleSheet } from 'react-native'
+import { MIDNIGHT_GREEN } from '../styles/palette';
 import { useEffect, useState } from 'react';
 
 
@@ -26,7 +25,7 @@ export const Applicant = ({ navigation, userId, isAccepted, projectInfo, setAcce
         // if wasn't originally accepted, add to participants
         if (!isAccepted) {
             try {
-                const info = await fetch(`http://localhost:4000/api/projects/check?`, {
+                await fetch(`http://localhost:4000/api/projects/check?`, {
                     method: 'PUT',
                     headers: {
                         Accept: 'application/json',
@@ -37,7 +36,6 @@ export const Applicant = ({ navigation, userId, isAccepted, projectInfo, setAcce
                         projectId: projectInfo._id
                     })
                 });
-                const result = await info.json()
                 setAccepted([...accepted, userId])
                 const index = applicants.indexOf(userId);
                 if (index > -1) { // only splice array when item is found
@@ -49,7 +47,7 @@ export const Applicant = ({ navigation, userId, isAccepted, projectInfo, setAcce
             }
         } else { // remove from participants
             try {
-                const info = await fetch(`http://localhost:4000/api/projects/uncheck?`, {
+                await fetch(`http://localhost:4000/api/projects/uncheck?`, {
                     method: 'PUT',
                     headers: {
                         Accept: 'application/json',
@@ -60,7 +58,6 @@ export const Applicant = ({ navigation, userId, isAccepted, projectInfo, setAcce
                         projectId: projectInfo._id
                     })
                 });
-                const result = await info.json()
                 setApplicants([...applicants, userId])
                 const index = accepted.indexOf(userId);
                 if (index > -1) { // only splice array when item is found

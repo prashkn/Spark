@@ -2,8 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { Text, View, Pressable, SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 import { BLOND, MIDNIGHT_GREEN, POLISHED_PINE } from '../styles/palette';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
-import { Applicant } from './Applicant';
 
 export function EditingProject({ navigation, route }) {
     const projectInfo = route.params.projectInfo

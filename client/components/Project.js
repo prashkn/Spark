@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import React, {  } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight'
 

@@ -1,8 +1,7 @@
-import { Button } from '@rneui/themed';
 import { StatusBar } from 'expo-status-bar';
 import { Image, SafeAreaView, ScrollView, Text, View, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { BLOND, MIDNIGHT_GREEN } from '../styles/palette';
+import { MIDNIGHT_GREEN } from '../styles/palette';
 import styles from '../screens/Profile/Profile-styles';
 import { project } from '../components/ProjectDetail'
 import ProfileInfoBox from '../screens/Profile/ProfileInfoBox';
@@ -38,6 +37,17 @@ export const OtherUser = ({ navigation, route }) => {
                     <View style={styles.userInfoTextArea}>
                         <Text style={styles.name}>{userInfo.name}</Text>
                         <Text style={styles.poppinsSmall}>{`@${userInfo.username}`}</Text>
+
+                        {/* Container for location pin and location name */}
+                        <View style={styles.locationContainer}>
+                            <Icon
+                                name="map-marker"
+                                size={30}
+                                color={MIDNIGHT_GREEN}
+                                style={styles.locationPin}
+                            ></Icon>
+                            <Text style={styles.poppinsSmall}>{userInfo.location}</Text>
+                        </View>
                     </View>
                 </View>
                 {[

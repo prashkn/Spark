@@ -25,7 +25,7 @@ export function ProjectDetail({ navigation, route }) {
                         <Text style={project.header}>{projectInfo.title}</Text>
                     </Pressable>
                     <Pressable style={{ display: 'flex', justifyContent: 'center' }} onPress={() => navigation.navigate('Editing Project', {projectInfo: projectInfo})}>
-                        <Text style={{ color: MIDNIGHT_GREEN, alignSelf: 'center' }}>Edit</Text>
+                        <Text style={{ color: MIDNIGHT_GREEN, alignSelf: 'center', fontSize: 16 }}>Edit</Text>
                     </Pressable>
                 </View>
                 <View style={project.card}>
