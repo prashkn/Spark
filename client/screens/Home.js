@@ -23,6 +23,7 @@ export default function Home({
     try {
       console.log(user_id);
       const tmp_proj_info = await getProjectInfo(user_id);
+      consolel;
       await getCreatorInfo(tmp_proj_info[counter].creator);
     } catch (err) {
       console.log(err);
@@ -33,7 +34,14 @@ export default function Home({
   const getProjectInfo = async (user_id) => {
     try {
       const info = await fetch(
-        `http://spark-api.owenhay.es/api/projects/homepage?userId=${user_id}`
+        `https://spark-api.owenhay.es/api/projects/homepage?userId=${user_id}`,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        }
       );
       const result = await info.json();
       setProjectInfo(result.data);
@@ -115,7 +123,7 @@ export default function Home({
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
-        <Logo width={'15%'} height={'15%'} style={styles.img} />
+        {/*<Logo width={'15%'} height={'15%'} style={styles.img} />*/}
         {loading && (
           <>
             <Skeleton animation="wave" width={'80%'} height={'50%'} />
@@ -163,7 +171,7 @@ export default function Home({
       </View>
 
       <View style={styles.createPost}>
-        <CreatePostButton navigation={navigation} />
+        <CreatePostButton navigation={navigation} user_id={user_id} />
       </View>
     </View>
   );

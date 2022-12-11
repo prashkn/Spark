@@ -3,12 +3,16 @@ import React from 'react';
 import { POLISHED_PINE } from '../styles/palette';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function CreatePostButton({ navigation }) {
+export default function CreatePostButton({ navigation, user_id }) {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       style={styles.btn}
-      onPress={() => navigation.navigate('Create a Brainstorm')}
+      onPress={() =>
+        navigation.navigate('Create a Brainstorm', {
+          user_id: user_id,
+        })
+      }
     >
       <Image style={styles.pencil} source={require('../assets/create.png')} />
     </TouchableOpacity>
