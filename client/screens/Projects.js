@@ -10,10 +10,11 @@ import {
 import Project from '../components/Project';
 import { BLOND, MIDNIGHT_GREEN } from '../styles/palette';
 import { Skeleton } from '@rneui/themed';
+import { BASE_URL } from '../data/util';
 
 export default function Projects({ navigation }) {
   const [projects, setProjects] = useState([]);
-  const [noProjects, setNoProjects] = useState();
+  // const [noProjects, setNoProjects] = useState();
   const NUM_OF_SKELETONS = 7;
 
   const getProjects = async (id) => {
@@ -24,9 +25,9 @@ export default function Projects({ navigation }) {
       const result = await info.json();
       const projects = [];
       if (result.data.length === 0) {
-        setNoProjects(true);
+        setProjects([]);
       } else {
-        setNoProjects(false);
+        // setNoProjects(false);
         for (let i = 0; i < result.data.length; i++) {
           projects.push(result.data[i]);
         }
@@ -66,24 +67,28 @@ export default function Projects({ navigation }) {
     >
       <ScrollView style={styles.container}>
         <Text style={styles.header}>My Projects</Text>
-        <View style={styles.projects}>
-          {noProjects ? (
-            <Text>You currently have no projects.</Text>
-          ) : !noProjects && projects.length === 0 ? (
-            skeletons
-          ) : (
-            projects.map((proj, i) => (
-              <Pressable
-                onPress={() =>
-                  navigation.navigate('Details', { projectInfo: proj })
-                }
-                key={i}
-              >
-                <Project project={proj} />
-              </Pressable>
-            ))
-          )}
-        </View>
+        {projects.length === 0 ? (
+          <View style={{ height: '100%', justifyContent: 'center' }}>
+            <Text style={{ alignSelf: 'center' }}>You currently have no projects.</Text>
+          </View>
+        ) :
+          <View style={styles.projects}>
+            {!projects ? (
+              skeletons
+            ) : (
+              projects.map((proj, i) => (
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate('Details', { id: proj._id })
+                  }
+                  key={i}
+                >
+                  <Project project={proj} />
+                </Pressable>
+              ))
+            )}
+          </View>
+        }
       </ScrollView>
     </SafeAreaView>
   );

@@ -6,6 +6,7 @@ import NumericInput from 'react-native-numeric-input';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
 import { skillset_list } from '../data/skillsets';
+import { BASE_URL } from '../data/util';
 
 export default function CreatePost({ navigation, route }) {
   DropDownPicker.setMode('BADGE');
