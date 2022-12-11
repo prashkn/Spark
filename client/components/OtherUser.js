@@ -29,7 +29,7 @@ export const OtherUser = ({ navigation, route }) => {
                 <View style={styles.userInfoContainer}>
                     {/* Profile pic */}
                     <Image
-                        style={{ width: '100px', height: '100px' }}
+                        style={{ width: 100, height: 100}}
                         source={require('../assets/profile_pic_placeholder.png')}
                     />
 

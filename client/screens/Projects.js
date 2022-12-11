@@ -1,53 +1,57 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import Project from '../components/Project';
 import { BLOND, MIDNIGHT_GREEN } from '../styles/palette';
 import { Skeleton } from '@rneui/themed';
 
-
 export default function Projects({ navigation }) {
-  const [projects, setProjects] = useState([])
-  const [noProjects, setNoProjects] = useState()
+  const [projects, setProjects] = useState([]);
+  const [noProjects, setNoProjects] = useState();
   const NUM_OF_SKELETONS = 7;
 
   const getProjects = async (id) => {
     try {
-      const info = await fetch(`http://localhost:4000/api/projects/createdprojects?userId=${id}`);
-      const result = await info.json()
-      const projects = []
+      const info = await fetch(
+        `${BASE_URL}/projects/createdprojects?userId=${id}`
+      );
+      const result = await info.json();
+      const projects = [];
       if (result.data.length === 0) {
-        setNoProjects(true)
+        setNoProjects(true);
       } else {
-        setNoProjects(false)
+        setNoProjects(false);
         for (let i = 0; i < result.data.length; i++) {
-          projects.push(result.data[i])
+          projects.push(result.data[i]);
         }
-        setProjects(projects)
+        setProjects(projects);
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-  const skeletons = []
+  const skeletons = [];
   for (let i = 0; i < NUM_OF_SKELETONS; i++) {
     skeletons.push(
       <View style={styles.projects} key={i}>
         <View style={styles.card}>
-          <Skeleton
-            animation="wave"
-            width={345}
-            height={90}
-          />
+          <Skeleton animation="wave" width={345} height={90} />
         </View>
       </View>
-    )
+    );
   }
 
   useEffect(() => {
     //! change to variable
-    getProjects("63823c924a0de95cddc54052")
-  }, [])
+    getProjects('63823c924a0de95cddc54052');
+  }, []);
 
   // if (projects.length !== 0) {
   //   setNoProjects(false)
@@ -63,19 +67,22 @@ export default function Projects({ navigation }) {
       <ScrollView style={styles.container}>
         <Text style={styles.header}>My Projects</Text>
         <View style={styles.projects}>
-          {noProjects?
+          {noProjects ? (
             <Text>You currently have no projects.</Text>
-            :
-            (!noProjects && projects.length === 0?
-              skeletons
-              :
-              projects.map((proj, i) => (
-                <Pressable onPress={() => navigation.navigate("Details", {projectInfo: proj})} key={i}>
-                  <Project project={proj} />
-                </Pressable>
-              ))
-            )
-          }
+          ) : !noProjects && projects.length === 0 ? (
+            skeletons
+          ) : (
+            projects.map((proj, i) => (
+              <Pressable
+                onPress={() =>
+                  navigation.navigate('Details', { projectInfo: proj })
+                }
+                key={i}
+              >
+                <Project project={proj} />
+              </Pressable>
+            ))
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -101,11 +108,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 5,
     shadowOffset: { width: 3, height: 4 },
-    shadowColor: "#333",
+    shadowColor: '#333',
     shadowOpacity: 0.2,
     shadowRadius: 5,
     display: 'flex',
     flexDirection: 'row',
     marginBottom: 10,
-  }
+  },
 });

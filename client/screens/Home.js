@@ -5,10 +5,15 @@ import CreatePostButton from '../components/CreatePostButton';
 import DeclineProject from '../components/DeclineProject';
 import ProjectCardFeed from '../components/ProjectCardFeed';
 import { BLOND } from '../styles/palette';
-import Logo from '../assets/spark_logo.png';
+import Logo from '../assets/spark_logo.svg';
+import { Skeleton } from '@rneui/themed';
 import EmptyFeed from '../components/EmptyFeed';
+import { BASE_URL } from '../data/util';
 
-export default function Home({ navigation, user_id }) {
+export default function Home({
+  navigation,
+  user_id = '63824360149a7a6b1f4eea69',
+}) {
   const [projectInfo, setProjectInfo] = useState([]); //holds all projects
   const [creator, setCreator] = useState({}); //holds the creator of the project
   const [counter, setCounter] = useState(0); //determines where in the array of projects we should
@@ -17,7 +22,9 @@ export default function Home({ navigation, user_id }) {
   //initialize home screen with information
   const getAllInfo = async (user_id) => {
     try {
+      console.log(user_id);
       const tmp_proj_info = await getProjectInfo(user_id);
+      console.log(tmp_proj_info)
       await getCreatorInfo(tmp_proj_info[counter].creator);
     } catch (err) {
       console.log(err);
@@ -28,7 +35,7 @@ export default function Home({ navigation, user_id }) {
   const getProjectInfo = async (user_id) => {
     try {
       const info = await fetch(
-        `http://localhost:4000/api/projects/homepage?userId=${user_id}`
+        `${BASE_URL}/projects/homepage?userId=${user_id}`
       );
       const result = await info.json();
       setProjectInfo(result.data);
@@ -40,8 +47,11 @@ export default function Home({ navigation, user_id }) {
 
   //gets the creator info on the curr project shown
   const getCreatorInfo = async (user_id) => {
+    console.log(user_id)
     try {
-      const info = await fetch(`http://localhost:4000/api/users/${user_id}`);
+      const info = await fetch(
+        `${BASE_URL}/users/${user_id}`
+      );
       const result = await info.json();
       setCreator(result.data);
     } catch (err) {
@@ -51,45 +61,51 @@ export default function Home({ navigation, user_id }) {
 
   //call endpoint on rejection
   const swipeLeft = async (project_id, user_id) => {
-    /*
     try {
       const requestOptions = {
         method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ projectId: project_id, userId: user_id }),
       };
       const res = await fetch(
-        `http://localhost:4000/api/projects/swipeleft`,
+        `${BASE_URL}/projects/swipeleft`,
         requestOptions
       );
       console.log('WORKED');
       console.log(res);
     } catch (err) {
       console.log(err);
-    }*/
+    }
   };
 
   //call endpoint on accept
   const swipeRight = async (project_id, user_id) => {
-    /*
     try {
       const requestOptions = {
         method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ projectId: project_id, userId: user_id }),
       };
       const res = await fetch(
-        `http://localhost:4000/api/projects/swiperight`,
+        `${BASE_URL}/projects/swiperight`,
         requestOptions
       );
-      console.log('WORKED');
-      console.log(res);
+      console.log(res.json());
     } catch (err) {
       console.log(err);
-    }*/
+    }
   };
 
   //on first render
   useEffect(() => {
-    getAllInfo(user_id).then(setLoading(false));
+    getAllInfo(user_id);
+    if (projectInfo) setLoading(false);
   }, []);
 
   //on counter changing
@@ -105,7 +121,7 @@ export default function Home({ navigation, user_id }) {
         {/* <Logo width={'15%'} height={'15%'} style={styles.img} /> */}
         {loading && (
           <>
-            <ProjectCardFeed />
+            <Skeleton animation="wave" width={'80%'} height={'50%'} />
             <View style={styles.actions}>
               <DeclineProject />
               <AcceptProject />

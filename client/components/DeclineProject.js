@@ -18,6 +18,8 @@ export default function DeclineProject({
       onPress={() => {
         setCounter(counter + 1);
         swipeLeft(project_id, user_id);
+        console.log(project_id);
+        console.log(user_id);
       }}
     >
       <Image source={require('../assets/reject.png')} />

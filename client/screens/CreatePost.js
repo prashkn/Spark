@@ -5,35 +5,29 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import NumericInput from 'react-native-numeric-input';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
+import { skillset_list } from '../data/skillsets';
 
-export default function CreatePost({ navigation, user_id }) {
+export default function CreatePost({
+  navigation,
+  user_id,
+  default_title = '',
+  default_biography = '',
+  default_description = '',
+  default_members = 3,
+  default_skillsets = [],
+  default_timeline = 6,
+  isCreating = true,
+}) {
   DropDownPicker.setMode('BADGE');
-  const [title, setTitle] = React.useState('');
-  const [biography, setBiography] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [members, setMembers] = React.useState(3);
-  const [skillsets, setSkillsets] = React.useState([]);
+  DropDownPicker.setListMode('SCROLLVIEW');
+  const [title, setTitle] = React.useState(default_title);
+  const [biography, setBiography] = React.useState(default_biography);
+  const [description, setDescription] = React.useState(default_description);
+  const [members, setMembers] = React.useState(default_members);
+  const [skillsets, setSkillsets] = React.useState(default_skillsets);
   const [open, setOpen] = React.useState(false);
-  const [possibleSkills, setPossibleSkills] = React.useState([
-    {
-      label: 'React',
-      value: 'react',
-    },
-    {
-      label: 'React Native',
-      value: 'react native',
-    },
-    {
-      label: 'UI/UX Design',
-      value: 'ui/ux design',
-    },
-    {
-      label: 'Product Management',
-      value: 'product management',
-    },
-  ]);
-  const [timeline, setTimeline] = React.useState(6); //https://github.com/miblanchard/react-native-slider
-  const [showToast, setShowToast] = React.useState(false);
+  const [possibleSkills, setPossibleSkills] = React.useState(skillset_list);
+  const [timeline, setTimeline] = React.useState(default_timeline);
   const toast = useToast();
 
   const verify = () => {
@@ -60,7 +54,8 @@ export default function CreatePost({ navigation, user_id }) {
   const postToDB = async () => {
     const shouldPost = verify();
     if (shouldPost) {
-      await fetch(`http://localhost:4000/api/projects/create`, {
+      console.log(skillsets);
+      await fetch(`${BASE_URL}/projects/create`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -75,13 +70,14 @@ export default function CreatePost({ navigation, user_id }) {
           membersNeeded: members,
         }),
       }).catch((error) => console.log(error));
+
       toast.show('Brainstorm Posted!', {
         type: 'success',
         placement: 'top',
         duration: 'zoom-in',
         duration: 2500,
       });
-      navigation.navigate('Home');
+      navigation.navigate('Home Pages');
     }
   };
 
@@ -89,6 +85,7 @@ export default function CreatePost({ navigation, user_id }) {
     <ScrollView
       style={styles.form}
       contentContainerStyle={{ alignItems: 'center' }}
+      nestedScrollEnabled={true}
     >
       <TextInput
         style={styles.input}
@@ -169,7 +166,7 @@ export default function CreatePost({ navigation, user_id }) {
       />
       <TouchableOpacity style={styles.btn} onPress={postToDB}>
         <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
-          Post Brainstorm
+          {isCreating ? 'Post Brainstorm' : 'Update Brainstorm'}
         </Text>
       </TouchableOpacity>
     </ScrollView>

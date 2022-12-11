@@ -7,6 +7,7 @@ import Projects from '../screens/Projects';
 import { MIDNIGHT_GREEN } from '../styles/palette';
 import HomeAndPost from './HomeAndPost';
 import ProfileAndSettings from './ProfileAndSettings';
+import { MyApplications } from '../screens/MyApplications';
 
 export default function Tabs() {
   const Tab = createBottomTabNavigator();
@@ -19,26 +20,29 @@ export default function Tabs() {
           let iconName;
 
           // Display icons based on which screen is focused
-          if (route.name === 'Home/Create') {
+          if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Profile/Settings') {
+          } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
-          } else if (route.name === 'My Projects') {
+          } else if (route.name === 'My Brainstorms') {
             iconName = focused ? 'documents' : 'documents-outline';
+          } else if (route.name === 'My Applications') {
+            iconName = focused ? 'albums' : 'albums-outline'
           }
 
           return <Icon name={iconName} size={30} color={MIDNIGHT_GREEN} />;
         },
 
         // Hide labels
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
       })}
     >
-      <Tab.Screen name="Home/Create" component={HomeAndPost} />
-      <Tab.Screen name="My Projects" component={MyProjects} />
+      <Tab.Screen name="Home" component={HomeAndPost} />
+      <Tab.Screen name="My Brainstorms" component={MyProjects} />
+      <Tab.Screen name="My Applications" component={MyApplications} />
 
       {/* Use nested navigator to display profile and settings sub-pages */}
-      <Tab.Screen name="Profile/Settings" component={ProfileAndSettings} />
+      <Tab.Screen name="Profile" component={ProfileAndSettings} />
     </Tab.Navigator>
   );
 }

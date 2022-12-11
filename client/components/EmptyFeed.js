@@ -5,7 +5,7 @@ import FeedEmpty from '../assets/feed_empty.svg';
 export default function EmptyFeed() {
   return (
     <View style={styles.container}>
-      {/* <FeedEmpty height={'50%'} /> */}
+      {/* <FeedEmpty height={'50%'} width={'100%'} /> */}
       <Text style={styles.message}>
         This is the end of everyone's brainstorms. Why not create your own?
       </Text>
