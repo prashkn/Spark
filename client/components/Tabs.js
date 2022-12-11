@@ -30,7 +30,6 @@ export default function Tabs() {
           return <Icon name={iconName} size={30} color={MIDNIGHT_GREEN} />;
         },
 
-        // Hide labels
         tabBarShowLabel: true,
       })}
     >

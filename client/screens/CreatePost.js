@@ -16,6 +16,7 @@ export default function CreatePost({
   default_members = 3,
   default_skillsets = [],
   default_timeline = 6,
+  isCreating = true,
 }) {
   DropDownPicker.setMode('BADGE');
   DropDownPicker.setListMode('SCROLLVIEW');
@@ -165,7 +166,7 @@ export default function CreatePost({
       />
       <TouchableOpacity style={styles.btn} onPress={postToDB}>
         <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
-          Post Brainstorm
+          {isCreating ? 'Post Brainstorm' : 'Update Brainstorm'}
         </Text>
       </TouchableOpacity>
     </ScrollView>
