@@ -7,31 +7,28 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
 import { skillset_list } from '../data/skillsets';
 
-export default function CreatePost({
-  navigation,
-  route,
-  default_title = '',
-  default_biography = '',
-  default_description = '',
-  default_members = 3,
-  default_skillsets = [],
-  default_timeline = 6,
-  isCreating = true,
-}) {
+export default function CreatePost({ navigation, route }) {
   DropDownPicker.setMode('BADGE');
   DropDownPicker.setListMode('SCROLLVIEW');
-  const [title, setTitle] = React.useState(default_title);
-  const [biography, setBiography] = React.useState(default_biography);
-  const [description, setDescription] = React.useState(default_description);
-  const [members, setMembers] = React.useState(default_members);
-  const [skillsets, setSkillsets] = React.useState(default_skillsets);
+  const [title, setTitle] = React.useState(route.params.title || '');
+  const [biography, setBiography] = React.useState(
+    route.params.biography || ''
+  );
+  const [description, setDescription] = React.useState(
+    route.params.description || ''
+  );
+  const [members, setMembers] = React.useState(route.params.members || 3);
+  const [skillsets, setSkillsets] = React.useState(
+    route.params.skillsets || []
+  );
   const [open, setOpen] = React.useState(false);
   const [possibleSkills, setPossibleSkills] = React.useState(skillset_list);
-  const [timeline, setTimeline] = React.useState(default_timeline);
+  const [timeline, setTimeline] = React.useState(route.params.timeline || 6);
   const toast = useToast();
   const user_id = route.params.user_id
     ? route.params.user_id
     : '63824360149a7a6b1f4eea69';
+  const isCreating = route.params.isCreating || false;
 
   const verify = () => {
     console.log(members);
