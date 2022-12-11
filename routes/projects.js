@@ -82,6 +82,9 @@ router.put("/swiperight", async (req, res) => {
       project.applicants.push(req.body.userId);
       await project.save();
     }
+    const user = await User.findById(req.body.userId);
+    user.applications.push({"projectId": req.body.projectId, "status": "Under review"});
+    await user.save();
     return res.status(200).json({ message: "OK" });
   } catch (err) {
     return res.status(500).json({ message: err.message, data: {} });
@@ -181,6 +184,14 @@ router.put("/check", async (req, res) => {
     }
     project.participants.push(req.body.userId);
     await project.save();
+    const user = await User.findById(req.body.userId);
+    for (let i = 0; i < user.applications.length; i++) {
+      if (user.applications[i].projectId == req.body.projectId) {
+        user.applications[i].status = "Accepted";
+        await user.save();
+        break;
+      }
+    }
     return res.status(200).json({ message: "OK", data: {} });
   } catch (err) {
     return res.status(500).json({ message: err.message, data: {} });
@@ -199,6 +210,14 @@ router.put("/uncheck", async (req, res) => {
     }
     project.applicants.push(req.body.userId);
     await project.save();
+    const user = await User.findById(req.body.userId);
+    for (let i = 0; i < user.applications.length; i++) {
+      if (user.applications[i].projectId == req.body.projectId) {
+        user.applications[i].status = "Under review";
+        await user.save();
+        break;
+      }
+    }
     return res.status(200).json({ message: "OK", data: {} });
   } catch (err) {
     return res.status(500).json({ message: err.message, data: {} });

@@ -11,6 +11,7 @@ var UserSchema = new mongoose.Schema(
     bio: String,
     skills: [String],
     projects: [String],
+    applications: [{ projectId: String, status: String }],
     avatar: String,
   },
   { versionKey: false }

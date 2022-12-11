@@ -12,6 +12,9 @@ Change user info:
 PUT /users/:id
 body: {field, content}
 
+Get user's project applications:
+GET /users/applications?userId=XXX
+
 Load home feed:
 GET /projects/homepage?userId=XXX
 
