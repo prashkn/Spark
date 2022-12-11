@@ -1,15 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCheck, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import {
-  Text,
-  View,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
-import { BLOND, MIDNIGHT_GREEN, POLISHED_PINE } from '../styles/palette';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { Text, View, Pressable, StyleSheet } from 'react-native';
+import { MIDNIGHT_GREEN } from '../styles/palette';
 import { useEffect, useState } from 'react';
 
 export const Applicant = ({
@@ -41,7 +33,7 @@ export const Applicant = ({
     // if wasn't originally accepted, add to participants
     if (!isAccepted) {
       try {
-        const info = await fetch(`http://localhost:4000/api/projects/check?`, {
+        await fetch(`http://localhost:4000/api/projects/check?`, {
           method: 'PUT',
           headers: {
             Accept: 'application/json',
@@ -52,7 +44,6 @@ export const Applicant = ({
             projectId: projectInfo._id,
           }),
         });
-        const result = await info.json();
         setAccepted([...accepted, userId]);
         const index = applicants.indexOf(userId);
         if (index > -1) {
@@ -66,21 +57,17 @@ export const Applicant = ({
     } else {
       // remove from participants
       try {
-        const info = await fetch(
-          `http://localhost:4000/api/projects/uncheck?`,
-          {
-            method: 'PUT',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              userId: userId,
-              projectId: projectInfo._id,
-            }),
-          }
-        );
-        const result = await info.json();
+        await fetch(`http://localhost:4000/api/projects/uncheck?`, {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: userId,
+            projectId: projectInfo._id,
+          }),
+        });
         setApplicants([...applicants, userId]);
         const index = accepted.indexOf(userId);
         if (index > -1) {
@@ -92,6 +79,7 @@ export const Applicant = ({
         console.log(err);
       }
     }
+    setAccepted(accepted);
   };
 
   useEffect(() => {
@@ -105,8 +93,8 @@ export const Applicant = ({
           onPress={handleCheck}
           style={{
             backgroundColor: MIDNIGHT_GREEN,
-            height: 20,
-            width: 20,
+            height: '20px',
+            width: '20px',
             alignSelf: 'center',
             justifyContent: 'center',
           }}
@@ -119,14 +107,30 @@ export const Applicant = ({
           )}
         </Pressable>
         {userInfo && (
-          <View style={{ flex: 2, marginLeft: 10 }}>
+          <Pressable
+            style={{ flex: 2, marginLeft: '10px' }}
+            onPress={() =>
+              navigation.navigate('Other User', {
+                projectInfo: projectInfo,
+                userInfo: userInfo,
+              })
+            }
+          >
             <Text>{userInfo.username}</Text>
             <Text numberOfLines={2} style={{ color: 'grey' }}>
               {userInfo.bio}
             </Text>
-          </View>
+          </Pressable>
         )}
-        <Pressable style={{ alignSelf: 'center' }}>
+        <Pressable
+          style={{ alignSelf: 'center' }}
+          onPress={() =>
+            navigation.navigate('Other User', {
+              projectInfo: projectInfo,
+              userInfo: userInfo,
+            })
+          }
+        >
           <FontAwesomeIcon icon={faChevronRight} />
         </Pressable>
       </View>

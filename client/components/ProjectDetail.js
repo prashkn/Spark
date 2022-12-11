@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {
   Text,
   View,
@@ -8,9 +7,10 @@ import {
   StyleSheet,
 } from 'react-native';
 import { BLOND, MIDNIGHT_GREEN, POLISHED_PINE } from '../styles/palette';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { Applicant } from './Applicant';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 export function ProjectDetail({ navigation, route }) {
   const projectInfo = route.params.projectInfo;
@@ -42,7 +42,13 @@ export function ProjectDetail({ navigation, route }) {
               })
             }
           >
-            <Text style={{ color: MIDNIGHT_GREEN, alignSelf: 'center' }}>
+            <Text
+              style={{
+                color: MIDNIGHT_GREEN,
+                alignSelf: 'center',
+                fontSize: 16,
+              }}
+            >
               Edit
             </Text>
           </Pressable>
@@ -51,7 +57,7 @@ export function ProjectDetail({ navigation, route }) {
           <View style={project.information}>
             <Text style={details.container}>
               <Text style={{ fontWeight: 'bold' }}>Description: </Text>
-              <Text style={{ fontWeight: '200', fontStyle: 'italic' }}>
+              <Text style={{ fontWeight: 200, fontStyle: 'italic' }}>
                 {projectInfo.description}
               </Text>
             </Text>
@@ -83,8 +89,8 @@ export function ProjectDetail({ navigation, route }) {
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'center',
-              paddingHorizontal: 10,
-              paddingBottom: 15,
+              paddingHorizontal: '10px',
+              paddingBottom: '15px',
             }}
           >
             <Pressable
@@ -143,7 +149,7 @@ export function ProjectDetail({ navigation, route }) {
   );
 }
 
-const project = StyleSheet.create({
+export const project = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 18,
