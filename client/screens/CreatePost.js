@@ -1,5 +1,5 @@
 import { View, TextInput, StyleSheet, Text, Alert } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { POLISHED_PINE, GAINSBORO, MUSTARD } from '../styles/palette';
 import DropDownPicker from 'react-native-dropdown-picker';
 import NumericInput from 'react-native-numeric-input';
@@ -7,6 +7,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
 import { skillset_list } from '../data/skillsets';
 import { BASE_URL } from '../data/util';
+import { UserContext } from '../components/UserContext';
 
 export default function CreatePost({ navigation, route }) {
   DropDownPicker.setMode('BADGE');
@@ -28,9 +29,7 @@ export default function CreatePost({ navigation, route }) {
     parseInt(route.params.timeline) || 6
   );
   const toast = useToast();
-  const user_id = route.params.user_id
-    ? route.params.user_id
-    : '63824360149a7a6b1f4eea69';
+  const { user } = useContext(UserContext);
   const isCreating = route.params.isCreating ? route.params.isCreating : true;
   const project_id = route.params.projectId || '';
 
@@ -69,7 +68,7 @@ export default function CreatePost({ navigation, route }) {
           description: description,
           skillset: skillsets,
           timeline: timeline,
-          creator: user_id,
+          creator: user._id,
           membersNeeded: members,
         }),
       }).catch((error) => console.log(error));
@@ -98,7 +97,7 @@ export default function CreatePost({ navigation, route }) {
           description: description,
           skillset: skillsets,
           timeline: timeline,
-          creator: user_id,
+          creator: user._id,
           membersNeeded: members,
         }),
       }).catch((error) => console.log(error));
