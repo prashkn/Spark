@@ -11,6 +11,11 @@ import ProfileInfoBox from './ProfileInfoBox';
 export default function Profile({ navigation }) {
   const { user } = useContext(UserContext);
 
+  // Ensure user is loaded
+  if (user === null) {
+    return <></>
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView
