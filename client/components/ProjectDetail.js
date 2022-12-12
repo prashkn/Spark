@@ -6,7 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Alert,
-  Linking
+  Linking,
 } from 'react-native';
 import {
   BLOND,
@@ -50,15 +50,15 @@ export function ProjectDetail({ navigation, route }) {
   });
 
   async function sendMessage() {
-    let numbers = ''
+    let numbers = '';
     for (let i = 0; i < accepted.length; i++) {
       try {
         const info = await fetch(`${BASE_URL}/users/${accepted[i]}`);
         const result = await info.json();
         if (numbers === '') {
-          numbers = result.data.number
+          numbers = result.data.number;
         } else {
-          numbers = numbers + "," + result.data.number
+          numbers = numbers + ',' + result.data.number;
         }
       } catch (err) {
         console.log(err);
@@ -73,16 +73,22 @@ export function ProjectDetail({ navigation, route }) {
       Alert.alert(
         'Warning!',
         'You have not accepted the amount of participants you described in the description. Are you sure you want to start this project?',
-        [{ text: 'Yes', onPress: () => sendMessage() }, { text: 'Cancel', style: 'cancel' }]
+        [
+          { text: 'Yes', onPress: () => sendMessage() },
+          { text: 'Cancel', style: 'cancel' },
+        ]
       );
     } else if (projectInfo.membersNeeded < accepted.length) {
       Alert.alert(
         'Warning!',
         'You have accepted more than the amount of participants you described in the description. Are you sure you want to start this project?',
-        [{ text: 'Yes', onPress: () => sendMessage() }, { text: 'Cancel', style: 'cancel' }]
+        [
+          { text: 'Yes', onPress: () => sendMessage() },
+          { text: 'Cancel', style: 'cancel' },
+        ]
       );
     } else {
-      sendMessage()
+      sendMessage();
     }
   }
 
@@ -111,7 +117,7 @@ export function ProjectDetail({ navigation, route }) {
                 onPress={() =>
                   navigation.navigate('Editing Project', {
                     title: projectInfo.title,
-                    biography: projectInfo.summary,
+                    summary: projectInfo.summary,
                     description: projectInfo.description,
                     members: projectInfo.members,
                     skillsets: projectInfo.skillset,
@@ -235,33 +241,33 @@ export function ProjectDetail({ navigation, route }) {
             <ScrollView style={{ display: 'flex' }}>
               {onApplicants
                 ? applicants &&
-                applicants.map((applicant, i) => (
-                  <Applicant
-                    key={i}
-                    userId={applicant}
-                    navigation={navigation}
-                    isAccepted={false}
-                    projectInfo={projectInfo}
-                    setAccepted={setAccepted}
-                    setApplicants={setApplicants}
-                    applicants={applicants}
-                    accepted={accepted}
-                  />
-                ))
+                  applicants.map((applicant, i) => (
+                    <Applicant
+                      key={i}
+                      userId={applicant}
+                      navigation={navigation}
+                      isAccepted={false}
+                      projectInfo={projectInfo}
+                      setAccepted={setAccepted}
+                      setApplicants={setApplicants}
+                      applicants={applicants}
+                      accepted={accepted}
+                    />
+                  ))
                 : accepted &&
-                accepted.map((applicant, i) => (
-                  <Applicant
-                    key={i}
-                    userId={applicant}
-                    navigation={navigation}
-                    isAccepted={true}
-                    projectInfo={projectInfo}
-                    setAccepted={setAccepted}
-                    setApplicants={setApplicants}
-                    applicants={applicants}
-                    accepted={accepted}
-                  />
-                ))}
+                  accepted.map((applicant, i) => (
+                    <Applicant
+                      key={i}
+                      userId={applicant}
+                      navigation={navigation}
+                      isAccepted={true}
+                      projectInfo={projectInfo}
+                      setAccepted={setAccepted}
+                      setApplicants={setApplicants}
+                      applicants={applicants}
+                      accepted={accepted}
+                    />
+                  ))}
             </ScrollView>
           )}
           {!onApplicants && !fromApps && (
@@ -354,7 +360,7 @@ const details = StyleSheet.create({
     fontSize: 14,
     display: 'flex',
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   timeline: {
     color: MIDNIGHT_GREEN,

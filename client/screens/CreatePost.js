@@ -13,9 +13,7 @@ export default function CreatePost({ navigation, route }) {
   DropDownPicker.setMode('BADGE');
   DropDownPicker.setListMode('SCROLLVIEW');
   const [title, setTitle] = React.useState(route.params.title || '');
-  const [biography, setBiography] = React.useState(
-    route.params.biography || ''
-  );
+  const [summary, setSummary] = React.useState(route.params.summary || '');
   const [description, setDescription] = React.useState(
     route.params.description || ''
   );
@@ -36,7 +34,7 @@ export default function CreatePost({ navigation, route }) {
 
   const verify = () => {
     console.log(members);
-    if (title === '' || biography === '') {
+    if (title === '' || summary === '') {
       Alert.alert('Invalid Form', 'All fields must be non-empty.', [
         { text: 'Ok' },
         { text: 'Cancel', style: 'cancel' },
@@ -58,6 +56,8 @@ export default function CreatePost({ navigation, route }) {
   const postToDB = async () => {
     const shouldPost = verify();
     if (shouldPost) {
+      console.log('SUMMARY on post');
+      console.log(summary);
       await fetch(`${BASE_URL}/projects/create`, {
         method: 'POST',
         headers: {
@@ -66,7 +66,7 @@ export default function CreatePost({ navigation, route }) {
         },
         body: JSON.stringify({
           title: title,
-          summary: biography,
+          summary: summary,
           description: description,
           skillset: skillsets,
           timeline: timeline,
@@ -88,6 +88,8 @@ export default function CreatePost({ navigation, route }) {
   async function editProject(id) {
     const shouldPost = verify();
     if (shouldPost) {
+      console.log('SUMMARY');
+      console.log(summary);
       await fetch(`${BASE_URL}/projects/${id}`, {
         method: 'PUT',
         headers: {
@@ -96,7 +98,7 @@ export default function CreatePost({ navigation, route }) {
         },
         body: JSON.stringify({
           title: title,
-          summary: biography,
+          summary: summary,
           description: description,
           skillset: skillsets,
           timeline: timeline,
@@ -129,9 +131,9 @@ export default function CreatePost({ navigation, route }) {
       />
       <TextInput
         style={styles.input}
-        value={biography}
-        onChangeText={setBiography}
-        placeholder={'Biography'}
+        value={summary}
+        onChangeText={setSummary}
+        placeholder={'Summary'}
       />
       <TextInput
         multiline

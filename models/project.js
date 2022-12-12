@@ -13,7 +13,7 @@ var ProjectSchema = new mongoose.Schema(
     applicants: [String],
     uninterested: [String],
     participants: [String],
-    summary: String,
+    summary: { type: String, default: "" },
   },
   { versionKey: false }
 );
