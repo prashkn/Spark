@@ -15,7 +15,6 @@ import { BASE_URL } from '../data/util';
 
 export const Applications = ({ navigation }) => {
     const [applications, setApplications] = useState([]);
-    const [projects, setProjects] = useState([])
     const NUM_OF_SKELETONS = 7;
 
     const getApplications = async (id) => {
@@ -30,13 +29,6 @@ export const Applications = ({ navigation }) => {
             } else {
                 for (let i = 0; i < result.data.length; i++) {
                     setApplications(apps => [...apps, result.data[i]]);
-                    try {
-                        const info2 = await fetch(`${BASE_URL}/projects/${result.data[i].projectId}`)
-                        const result2 = await info2.json()
-                        setProjects(projects => [...projects, result2.data])
-                    } catch (err) {
-                        console.log(err)
-                    }
                 }
             }
         } catch (err) {
@@ -70,23 +62,23 @@ export const Applications = ({ navigation }) => {
         >
             <ScrollView style={styles.container}>
                 <Text style={styles.header}>My Applications</Text>
-                {projects.length === 0 ?
+                {applications.length === 0 ?
                     <View style={{ height: '100%', justifyContent: 'center' }}>
                         <Text style={{ alignSelf: 'center', fontFamily: 'Poppins-Regular' }}>You have not applied to any projects.</Text>
                     </View>
                     :
                     <View style={styles.applications}>
-                        {!projects ? (
+                        {!applications ? (
                             skeletons
                         ) : (
-                            projects.map((proj, i) => (
+                            applications.map((app, i) => (
                                 <Pressable
                                     onPress={() =>
-                                        navigation.navigate('Details', { id: proj._id, fromApps: true })
+                                        navigation.navigate('Details', { id: app.projectId, fromApps: true })
                                     }
                                     key={i}
                                 >
-                                    <Project project={proj} status={applications[i].status} />
+                                    <Project projectId={app.projectId} status={applications[i].status} />
                                 </Pressable>
                             ))
                         )}
