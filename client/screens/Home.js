@@ -1,22 +1,37 @@
-import { View, StyleSheet, Modal, TouchableOpacity } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Button,
+  Text,
+  ScrollView,
+} from 'react-native';
 import { useEffect, useState } from 'react';
+import Modal from 'react-native-modal';
 import AcceptProject from '../components/AcceptProject';
 import CreatePostButton from '../components/CreatePostButton';
 import DeclineProject from '../components/DeclineProject';
 import ProjectCardFeed from '../components/ProjectCardFeed';
-import { BLOND, POLISHED_PINE } from '../styles/palette';
+import { BLOND, GAINSBORO, POLISHED_PINE, MUSTARD } from '../styles/palette';
 import Logo from '../assets/spark_logo.svg';
 import { Skeleton } from '@rneui/themed';
 import EmptyFeed from '../components/EmptyFeed';
+import { skillset_list } from '../data/skillsets';
 import { BASE_URL } from '../data/util';
+import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function Home({ navigation, user_id = 't' }) {
+  DropDownPicker.setMode('BADGE');
+  DropDownPicker.setListMode('SCROLLVIEW');
   const [projectInfo, setProjectInfo] = useState([]); //holds all projects
   const [creator, setCreator] = useState({}); //holds the creator of the project
   const [counter, setCounter] = useState(0); //determines where in the array of projects we should
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [skillsets, setSkillsets] = useState([]);
+  const [possibleSkills, setPossibleSkills] = useState(skillset_list);
 
   //initialize home screen with information
   const getAllInfo = async (user_id) => {
@@ -110,6 +125,37 @@ export default function Home({ navigation, user_id = 't' }) {
 
   return (
     <View style={styles.screen}>
+      <Modal
+        isVisible={modalVisible}
+        animationIn={'slideInUp'}
+        onBackdropPress={() => setModalVisible(!modalVisible)}
+      >
+        <View style={styles.modal}>
+          <Text style={styles.modal_title}>Filter brainstorms by:</Text>
+          <View style={styles.singleinput}>
+            <DropDownPicker
+              multiple={true}
+              min={1}
+              open={open}
+              value={skillsets}
+              items={possibleSkills}
+              setOpen={setOpen}
+              setValue={setSkillsets}
+              setItems={setPossibleSkills}
+              style={styles.dropdown}
+              textStyle={styles.dd_text}
+            />
+          </View>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => setModalVisible(!modalVisible)}
+          >
+            <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
+              Update Filters
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
       <View style={styles.container}>
         <Logo width={'15%'} height={'15%'} />
         {loading && (
@@ -159,7 +205,11 @@ export default function Home({ navigation, user_id = 't' }) {
       </View>
 
       <View style={styles.bottomButtons}>
-        <TouchableOpacity activeOpacity={0.8} style={styles.filter}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          style={styles.filter}
+          onPress={() => setModalVisible(!modalVisible)}
+        >
           <Icon name={'tune'} color={'white'} size={35} />
         </TouchableOpacity>
         <CreatePostButton
@@ -212,5 +262,41 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: BLOND,
+  },
+  modal: {
+    flex: 0.5,
+    alignItems: 'center',
+    backgroundColor: '#e7e8e8',
+    borderRadius: '15%',
+  },
+  modalinput: {
+    backgroundColor: GAINSBORO,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '80%',
+    borderRadius: '5%',
+  },
+  dropdown: {
+    width: '80%',
+    alignSelf: 'center',
+    borderRadius: '5%',
+    borderWidth: 0,
+    marginBottom: '50%',
+  },
+  dd_text: {
+    fontSize: 14,
+    color: POLISHED_PINE,
+  },
+  btn: {
+    marginTop: '10%',
+    backgroundColor: MUSTARD,
+    paddingHorizontal: 50,
+    paddingVertical: 10,
+    borderRadius: 30,
+  },
+  modal_title: {
+    marginTop: '8%',
+    fontSize: 20,
+    marginBottom: '5%',
   },
 });
