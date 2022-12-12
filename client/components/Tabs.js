@@ -8,9 +8,9 @@ import { MIDNIGHT_GREEN } from '../styles/palette';
 import HomeAndPost from './HomeAndPost';
 import ProfileAndSettings from './ProfileAndSettings';
 import YourBackground from '../screens/YourBackground';
+import { UserContext } from './UserContext';
 
-
-  const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 export default function Tabs() {
   return (
     <Tab.Navigator
@@ -39,11 +39,19 @@ export default function Tabs() {
       })}
     >
       {/* <Tab.Screen name="Login" component={YourBasicInformation} /> */}
-      <Tab.Screen name="Home/Create" component={HomeAndPost} />
+      <Tab.Screen
+        name="Home/Create"
+        component={HomeAndPost}
+        screenOptions={{ title: 'Home' }}
+      />
       <Tab.Screen name="Projects" component={Projects} />
 
       {/* Use nested navigator to display profile and settings sub-pages */}
-      <Tab.Screen name="Profile/Settings" component={ProfileAndSettings} />
+      <Tab.Screen
+        name="Profile/Settings"
+        component={ProfileAndSettings}
+
+      />
     </Tab.Navigator>
   );
 }

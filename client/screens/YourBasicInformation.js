@@ -4,10 +4,11 @@ import LoginButton from '../components/LoginButton';
 import LoginTextInput from '../components/LoginTextInput';
 import ProgressBar from '../components/ProgressBar';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { NewUserInfoContext } from '../components/SignUp';
 import { GAINSBORO, MUSTARD } from '../styles/palette';
 import * as EmailValidator from 'email-validator';
 import WarningMessage from '../components/WarningMessage';
+import { NewUserInfoContext } from '../components/NewUserInfoContext';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default function YourBasicInformation({ navigation }) {
   const { newUserInfo, setNewUserInfo } = useContext(NewUserInfoContext);
@@ -15,6 +16,7 @@ export default function YourBasicInformation({ navigation }) {
   const [nameValid, setNameValid] = useState(null);
   const [emailValid, setEmailValid] = useState(null);
   const [passwordValid, setPasswordValid] = useState(null);
+  const [usernameValid, setUsernameValid] = useState(null);
 
   const [progress, setProgress] = useState(20);
 
@@ -30,22 +32,31 @@ export default function YourBasicInformation({ navigation }) {
       setEmailValid(true);
     }
 
+    // TODO: Check if email is valid (does user with email exist in DB?)
+
     // Check if name is valid
-    if (
-      newUserInfo.name === undefined ||
-      newUserInfo.name.length === 0
-    ) {
+    if (newUserInfo.name === undefined || newUserInfo.name.length === 0) {
       setNameValid(false);
       allFieldsValid = false;
     } else {
       setNameValid(true);
     }
 
-    // Check if password is valid
+    // Check if username is valid
     if (
-      newUserInfo.password === undefined ||
-      newUserInfo.password.length < 8
+      newUserInfo.username === undefined ||
+      newUserInfo.username.length === 0
     ) {
+      setUsernameValid(false);
+      allFieldsValid = false;
+    } else {
+      setUsernameValid(true);
+    }
+
+    // TODO: Check if username exists in DB
+
+    // Check if password is valid
+    if (newUserInfo.password === undefined || newUserInfo.password.length < 8) {
       setPasswordValid(false);
       allFieldsValid = false;
     } else {
@@ -68,7 +79,7 @@ export default function YourBasicInformation({ navigation }) {
         }}
       >
         <ProgressBar progress={progress} />
-        <ScrollView
+        <KeyboardAwareScrollView
           style={{
             height: '100%',
           }}
@@ -100,11 +111,42 @@ export default function YourBasicInformation({ navigation }) {
                 setNewUserInfo({ ...newUserInfo, name: text });
               }}
               onSubmitEditing={submitForm}
-              returnKeyType='done'
+              returnKeyType="done"
             />
 
+            {/* TODO: Use object instead of individual booleans to store if fields are invalid and store a message in the object so warning message can be dynamically updated */}
             {nameValid === false && (
               <WarningMessage message="Please enter your full name." />
+            )}
+
+            <View>
+              <LoginTextInput
+                placeholder="username"
+                onChangeText={(text) => {
+                  setNewUserInfo({ ...newUserInfo, username: text });
+                }}
+                onSubmitEditing={submitForm}
+                returnKeyType="done"
+                style={{ paddingLeft: 28 }}
+              />
+              <Text
+                style={{
+                  fontFamily: 'Poppins-Medium',
+                  fontSize: 16,
+                  color: '#BDBDBD',
+                  position: 'absolute',
+                  paddingLeft: 10,
+                  paddingTop: 12
+                  // top: '22%',
+                  // left: 10,
+                }}
+              >
+                @
+              </Text>
+            </View>
+
+            {usernameValid === false && (
+              <WarningMessage message="Please enter a username." />
             )}
 
             <LoginTextInput
@@ -114,7 +156,7 @@ export default function YourBasicInformation({ navigation }) {
                 setNewUserInfo({ ...newUserInfo, email: text });
               }}
               onSubmitEditing={submitForm}
-              returnKeyType='done'
+              returnKeyType="done"
             />
 
             {emailValid === false && (
@@ -128,19 +170,15 @@ export default function YourBasicInformation({ navigation }) {
                 setNewUserInfo({ ...newUserInfo, password: text });
               }}
               onSubmitEditing={submitForm}
-              returnKeyType='done'
+              returnKeyType="done"
             />
-            
 
             {passwordValid === false && (
               <WarningMessage message="Please enter a password with at least 8 characters." />
             )}
           </View>
-          <LoginButton
-            title="Continue"
-            onPress={submitForm}
-          />
-        </ScrollView>
+          <LoginButton title="Continue" onPress={submitForm} />
+        </KeyboardAwareScrollView>
       </View>
 
       <StatusBar barStyle="dark-content" />

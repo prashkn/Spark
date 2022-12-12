@@ -2,15 +2,26 @@ import { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, StatusBar, Text, View } from 'react-native';
 import LoginButton from '../components/LoginButton';
 import LoginTextInput from '../components/LoginTextInput';
-import { NewUserInfoContext } from '../components/SignUp';
+import { NewUserInfoContext } from '../components/NewUserInfoContext';
 import { GAINSBORO, MUSTARD } from '../styles/palette';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
+import { SPARK_API } from './BackendURL';
+import { UserContext } from '../components/UserContext';
+import WarningMessage from '../components/WarningMessage';
 
 export default function YourBackground({ navigation }) {
   const { newUserInfo, setNewUserInfo } = useContext(NewUserInfoContext);
   const [progress, setProgress] = useState(90);
 
+  const { setUser } = useContext(UserContext);
+
   useEffect(() => {
-    // Redirect to signup flow page 1 if missing basic info (should be handled 
+    // Redirect to signup flow page 1 if missing basic info (should be handled
     // in previous page, but in case someone goes to the URL for this page
     // directly without inputting basic info, we should redirect them)
     if (
@@ -23,6 +34,90 @@ export default function YourBackground({ navigation }) {
       return;
     }
   }, []);
+
+  const [fieldsValid, setFieldsValid] = useState({
+    bio: true,
+    experience: true,
+  });
+
+  function submitForm() {
+    console.log(newUserInfo);
+    console.log(fieldsValid);
+
+    let allFieldsValid = true;
+
+    let newFieldsValid = {...fieldsValid};
+
+    // Check if bio is valid
+    if (newUserInfo.bio === undefined || newUserInfo.bio.length === 0) {
+      newFieldsValid = { ...newFieldsValid, bio: false };
+      allFieldsValid = false;
+    } else {
+      newFieldsValid = { ...newFieldsValid, bio: true };
+    }
+
+    // Check if experience is valid
+    if (
+      newUserInfo.experience === undefined ||
+      newUserInfo.experience.length === 0
+    ) {
+      newFieldsValid = { ...newFieldsValid, experience: false };
+      allFieldsValid = false;
+    } else {
+      newFieldsValid = { ...newFieldsValid, experience: true };
+    }
+
+    setFieldsValid(newFieldsValid);
+
+    if (!allFieldsValid) {
+      return;
+    }
+
+    // Sign up user with Firebase
+    const auth = getAuth();
+    createUserWithEmailAndPassword(
+      auth,
+      newUserInfo.email,
+      newUserInfo.password
+    )
+      .then(async () => {
+        const newUserToBackend = {
+          ...newUserInfo,
+          password: '',
+          skills: newUserInfo.experience,
+        };
+        console.log(newUserToBackend);
+
+        // Create user in DB
+        const response = await fetch(`${SPARK_API}/users/create`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newUserToBackend),
+        });
+
+        if (!response.ok) {
+          console.log(response);
+          return;
+        }
+
+        const body = await response.json();
+
+        setUser(body.data);
+
+        signInWithEmailAndPassword(
+          auth,
+          newUserInfo.email,
+          newUserInfo.password
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // navigation.navigate('Root', { screen: 'Home' });
+  }
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
@@ -60,7 +155,7 @@ export default function YourBackground({ navigation }) {
         </View>
       </View>
 
-      <ScrollView
+      <KeyboardAwareScrollView
         style={{
           height: '100%',
         }}
@@ -71,6 +166,7 @@ export default function YourBackground({ navigation }) {
         }}
       >
         <Text>{JSON.stringify(newUserInfo)}</Text>
+        <Text>{JSON.stringify(fieldsValid)}</Text>
         <Text style={{ fontFamily: 'Poppins-Bold', fontSize: 24 }}>
           Your Background
         </Text>
@@ -95,22 +191,34 @@ export default function YourBackground({ navigation }) {
           <LoginTextInput
             placeholder="About me"
             multiline={true}
-            style={{ height: 125 }}
+            scrollEnabled={true}
+            style={{ height: 125, paddingTop: 10 }}
+            onChangeText={(text) => {
+              setNewUserInfo({ ...newUserInfo, bio: text });
+            }}
           />
+
+          {fieldsValid.bio === false && (
+            <WarningMessage message="Please enter a bio." />
+          )}
+
           <LoginTextInput
             placeholder="Experience"
             multiline={true}
-            style={{ height: 125 }}
+            scrollEnabled={true}
+            style={{ height: 125, paddingTop: 10 }}
+            onChangeText={(text) => {
+              setNewUserInfo({ ...newUserInfo, experience: text });
+            }}
           />
+
+          {fieldsValid.experience === false && (
+            <WarningMessage message="Please select experience." />
+          )}
         </View>
 
-        <LoginButton
-          title="Start Brainstorming!"
-          onPress={() => {
-            navigation.navigate('Root', { screen: 'Home' });
-          }}
-        />
-      </ScrollView>
+        <LoginButton title="Start Brainstorming!" onPress={submitForm} />
+      </KeyboardAwareScrollView>
       {/* </View> */}
 
       <StatusBar barStyle="dark-content" />

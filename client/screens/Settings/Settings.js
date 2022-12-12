@@ -1,4 +1,5 @@
 import { DefaultTheme } from '@react-navigation/native';
+import { getAuth } from 'firebase/auth';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { GAINSBORO, MIDNIGHT_GREEN } from '../../styles/palette';
@@ -12,11 +13,12 @@ export default function Settings({ navigation }) {
         { name: 'Security', icon: 'lock-closed-outline' },
         { name: 'Help', icon: 'help-outline' },
         { name: 'About', icon: 'information-circle-outline' },
+        { name: 'Log Out', icon: 'log-out', onPress: () => {const auth = getAuth(); auth.signOut();} },
       ].map((setting, i) => (
         <View key={i}>
           <Pressable
             // Navigate to menu when pressed
-            onPress={() => navigation.push(setting.name)}
+            onPress={setting.onPress ? setting.onPress : () => navigation.push(setting.name)}
             style={({ pressed, hovered }) => [
               {
                 ...styles.menuButton,

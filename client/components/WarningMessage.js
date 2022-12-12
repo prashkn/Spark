@@ -13,13 +13,15 @@ export default function WarningMessage(props) {
         padding: 10,
         flexDirection: 'row',
         marginBottom: 10,
-        alignItems: 'center'
+        alignItems: 'center',
+
+        width: '100%',
       }}
     >
       <Icon name="warning" size={20} color="black" style={{ marginRight: 5 }} />
       <Text
         style={{
-          fontFamily: 'Poppins-Regular',
+          fontFamily: 'Poppins-Medium',
           color: 'black',
           fontSize: 16,
           flex: 1

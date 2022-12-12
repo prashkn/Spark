@@ -1,8 +1,9 @@
+import { forwardRef } from 'react';
 import { TextInput } from 'react-native';
 
-export default function LoginTextInput({ style, ...props }) {
+export default forwardRef(({ style, ...props }, ref) => {
   return (
-    <TextInput
+    <TextInput ref={ref}
       style={[
         {
           borderWidth: 1,
@@ -23,3 +24,4 @@ export default function LoginTextInput({ style, ...props }) {
     />
   );
 }
+)

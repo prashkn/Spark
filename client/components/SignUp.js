@@ -4,13 +4,10 @@ import { Text } from 'react-native';
 import YourBackground from '../screens/YourBackground';
 import YourBasicInformation from '../screens/YourBasicInformation';
 import { MIDNIGHT_GREEN } from '../styles/palette';
+import { NewUserInfoContext } from './NewUserInfoContext';
 
 // let newUserInfo = {};
 
-export const NewUserInfoContext = createContext({
-  newUserInfo: {},
-  setNewUserInfo: (info) => {},
-});
 
 const Stack = createNativeStackNavigator();
 

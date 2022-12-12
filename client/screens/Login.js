@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import {
   Image,
   SafeAreaView,
@@ -15,105 +15,163 @@ import {
 } from 'react-native';
 import LoginButton from '../components/LoginButton';
 import LoginTextInput from '../components/LoginTextInput';
+import { UserContext } from '../components/UserContext';
+import WarningMessage from '../components/WarningMessage';
 import { BLOND, GAINSBORO, MUSTARD } from '../styles/palette';
+import * as EmailValidator from 'email-validator';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Login({ navigation }) {
-  const [user, setUser] = useState();
+  const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [validForm, setValidForm] = useState({
+    email: { valid: true, message: '' },
+    password: { valid: true, message: '' },
+  });
+
+  const passwordBox = useRef();
+
   const auth = getAuth();
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const data = await fetch('https://spark-api.owenhay.es/api/projects/homepage?userId=63824360149a7a6b1f4eea69');
-  //     console.log(await data.text());
-  //   }
-  //   fetchData();
-  // }, []);
+  function login() {
+    let allFieldsValid = true;
 
-  // useEffect(() => {
-  //   signOut(auth)
-  // }, [])
-
-  onAuthStateChanged(auth, (user) => {
-    setUser(user);
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid;
-      user.getIdToken(true).then((thing) => {
-        console.log(thing);
-      })
-      // ...
+    // Check if email is valid
+    if (!EmailValidator.validate(email)) {
+      setValidForm({
+        ...validForm,
+        email: { valid: false, message: 'Please enter a valid email.' },
+      });
+      allFieldsValid = false;
     } else {
-      // User is signed out
-      // ...
+      // Set back to true in case user comes back
+      setValidForm({
+        ...validForm,
+        email: { valid: true, message: '' },
+      });
     }
-  });
+
+    if (!allFieldsValid) {
+      return;
+    }
+
+    // If all fields valid, sign in
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log(userCredential);
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+        if (error.code === 'auth/user-not-found') {
+          setValidForm({
+            ...validForm,
+            email: {
+              valid: false,
+              message: 'User not found. Would you like to create an account?',
+            },
+          });
+        } else if (error.code === 'auth/wrong-password') {
+          setValidForm({
+            ...validForm,
+            password: {
+              valid: false,
+              message: 'Incorrect password. Try again.',
+            },
+          });
+        }
+      });
+  }
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
-      {/* <View> */}
-      <Image source={require('../assets/spark_logo.png')} style={styles.logo} />
-      <View style={styles.container}>
-        <Text style={styles.title}>Spark</Text>
-        <Text style={{ maxWidth: '100%' }}>{JSON.stringify(user)}</Text>
+      <ScrollView
+        scrollEnabled={false}
+        keyboardShouldPersistTaps="handled"
+        style={{
+          flex: 1,
+          width: '100%',
+        }}
+        contentContainerStyle={{
+          flex: 1,
+          // Put logo on top, input and buttons in center, and spacer at bottom
+          justifyContent: 'space-between',
 
-        <LoginTextInput
-          placeholder="Email"
-          keyboardType="email-address"
-          value={email}
-          onChangeText={setEmail}
+          // Horizontally center items
+          alignItems: 'center',
+        }}
+      >
+        <Image
+          source={require('../assets/spark_logo.png')}
+          style={styles.logo}
         />
-        <LoginTextInput
-          placeholder="Password"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
+        <View style={styles.container}>
+          <Text style={styles.title}>Spark</Text>
+          {/* <Text style={{ maxWidth: '100%' }}>{JSON.stringify(user)}</Text> */}
 
-        <LoginButton
-          title="Log in"
-          backgroundColor={MUSTARD}
-          backgroundColorPressed="#ffd333"
-          onPress={() => {
-            const auth = getAuth();
-            signInWithEmailAndPassword(auth, email, password)
-              .then((userCredential) => {
-                console.log(userCredential);
-              })
-              .catch((error) => {
-                console.log(JSON.stringify(error));
-              });
-          }}
-        />
+          <LoginTextInput
+            placeholder="Email"
+            keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
+            returnKeyType="next"
+            onSubmitEditing={() => {
+              passwordBox.current.focus();
+            }}
+          />
 
-        <LoginButton
-          title="Forgot password?"
-          backgroundColor={BLOND}
-          backgroundColorPressed="#ffea80"
-        />
+          {validForm.email.valid === false && (
+            <WarningMessage message={validForm.email.message} />
+          )}
 
-        <View style={styles.orContainer}>
-          <View style={styles.horizontalLine}></View>
-          <Text style={styles.orText}>or</Text>
-          <View style={styles.horizontalLine}></View>
+          <LoginTextInput
+            placeholder="Password"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+            onSubmitEditing={login}
+            returnKeyType="done"
+            ref={passwordBox}
+          />
+
+          {validForm.password.valid === false && (
+            <WarningMessage message={validForm.password.message} />
+          )}
+
+          <LoginButton
+            title="Log in"
+            backgroundColor={MUSTARD}
+            backgroundColorPressed="#ffd333"
+            onPress={login}
+          />
+
+          <LoginButton
+            title="Forgot password?"
+            backgroundColor={BLOND}
+            backgroundColorPressed="#ffea80"
+          />
+
+          <View style={styles.orContainer}>
+            <View style={styles.horizontalLine}></View>
+            <Text style={styles.orText}>or</Text>
+            <View style={styles.horizontalLine}></View>
+          </View>
+
+          <LoginButton
+            title="Create account"
+            backgroundColor={MUSTARD}
+            backgroundColorPressed="#ffd333"
+            onPress={() => navigation.navigate('SignUpRoot')}
+          />
         </View>
 
-        <LoginButton
-          title="Create account"
-          backgroundColor={MUSTARD}
-          backgroundColorPressed="#ffd333"
-          onPress={() => navigation.navigate('SignUpRoot')}
-        />
-      </View>
+        {/* Spacer (same height as logo) to keep input text and login buttons centered */}
+        <View style={styles.bottomSpacer}></View>
 
-      {/* Spacer (same height as logo) to keep input text and login buttons centered */}
-      <View style={styles.bottomSpacer}></View>
-
-      <StatusBar barStyle="dark-content" />
-      {/* </View> */}
+        <StatusBar barStyle="dark-content" />
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -143,8 +201,7 @@ const styles = StyleSheet.create({
     width: '100%',
 
     // Center contents
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    marginHorizontal: 'auto',
   },
 
   logo: { height: logoSize, width: logoSize },
