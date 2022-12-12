@@ -54,10 +54,6 @@ export default function Projects({ navigation }) {
     getProjects(user._id);
   }, []);
 
-  // if (projects.length !== 0) {
-  //   setNoProjects(false)
-  // }
-
   return (
     <SafeAreaView
       style={{

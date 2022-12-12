@@ -117,6 +117,8 @@ export function ProjectDetail({ navigation, route }) {
                     skillsets: projectInfo.skillset,
                     timeline: projectInfo.timeline,
                     projectId: projectInfo._id,
+                    isCreating: false,
+                    user_id: projectInfo.creator,
                   })
                 }
               >
