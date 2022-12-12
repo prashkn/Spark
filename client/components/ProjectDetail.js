@@ -90,7 +90,7 @@ export function ProjectDetail({ navigation, route }) {
                 onPress={() =>
                   navigation.navigate('Editing Project', {
                     title: projectInfo.title,
-                    biography: '',
+                    biography: projectInfo.summary,
                     description: projectInfo.description,
                     members: projectInfo.members,
                     skillsets: projectInfo.skillset,

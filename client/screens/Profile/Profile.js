@@ -1,12 +1,21 @@
 import { Button } from '@rneui/themed';
 import { StatusBar } from 'expo-status-bar';
+import { useContext } from 'react';
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { UserContext } from '../../components/UserContext';
 import { BLOND, MIDNIGHT_GREEN } from '../../styles/palette';
 import styles from './Profile-styles';
 import ProfileInfoBox from './ProfileInfoBox';
 
 export default function Profile({ navigation }) {
+  const { user } = useContext(UserContext);
+
+  // Ensure user is loaded
+  if (user === null) {
+    return <></>
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView
@@ -32,8 +41,8 @@ export default function Profile({ navigation }) {
 
           {/* Sub-container with name, username, and location */}
           <View style={styles.userInfoTextArea}>
-            <Text style={styles.name}>George Washington</Text>
-            <Text style={styles.poppinsSmall}>@george</Text>
+            <Text style={styles.name}>{user.name}</Text>
+            <Text style={styles.poppinsSmall}>@{user.username}</Text>
 
             {/* Container for location pin and location name */}
             <View style={styles.locationContainer}>
@@ -51,12 +60,12 @@ export default function Profile({ navigation }) {
           {
             header: 'About me',
             content:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in est ex. Nulla lacinia tortor sed ultrices vulputate. Mauris at mi nisi. Integer lobortis, diam et accumsan feugiat, lacus orci tempus felis, id iaculis nunc nulla ut nisi. Nunc eget enim sem. ',
+              user.bio /* 'OWEN Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in est ex. Nulla lacinia tortor sed ultrices vulputate. Mauris at mi nisi. Integer lobortis, diam et accumsan feugiat, lacus orci tempus felis, id iaculis nunc nulla ut nisi. Nunc eget enim sem. ', */,
           },
           {
             header: 'Skills',
-            content:
-              'Nulla vehicula ex ut ipsum ornare lobortis. Cras ac consectetur neque, sed malesuada felis. Sed eget quam pretium, viverra sem in, facilisis tellus. Curabitur molestie est bibendum pellentesque imperdiet.',
+            content: JSON.stringify(user.skills),
+            // 'Nulla vehicula ex ut ipsum ornare lobortis. Cras ac consectetur neque, sed malesuada felis. Sed eget quam pretium, viverra sem in, facilisis tellus. Curabitur molestie est bibendum pellentesque imperdiet.',
           },
           {
             header: 'Experience',

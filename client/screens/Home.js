@@ -13,7 +13,7 @@ import CreatePostButton from '../components/CreatePostButton';
 import DeclineProject from '../components/DeclineProject';
 import ProjectCardFeed from '../components/ProjectCardFeed';
 import { BLOND, GAINSBORO, POLISHED_PINE, MUSTARD } from '../styles/palette';
-import Logo from '../assets/spark_logo.svg';
+// import Logo from '../assets/spark_logo.svg';
 import { Skeleton } from '@rneui/themed';
 import EmptyFeed from '../components/EmptyFeed';
 import { skillset_list } from '../data/skillsets';
@@ -164,7 +164,7 @@ export default function Home({ navigation, user_id = 't' }) {
         </View>
       </Modal>
       <View style={styles.container}>
-        <Logo width={'15%'} height={'15%'} />
+        {/* <Logo width={'15%'} height={'15%'} /> */}
         {loading && (
           <>
             <Skeleton animation="wave" width={'80%'} height={'50%'} />
