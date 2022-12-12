@@ -13,8 +13,7 @@ import { Skeleton } from '@rneui/themed';
 import { BASE_URL } from '../data/util';
 
 export default function Projects({ navigation }) {
-  const [projects, setProjects] = useState([]);
-  // const [noProjects, setNoProjects] = useState();
+  const [projectIds, setProjectIds] = useState([]);
   const NUM_OF_SKELETONS = 7;
 
   const getProjects = async (id) => {
@@ -23,15 +22,14 @@ export default function Projects({ navigation }) {
         `${BASE_URL}/projects/createdprojects?userId=${id}`
       );
       const result = await info.json();
-      const projects = [];
+      const ids = [];
       if (result.data.length === 0) {
-        setProjects([]);
+        setProjectIds([]);
       } else {
-        // setNoProjects(false);
         for (let i = 0; i < result.data.length; i++) {
-          projects.push(result.data[i]);
+          ids.push(result.data[i]._id);
         }
-        setProjects(projects);
+        setProjectIds(ids);
       }
     } catch (err) {
       console.log(err);
@@ -67,23 +65,23 @@ export default function Projects({ navigation }) {
     >
       <ScrollView style={styles.container}>
         <Text style={styles.header}>My Projects</Text>
-        {projects.length === 0 ? (
+        {projectIds.length === 0 ? (
           <View style={{ height: '100%', justifyContent: 'center' }}>
-            <Text style={{ alignSelf: 'center' }}>You currently have no projects.</Text>
+            <Text style={{ alignSelf: 'center', fontFamily: 'Poppins-Regular' }}>You currently have no projects.</Text>
           </View>
         ) :
           <View style={styles.projects}>
-            {!projects ? (
+            {!projectIds ? (
               skeletons
             ) : (
-              projects.map((proj, i) => (
+              projectIds.map((id, i) => (
                 <Pressable
                   onPress={() =>
-                    navigation.navigate('Details', { id: proj._id })
+                    navigation.navigate('Details', { id: id, fromApps: false })
                   }
                   key={i}
                 >
-                  <Project project={proj} />
+                  <Project projectId={id} />
                 </Pressable>
               ))
             )}

@@ -30,6 +30,7 @@ export default function CreatePost({ navigation, route }) {
     ? route.params.user_id
     : '63824360149a7a6b1f4eea69';
   const isCreating = route.params.isCreating || false;
+  const project_id = route.params.projectId || ''
 
   const verify = () => {
     console.log(members);
@@ -55,7 +56,6 @@ export default function CreatePost({ navigation, route }) {
   const postToDB = async () => {
     const shouldPost = verify();
     if (shouldPost) {
-      console.log(skillsets);
       await fetch(`${BASE_URL}/projects/create`, {
         method: 'POST',
         headers: {
@@ -81,6 +81,35 @@ export default function CreatePost({ navigation, route }) {
       navigation.navigate('Home Pages');
     }
   };
+
+  async function editProject(id) {
+    const shouldPost = verify();
+    if (shouldPost) {
+      await fetch(`${BASE_URL}/projects/${id}`, {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: title,
+          description: description,
+          skillset: skillsets,
+          timeline: timeline,
+          creator: user_id,
+          membersNeeded: members,
+        }),
+      }).catch((error) => console.log(error));
+
+      toast.show('Brainstorm updated!', {
+        type: 'success',
+        placement: 'top',
+        duration: 'zoom-in',
+        duration: 2500,
+      });
+      navigation.navigate('Details', {id: id, fromApps: false});
+    }
+  }
 
   return (
     <ScrollView
@@ -165,7 +194,7 @@ export default function CreatePost({ navigation, route }) {
         style={styles.dropdown}
         textStyle={styles.dd_text}
       />
-      <TouchableOpacity style={styles.btn} onPress={postToDB}>
+      <TouchableOpacity style={styles.btn} onPress={isCreating ? postToDB : () => editProject(project_id)}>
         <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
           {isCreating ? 'Post Brainstorm' : 'Update Brainstorm'}
         </Text>

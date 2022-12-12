@@ -13,32 +13,27 @@ import { Skeleton } from '@rneui/themed';
 import { BASE_URL } from '../data/util';
 
 
-export const Applications = () => {
+export const Applications = ({ navigation }) => {
     const [applications, setApplications] = useState([]);
-    const [noApplications, setNoApplications] = useState();
     const NUM_OF_SKELETONS = 7;
 
     const getApplications = async (id) => {
         //! get applications
-        setApplications([])
-        // try {
-        //   const info = await fetch(
-        //     `${BASE_URL}/projects/createdprojects?userId=${id}`
-        //   );
-        //   const result = await info.json();
-        //   const apps = [];
-        //   if (result.data.length === 0) {
-        //     setNoApplications(true);
-        //   } else {
-        //     setNoApplications(false);
-        //     for (let i = 0; i < result.data.length; i++) {
-        //       apps.push(result.data[i]);
-        //     }
-        //     setApplications(apps);
-        //   }
-        // } catch (err) {
-        //   console.log(err);
-        // }
+        try {
+            const info = await fetch(
+                `${BASE_URL}/users/applications?userId=${id}`
+            );
+            const result = await info.json();
+            if (result.data.length === 0) {
+                setApplications([]);
+            } else {
+                for (let i = 0; i < result.data.length; i++) {
+                    setApplications(apps => [...apps, result.data[i]]);
+                }
+            }
+        } catch (err) {
+            console.log(err);
+        }
     };
 
 
@@ -68,22 +63,22 @@ export const Applications = () => {
             <ScrollView style={styles.container}>
                 <Text style={styles.header}>My Applications</Text>
                 {applications.length === 0 ?
-                    <View style={{height: '100%', justifyContent: 'center'}}>
-                        <Text style={{ alignSelf: 'center' }}>You have not applied to any projects.</Text>
+                    <View style={{ height: '100%', justifyContent: 'center' }}>
+                        <Text style={{ alignSelf: 'center', fontFamily: 'Poppins-Regular' }}>You have not applied to any projects.</Text>
                     </View>
                     :
                     <View style={styles.applications}>
                         {!applications ? (
                             skeletons
                         ) : (
-                            applications.map((proj, i) => (
+                            applications.map((app, i) => (
                                 <Pressable
                                     onPress={() =>
-                                        navigation.navigate('Details', { projectInfo: proj })
+                                        navigation.navigate('Details', { id: app.projectId, fromApps: true })
                                     }
                                     key={i}
                                 >
-                                    <Project project={proj} />
+                                    <Project projectId={app.projectId} status={applications[i].status} />
                                 </Pressable>
                             ))
                         )}

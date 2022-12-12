@@ -3,8 +3,8 @@ import { HeaderBackButton } from '@react-navigation/elements';
 import { MIDNIGHT_GREEN } from '../styles/palette';
 import Projects from "./Projects";
 import { ProjectDetail } from "../components/ProjectDetail";
-import { EditingProject } from "../components/EditingProject";
 import { OtherUser } from "../components/OtherUser";
+import  CreatePost from "../screens/CreatePost"
 
 export function MyProjects() {
     const Stack = createNativeStackNavigator();
@@ -41,7 +41,7 @@ export function MyProjects() {
                 }} />
             <Stack.Screen
                 name="Editing Project"
-                component={EditingProject}
+                component={CreatePost}
                 />
             <Stack.Screen
                 name="Other User"

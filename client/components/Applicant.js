@@ -118,8 +118,8 @@ export const Applicant = ({
               })
             }
           >
-            <Text>{userInfo.username}</Text>
-            <Text numberOfLines={2} style={{ color: 'grey' }}>
+            <Text style={{fontFamily: 'Poppins-Regular'}}>{userInfo.username}</Text>
+            <Text numberOfLines={2} style={{ color: '#c2c2c2', fontFamily: 'Poppins-Regular' }}>
               {userInfo.bio}
             </Text>
           </Pressable>
