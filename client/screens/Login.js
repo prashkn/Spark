@@ -60,9 +60,6 @@ export default function Login({ navigation }) {
     // If all fields valid, sign in
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(userCredential);
-      })
       .catch((error) => {
         console.log(JSON.stringify(error));
         if (error.code === 'auth/user-not-found') {

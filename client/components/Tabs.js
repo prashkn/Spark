@@ -43,15 +43,18 @@ export default function Tabs() {
         tabBarShowLabel: true,
       })}
     >
-      <Tab.Screen name="Home/Create" component={HomeAndPost} />
-      <Tab.Screen name="Projects" component={Projects} />
+      <Tab.Screen
+        name="Home"
+        component={HomeAndPost}
+        screenOptions={{ title: 'Home' }}
+      />
+
+      <Tab.Screen name="My Brainstorms" component={MyProjects} />
+
+      <Tab.Screen name="My Applications" component={MyApplications} />
 
       {/* Use nested navigator to display profile and settings sub-pages */}
-      <Tab.Screen
-        name="Profile"
-        component={ProfileAndSettings}
-
-      />
+      <Tab.Screen name="Profile" component={ProfileAndSettings} />
     </Tab.Navigator>
   );
 }

@@ -47,8 +47,12 @@ const linking = {
       Root: {
         path: '',
         screens: {
-          Home: { path: '', screens: { Home: 'home' } },
-          'My Brainstorms': 'brainstorms',
+          Home: { path: '', screens: { 'Home Page': '' } },
+          'My Brainstorms': {
+            path: 'brainstorms',
+            screens: { Projects: 'projects' },
+          },
+          'My Applications': {path: 'applications', screens: {Applications: ''}},
           Profile: {
             path: 'profile',
             screens: { Profile: '', Settings: 'settings' },

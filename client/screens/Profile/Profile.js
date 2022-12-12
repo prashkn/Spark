@@ -1,7 +1,6 @@
 import { Button } from '@rneui/themed';
 import { StatusBar } from 'expo-status-bar';
-import { getAuth, signOut } from 'firebase/auth';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { UserContext } from '../../components/UserContext';
@@ -11,12 +10,6 @@ import ProfileInfoBox from './ProfileInfoBox';
 
 export default function Profile({ navigation }) {
   const { user } = useContext(UserContext);
-
-  const auth = getAuth();
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   return (
     <SafeAreaView style={styles.safeArea}>

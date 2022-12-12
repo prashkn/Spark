@@ -14,9 +14,8 @@ export async function getUserInfoFromDatabase(user) {
   const loginResponse = await fetch(
     `${SPARK_API}/users/login?email=${user.email}&password=`
   );
+
   const body = await loginResponse.json();
-  // console.log(await loginResponse.text());
-  console.log(body)
 
   return body.data;
 }
