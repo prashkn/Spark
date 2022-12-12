@@ -26,9 +26,7 @@ export const Applications = ({ navigation }) => {
       if (result.data.length === 0) {
         setApplications([]);
       } else {
-        for (let i = 0; i < result.data.length; i++) {
-          setApplications((apps) => [...apps, result.data[i]]);
-        }
+        setApplications(result.data);
       }
     } catch (err) {
       console.log(err);
