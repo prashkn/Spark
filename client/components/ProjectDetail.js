@@ -19,8 +19,6 @@ import { Applicant } from './Applicant';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { BASE_URL } from '../data/util';
-import SendSMS from 'react-native-sms';
-import { useToast } from 'react-native-toast-notifications';
 
 export function ProjectDetail({ navigation, route }) {
   const id = route.params.id;
@@ -29,8 +27,6 @@ export function ProjectDetail({ navigation, route }) {
   const [onApplicants, setOnApplicants] = useState(true);
   const [accepted, setAccepted] = useState();
   const [applicants, setApplicants] = useState();
-  const toast = useToast();
-  const [bodySMS, setBodySMS] = useState('Hello this a test from my app. ignore it lol');
 
   async function getProject(id) {
     try {
@@ -69,7 +65,6 @@ export function ProjectDetail({ navigation, route }) {
       }
     }
 
-    console.log(numbers)
     Linking.openURL(`sms:/open?addresses=${numbers}&body=`);
   }
 
@@ -78,13 +73,13 @@ export function ProjectDetail({ navigation, route }) {
       Alert.alert(
         'Warning!',
         'You have not accepted the amount of participants you described in the description. Are you sure you want to start this project?',
-        [{ text: 'Yes', onPress: { sendMessage } }, { text: 'Cancel', style: 'cancel' }]
+        [{ text: 'Yes', onPress: () => sendMessage() }, { text: 'Cancel', style: 'cancel' }]
       );
     } else if (projectInfo.membersNeeded < accepted.length) {
       Alert.alert(
         'Warning!',
         'You have accepted more than the amount of participants you described in the description. Are you sure you want to start this project?',
-        [{ text: 'Yes', onPress: { sendMessage } }, { text: 'Cancel', style: 'cancel' }]
+        [{ text: 'Yes', onPress: () => sendMessage() }, { text: 'Cancel', style: 'cancel' }]
       );
     } else {
       sendMessage()
@@ -357,6 +352,7 @@ const details = StyleSheet.create({
     fontSize: 14,
     display: 'flex',
     flexDirection: 'row',
+    flexWrap: 'wrap'
   },
   timeline: {
     color: MIDNIGHT_GREEN,
