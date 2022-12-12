@@ -8,7 +8,7 @@ default:
     - echo $FIREBASE_SERVICE_ACCOUNT > "service_account.json"
 
 deploy-client:
-  image: node-16:alpine
+  image: node:16-alpine
   stage: deploy
 
   script:
