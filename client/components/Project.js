@@ -2,24 +2,45 @@ import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
+import { useEffect, useState } from 'react';
+import { BASE_URL } from '../data/util';
 
-export default function Project({ project, status }) {
-  const proj = project;
+export default function Project({ projectId, status }) {
+  const id = projectId;
+  const [proj, setProj] = useState()
   const statusColor = status === 'Accepted' ? 'green' : status === 'Under review' ? 'grey' : 'red'
+
+  async function getProjectInfo() {
+    try {
+      const info = await fetch(
+        `${BASE_URL}/projects/${id}`
+      );
+      const result = await info.json();
+      setProj(result.data)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getProjectInfo()
+  })
 
   return (
     <View style={styles.card}>
-      <View style={styles.info}>
-        <Text style={styles.title}>{proj.title}</Text>
-        <Text numberOfLines={2} style={styles.description}>
-          {proj.description}
-        </Text>
-        {status &&
-          <Text numberOfLines={2} style={{...styles.description, color: statusColor}}>
-            {status}
+      {proj &&
+        <View style={styles.info}>
+          <Text style={styles.title}>{proj.title}</Text>
+          <Text numberOfLines={2} style={styles.description}>
+            {proj.description}
           </Text>
-        }
-      </View>
+          {status &&
+            <Text numberOfLines={2} style={{ ...styles.description, color: statusColor }}>
+              {status}
+            </Text>
+          }
+        </View>
+      }
       <Text style={styles.arrow}>
         <FontAwesomeIcon icon={faChevronRight} />
       </Text>

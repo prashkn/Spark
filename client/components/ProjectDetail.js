@@ -38,6 +38,11 @@ export function ProjectDetail({ navigation, route }) {
   useEffect(() => {
     getProject(id)
   }, [])
+  
+  navigation.addListener('focus', () => {
+    // reset marker state
+    getProject(id)
+});
 
   return (
     <SafeAreaView
@@ -61,7 +66,13 @@ export function ProjectDetail({ navigation, route }) {
                 style={{ display: 'flex', justifyContent: 'center' }}
                 onPress={() =>
                   navigation.navigate('Editing Project', {
-
+                    title: projectInfo.title,
+                    biography: '',
+                    description: projectInfo.description,
+                    members: projectInfo.members,
+                    skillsets: projectInfo.skillset,
+                    timeline: projectInfo.timeline,
+                    projectId: projectInfo._id
                   })
                 }
               >
