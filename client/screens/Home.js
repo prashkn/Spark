@@ -117,7 +117,7 @@ export default function Home({ navigation }) {
     console.log('user');
     console.log(user || '');
     if (user !== null) getAllInfo(user._id).then(setLoading(false));
-    else getAllInfo('');
+    else getAllInfo('').then(setLoading(false));
   }, []);
 
   //on counter changing
@@ -190,7 +190,6 @@ export default function Home({ navigation }) {
               bio={projectInfo[counter].summary || 'Project bio here'}
               creator_name={creator.name || 'No User'}
               creator_username={creator.username ? `@${creator.username}` : ''}
-              image={creator.image}
               title={projectInfo[counter].title}
               timeline={`${projectInfo[counter].timeline} months`}
               members_needed={`${

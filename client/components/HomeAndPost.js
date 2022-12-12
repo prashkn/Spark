@@ -34,7 +34,7 @@ export default function HomeAndPost() {
           headerShown: false,
         }}
       />
-      <Stack.Screen name="Create a Brainstorm" component={CreatePost} />
+      <Stack.Screen name="Your Brainstorm" component={CreatePost} />
     </Stack.Navigator>
   );
 }

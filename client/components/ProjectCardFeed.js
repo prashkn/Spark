@@ -25,16 +25,21 @@ export default function ProjectCardFeed({
         <View style={styles.header}>
           <UserAvatar
             style={styles.profilepic}
-            size={50}
             name={creator_name || 'John Doe'}
           />
           <View>
             <Text style={styles.title}>{title}</Text>
-            <Text style={{ fontSize: 14 }}>
+            <Text style={{ fontSize: 14, fontFamily: 'Poppins-Regular' }}>
               {creator_name}•
-              <Text style={{ fontStyle: 'italic' }}>{creator_username}</Text>
+              <Text
+                style={{ fontStyle: 'italic', fontFamily: 'Poppins-Regular' }}
+              >
+                {creator_username}
+              </Text>
             </Text>
-            <Text style={{ fontSize: 11 }}>Timeline: {timeline}</Text>
+            <Text style={{ fontSize: 11, fontFamily: 'Poppins-Regular' }}>
+              Timeline: {timeline}
+            </Text>
           </View>
         </View>
         <Text style={styles.bio}>{bio}</Text>
@@ -52,7 +57,7 @@ export default function ProjectCardFeed({
               );
             })}
         </View>
-        <Text>{description}</Text>
+        <Text style={{ fontFamily: 'Poppins-Regular' }}>{description}</Text>
       </View>
     </View>
   );
@@ -85,11 +90,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    fontFamily: 'Poppins-Bold',
   },
   profilepic: {
     marginRight: 20,
-    paddingLeft: 3,
-    paddingRight: 3,
+    borderRadius: '50%',
+    width: 70,
+    height: 70,
   },
   header: {
     flexDirection: 'row',
@@ -109,6 +116,7 @@ const styles = StyleSheet.create({
   bio: {
     marginTop: 15,
     fontSize: 18,
+    fontFamily: 'Poppins-Regular',
   },
   members: {
     backgroundColor: POLISHED_PINE,
@@ -117,5 +125,6 @@ const styles = StyleSheet.create({
   pill: {
     paddingLeft: 5,
     paddingRight: 5,
+    fontFamily: 'Poppins-Regular',
   },
 });

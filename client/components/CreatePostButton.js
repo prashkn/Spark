@@ -10,7 +10,7 @@ export default function CreatePostButton({ navigation, user_id }) {
       activeOpacity={0.8}
       style={styles.btn}
       onPress={() =>
-        navigation.navigate('Create a Brainstorm', {
+        navigation.navigate('Your Brainstorm', {
           user_id: user_id,
         })
       }
