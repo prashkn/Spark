@@ -80,7 +80,7 @@ export default function CreatePost({ navigation, route }) {
         duration: 'zoom-in',
         duration: 2500,
       });
-      navigation.navigate('Home Pages');
+      navigation.navigate('Home Page');
     }
   };
 
