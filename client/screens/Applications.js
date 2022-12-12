@@ -72,16 +72,14 @@ export const Applications = ({ navigation }) => {
                 <Text style={styles.header}>My Applications</Text>
                 {projects.length === 0 ?
                     <View style={{ height: '100%', justifyContent: 'center' }}>
-                        <Text style={{ alignSelf: 'center' }}>You have not applied to any projects.</Text>
+                        <Text style={{ alignSelf: 'center', fontFamily: 'Poppins-Regular' }}>You have not applied to any projects.</Text>
                     </View>
                     :
                     <View style={styles.applications}>
                         {!projects ? (
                             skeletons
                         ) : (
-                            projects.map((proj, i) => {
-                                console.log(applications[i].status)
-                                return (
+                            projects.map((proj, i) => (
                                 <Pressable
                                     onPress={() =>
                                         navigation.navigate('Details', { id: proj._id, fromApps: true })
@@ -90,8 +88,7 @@ export const Applications = ({ navigation }) => {
                                 >
                                     <Project project={proj} status={applications[i].status} />
                                 </Pressable>
-                                )
-                            })
+                            ))
                         )}
                     </View>
                 }

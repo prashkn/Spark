@@ -67,7 +67,7 @@ export default function Projects({ navigation }) {
         <Text style={styles.header}>My Projects</Text>
         {projects.length === 0 ? (
           <View style={{ height: '100%', justifyContent: 'center' }}>
-            <Text style={{ alignSelf: 'center' }}>You currently have no projects.</Text>
+            <Text style={{ alignSelf: 'center', fontFamily: 'Poppins-Regular' }}>You currently have no projects.</Text>
           </View>
         ) :
           <View style={styles.projects}>
