@@ -14,7 +14,6 @@ import { BASE_URL } from '../data/util';
 
 export default function Projects({ navigation }) {
   const [projects, setProjects] = useState([]);
-  // const [noProjects, setNoProjects] = useState();
   const NUM_OF_SKELETONS = 7;
 
   const getProjects = async (id) => {
@@ -27,7 +26,6 @@ export default function Projects({ navigation }) {
       if (result.data.length === 0) {
         setProjects([]);
       } else {
-        // setNoProjects(false);
         for (let i = 0; i < result.data.length; i++) {
           projects.push(result.data[i]);
         }
@@ -79,7 +77,7 @@ export default function Projects({ navigation }) {
               projects.map((proj, i) => (
                 <Pressable
                   onPress={() =>
-                    navigation.navigate('Details', { id: proj._id })
+                    navigation.navigate('Details', { id: proj._id, fromApps: false })
                   }
                   key={i}
                 >

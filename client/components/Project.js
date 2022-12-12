@@ -3,8 +3,9 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
 
-export default function Project(project) {
-  const proj = project.project;
+export default function Project({ project, status }) {
+  const proj = project;
+  const statusColor = status === 'Accepted' ? 'green' : status === 'Under review' ? 'grey' : 'red'
 
   return (
     <View style={styles.card}>
@@ -13,6 +14,11 @@ export default function Project(project) {
         <Text numberOfLines={2} style={styles.description}>
           {proj.description}
         </Text>
+        {status &&
+          <Text numberOfLines={2} style={{...styles.description, color: statusColor}}>
+            {status}
+          </Text>
+        }
       </View>
       <Text style={styles.arrow}>
         <FontAwesomeIcon icon={faChevronRight} />
@@ -53,4 +59,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     paddingRight: 5,
   },
+  status: {
+    flex: 1,
+    fontFamily: 'Poppins-Italic',
+    fontSize: 14,
+  }
 });

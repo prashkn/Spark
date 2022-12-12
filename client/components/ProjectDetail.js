@@ -15,6 +15,7 @@ import { BASE_URL } from '../data/util';
 
 export function ProjectDetail({ navigation, route }) {
   const id = route.params.id;
+  const fromApps = route.params.fromApps
   const [projectInfo, setProjectInfo] = useState();
   const [onApplicants, setOnApplicants] = useState(true);
   const [accepted, setAccepted] = useState();
@@ -38,7 +39,6 @@ export function ProjectDetail({ navigation, route }) {
     getProject(id)
   }, [])
 
-
   return (
     <SafeAreaView
       style={{
@@ -51,7 +51,7 @@ export function ProjectDetail({ navigation, route }) {
           <View style={{ display: 'flex', flexDirection: 'row' }}>
             <Pressable
               style={{ display: 'flex', flexDirection: 'row', flex: 2 }}
-              onPress={() => navigation.navigate('Projects')}
+              onPress={() => navigation.navigate(fromApps ? 'Applications' : 'Projects')}
             >
               <FontAwesomeIcon style={project.backIcon} icon={faChevronLeft} />
               <Text style={project.header}>{projectInfo.title}</Text>
@@ -60,7 +60,7 @@ export function ProjectDetail({ navigation, route }) {
               style={{ display: 'flex', justifyContent: 'center' }}
               onPress={() =>
                 navigation.navigate('Editing Project', {
-                  projectInfo: projectInfo,
+                  
                 })
               }
             >
