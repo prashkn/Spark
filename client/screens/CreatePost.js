@@ -31,7 +31,7 @@ export default function CreatePost({ navigation, route }) {
   const user_id = route.params.user_id
     ? route.params.user_id
     : '63824360149a7a6b1f4eea69';
-  const isCreating = route.params.isCreating || false;
+  const isCreating = route.params.isCreating || true;
   const project_id = route.params.projectId || '';
 
   const verify = () => {
@@ -149,7 +149,13 @@ export default function CreatePost({ navigation, route }) {
           borderRadius: '5%',
         }}
       >
-        <Text style={{ color: 'gray', marginBottom: '1%' }}>
+        <Text
+          style={{
+            color: 'gray',
+            marginBottom: '1%',
+            fontFamily: 'Poppins-Regular',
+          }}
+        >
           Members needed: {members}
         </Text>
         <NumericInput
@@ -166,7 +172,14 @@ export default function CreatePost({ navigation, route }) {
           rightButtonBackgroundColor={POLISHED_PINE}
           leftButtonBackgroundColor={POLISHED_PINE}
         />
-        <Text style={{ color: 'gray', marginTop: '10%', marginBottom: '1%' }}>
+        <Text
+          style={{
+            color: 'gray',
+            marginTop: '10%',
+            marginBottom: '1%',
+            fontFamily: 'Poppins-Regular',
+          }}
+        >
           Timeline: {timeline} months
         </Text>
         <NumericInput
@@ -200,7 +213,13 @@ export default function CreatePost({ navigation, route }) {
         style={styles.btn}
         onPress={isCreating ? postToDB : () => editProject(project_id)}
       >
-        <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 15,
+            fontFamily: 'Poppins-Bold',
+          }}
+        >
           {isCreating ? 'Post Brainstorm' : 'Update Brainstorm'}
         </Text>
       </TouchableOpacity>
@@ -221,6 +240,7 @@ const styles = StyleSheet.create({
     borderRadius: '5%',
     marginBottom: '5%',
     color: POLISHED_PINE,
+    fontFamily: 'Poppins-Regular',
   },
   dropdown: {
     width: '80%',
@@ -231,6 +251,7 @@ const styles = StyleSheet.create({
   dd_text: {
     fontSize: 14,
     color: POLISHED_PINE,
+    fontFamily: 'Poppins-Regular',
   },
   btn: {
     marginTop: '10%',

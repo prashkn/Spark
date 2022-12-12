@@ -10,7 +10,7 @@ export default function CreatePostButton({ navigation, user_id }) {
       activeOpacity={0.8}
       style={styles.btn}
       onPress={() =>
-        navigation.navigate('Create a Brainstorm', {
+        navigation.navigate('Your Brainstorm', {
           user_id: user_id,
         })
       }
@@ -24,7 +24,7 @@ export default function CreatePostButton({ navigation, user_id }) {
 const styles = StyleSheet.create({
   btn: {
     borderRadius: '50%',
-    backgroundColor: POLISHED_PINE,
+    backgroundColor: MIDNIGHT_GREEN,
     height: 60,
     width: 60,
     justifyContent: 'center',
