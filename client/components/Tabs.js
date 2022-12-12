@@ -1,16 +1,20 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import YourBasicInformation from '../screens/YourBasicInformation';
+import Login from '../screens/Login';
 import Home from '../screens/Home';
 import { MyProjects } from '../screens/MyProjects';
 import Projects from '../screens/Projects';
 import { MIDNIGHT_GREEN } from '../styles/palette';
 import HomeAndPost from './HomeAndPost';
 import ProfileAndSettings from './ProfileAndSettings';
+import YourBackground from '../screens/YourBackground';
+import { UserContext } from './UserContext';
 import { MyApplications } from '../screens/MyApplications';
 
+const Tab = createBottomTabNavigator();
 export default function Tabs() {
-  const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -26,6 +30,8 @@ export default function Tabs() {
             iconName = focused ? 'person' : 'person-outline';
           } else if (route.name === 'My Brainstorms') {
             iconName = focused ? 'documents' : 'documents-outline';
+          } else if (route.name === 'Login') {
+            iconName = focused ? 'enter' : 'enter-outline';
           } else if (route.name === 'My Applications') {
             iconName = focused ? 'albums' : 'albums-outline';
           }
@@ -37,8 +43,14 @@ export default function Tabs() {
         tabBarShowLabel: true,
       })}
     >
-      <Tab.Screen name="Home" component={HomeAndPost} />
+      <Tab.Screen
+        name="Home"
+        component={HomeAndPost}
+        screenOptions={{ title: 'Home' }}
+      />
+
       <Tab.Screen name="My Brainstorms" component={MyProjects} />
+
       <Tab.Screen name="My Applications" component={MyApplications} />
 
       {/* Use nested navigator to display profile and settings sub-pages */}

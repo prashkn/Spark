@@ -36,6 +36,7 @@ export default function ProfileAndSettings() {
           // Hide header on profile page
           headerShown: false,
         }}
+        screenOptions={{ title: 'Profile' }}
       />
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="Account Information" component={AccountInformation} />
