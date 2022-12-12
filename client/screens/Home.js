@@ -96,7 +96,7 @@ export default function Home({ navigation, user_id = 'r' }) {
   //on first render
   useEffect(() => {
     getAllInfo(user_id);
-    if (projectInfo.length) setLoading(false);
+    if (projectInfo.length > 0) setLoading(false);
   }, []);
 
   //on counter changing
