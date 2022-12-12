@@ -51,9 +51,13 @@ export const Applications = ({ navigation }) => {
     }
 
     useEffect(() => {
-        //! change to variable
         getApplications(user._id);
     }, []);
+    
+    navigation.addListener('focus', () => {
+        // reset marker state
+        getApplications(user._id);
+      });
 
     return (
         <SafeAreaView
