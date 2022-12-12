@@ -14,6 +14,7 @@ import { project } from '../components/ProjectDetail';
 import ProfileInfoBox from '../screens/Profile/ProfileInfoBox';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import UserAvatar from 'react-native-user-avatar';
 
 export const OtherUser = ({ navigation, route }) => {
   const userInfo = route.params.userInfo;
@@ -43,9 +44,10 @@ export const OtherUser = ({ navigation, route }) => {
         {/* User info container with pic, name, username, and location */}
         <View style={styles.userInfoContainer}>
           {/* Profile pic */}
-          <Image
-            style={{ width: 100, height: 100 }}
-            source={require('../assets/profile_pic_placeholder.png')}
+          <UserAvatar
+            style={{width: 100, height: 100, borderRadius: 50}}
+            size={50}
+            name={userInfo.name || 'John Doe'}
           />
 
           {/* Sub-container with name, username, and location */}
