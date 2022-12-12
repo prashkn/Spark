@@ -30,7 +30,7 @@ deploy-api:
   stage: deploy
   only:
     changes:
-      - "**!(client)/**/*"
+      - "!(client)/**/*"
   script:
     - apk add nodejs npm
     # Install Docker
