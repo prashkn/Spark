@@ -119,8 +119,8 @@ export default function Home({ navigation, user_id = 't' }) {
   //on counter changing
   useEffect(() => {
     if (projectInfo[counter]) getCreatorInfo(projectInfo[counter].creator);
-    console.log('counter' + counter);
-    console.log(projectInfo[counter]);
+    //.log('counter' + counter);
+    //console.log(projectInfo[counter]);
   }, [counter]);
 
   return (
@@ -146,6 +146,7 @@ export default function Home({ navigation, user_id = 't' }) {
               textStyle={styles.dd_text}
             />
           </View>
+          {/* dont show on feed empty view */}
           <TouchableOpacity
             style={styles.btn}
             onPress={() => setModalVisible(!modalVisible)}

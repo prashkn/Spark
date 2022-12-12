@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+/*import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {
   Text,
   View,
@@ -147,4 +147,4 @@ const details = StyleSheet.create({
     backgroundColor: BLOND,
     borderRadius: 5,
   },
-});
+});*/

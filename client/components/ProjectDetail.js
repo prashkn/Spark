@@ -7,7 +7,12 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
-import { BLOND, MIDNIGHT_GREEN, POLISHED_PINE, MUSTARD } from '../styles/palette';
+import {
+  BLOND,
+  MIDNIGHT_GREEN,
+  POLISHED_PINE,
+  MUSTARD,
+} from '../styles/palette';
 import { useEffect, useState } from 'react';
 import { Applicant } from './Applicant';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -16,7 +21,7 @@ import { BASE_URL } from '../data/util';
 
 export function ProjectDetail({ navigation, route }) {
   const id = route.params.id;
-  const fromApps = route.params.fromApps
+  const fromApps = route.params.fromApps;
   const [projectInfo, setProjectInfo] = useState();
   const [onApplicants, setOnApplicants] = useState(true);
   const [accepted, setAccepted] = useState();
@@ -24,39 +29,39 @@ export function ProjectDetail({ navigation, route }) {
 
   async function getProject(id) {
     try {
-      const info = await fetch(
-        `${BASE_URL}/projects/${id}`
-      );
+      const info = await fetch(`${BASE_URL}/projects/${id}`);
       const result = await info.json();
-      setProjectInfo(result.data)
-      setAccepted(result.data.participants)
-      setApplicants(result.data.applicants)
+      setProjectInfo(result.data);
+      setAccepted(result.data.participants);
+      setApplicants(result.data.applicants);
     } catch (err) {
       console.log(err);
     }
   }
 
   useEffect(() => {
-    getProject(id)
-  }, [])
+    getProject(id);
+  }, []);
 
   navigation.addListener('focus', () => {
     // reset marker state
-    getProject(id)
+    getProject(id);
   });
 
   function handleStartProj() {
     if (projectInfo.membersNeeded > accepted.length) {
-      Alert.alert('Warning!', 'You have not accepted the amount of participants you described in the description. Are you sure you want to start this project?', [
-        { text: 'Yes' },
-        { text: 'Cancel', style: 'cancel' },
-      ]);
+      Alert.alert(
+        'Warning!',
+        'You have not accepted the amount of participants you described in the description. Are you sure you want to start this project?',
+        [{ text: 'Yes' }, { text: 'Cancel', style: 'cancel' }]
+      );
     }
     if (projectInfo.membersNeeded < accepted.length) {
-      Alert.alert('Warning!', 'You have accepted more than the amount of participants you described in the description. Are you sure you want to start this project?', [
-        { text: 'Yes' },
-        { text: 'Cancel', style: 'cancel' },
-      ]);
+      Alert.alert(
+        'Warning!',
+        'You have accepted more than the amount of participants you described in the description. Are you sure you want to start this project?',
+        [{ text: 'Yes' }, { text: 'Cancel', style: 'cancel' }]
+      );
     }
   }
 
@@ -67,17 +72,19 @@ export function ProjectDetail({ navigation, route }) {
         flex: 1,
       }}
     >
-      {projectInfo &&
+      {projectInfo && (
         <View style={project.container}>
           <View style={{ display: 'flex', flexDirection: 'row' }}>
             <Pressable
               style={{ display: 'flex', flexDirection: 'row', flex: 2 }}
-              onPress={() => navigation.navigate(fromApps ? 'Applications' : 'Projects')}
+              onPress={() =>
+                navigation.navigate(fromApps ? 'Applications' : 'Projects')
+              }
             >
               <FontAwesomeIcon style={project.backIcon} icon={faChevronLeft} />
               <Text style={project.header}>{projectInfo.title}</Text>
             </Pressable>
-            {!fromApps &&
+            {!fromApps && (
               <Pressable
                 style={{ display: 'flex', justifyContent: 'center' }}
                 onPress={() =>
@@ -88,7 +95,7 @@ export function ProjectDetail({ navigation, route }) {
                     members: projectInfo.members,
                     skillsets: projectInfo.skillset,
                     timeline: projectInfo.timeline,
-                    projectId: projectInfo._id
+                    projectId: projectInfo._id,
                   })
                 }
               >
@@ -97,45 +104,71 @@ export function ProjectDetail({ navigation, route }) {
                     color: MIDNIGHT_GREEN,
                     alignSelf: 'center',
                     fontSize: 16,
-                    fontFamily: 'Poppins-Regular'
+                    fontFamily: 'Poppins-Regular',
                   }}
                 >
                   Edit
                 </Text>
               </Pressable>
-            }
+            )}
           </View>
           <View style={project.card}>
             <View style={project.information}>
               <Text style={details.container}>
-                <Text style={{ fontFamily: 'Poppins-Bold' }}>Description: </Text>
+                <Text style={{ fontFamily: 'Poppins-Bold' }}>
+                  Description:{' '}
+                </Text>
                 <Text style={{ fontFamily: 'Poppins-LightItalic' }}>
                   {projectInfo.description}
                 </Text>
               </Text>
               <View style={details.container}>
-                <Text style={{ fontFamily: 'Poppins-Bold', color: MIDNIGHT_GREEN, alignSelf: 'center' }}>
+                <Text
+                  style={{
+                    fontFamily: 'Poppins-Bold',
+                    color: MIDNIGHT_GREEN,
+                    alignSelf: 'center',
+                  }}
+                >
                   Number of people wanted:{' '}
                 </Text>
                 <View style={details.greenButton}>
-                  <Text style={{ color: 'white', fontFamily: 'Poppins-Regular' }}>{`${projectInfo.membersNeeded} Members`}</Text>
+                  <Text
+                    style={{ color: 'white', fontFamily: 'Poppins-Regular' }}
+                  >{`${projectInfo.membersNeeded} Members`}</Text>
                 </View>
               </View>
               <View style={details.container}>
-                <Text style={{ fontFamily: 'Poppins-Bold', color: MIDNIGHT_GREEN, alignSelf: 'center' }}>Skills wanted: </Text>
-                {projectInfo.skillset.map((skill, i) => (
-                  <View style={{ ...details.yellowButton, margin: 5 }} key={i}>
-                    <Text style={{ fontFamily: 'Poppins-Regular' }}>{skill}</Text>
-                  </View>
-                ))}
+                <Text
+                  style={{
+                    fontFamily: 'Poppins-Bold',
+                    color: MIDNIGHT_GREEN,
+                    alignSelf: 'center',
+                  }}
+                >
+                  Skills wanted:{' '}
+                </Text>
+                {projectInfo.skillset &&
+                  projectInfo.skillset.map((skill, i) => (
+                    <View
+                      style={{ ...details.yellowButton, margin: 5 }}
+                      key={i}
+                    >
+                      <Text style={{ fontFamily: 'Poppins-Regular' }}>
+                        {skill}
+                      </Text>
+                    </View>
+                  ))}
               </View>
               <Text style={details.timeline}>
                 <Text style={{ fontFamily: 'Poppins-Bold' }}>Timeline: </Text>
-                <Text style={{ fontFamily: 'Poppins-Regular' }}>{`Approx. ${projectInfo.timeline} months`}</Text>
+                <Text
+                  style={{ fontFamily: 'Poppins-Regular' }}
+                >{`Approx. ${projectInfo.timeline} months`}</Text>
               </Text>
             </View>
           </View>
-          {!fromApps &&
+          {!fromApps && (
             <View
               style={{
                 display: 'flex',
@@ -153,7 +186,11 @@ export function ProjectDetail({ navigation, route }) {
                   borderBottomWidth: onApplicants ? 3 : 1,
                 }}
               >
-                <Text style={{ alignSelf: 'center', fontFamily: 'Poppins-Regular' }}>Applicants</Text>
+                <Text
+                  style={{ alignSelf: 'center', fontFamily: 'Poppins-Regular' }}
+                >
+                  Applicants
+                </Text>
               </Pressable>
               <Pressable
                 onPress={() => setOnApplicants(false)}
@@ -163,50 +200,70 @@ export function ProjectDetail({ navigation, route }) {
                   borderBottomWidth: !onApplicants ? 3 : 1,
                 }}
               >
-                <Text style={{ alignSelf: 'center', fontFamily: 'Poppins-Regular' }}>Accepted</Text>
+                <Text
+                  style={{ alignSelf: 'center', fontFamily: 'Poppins-Regular' }}
+                >
+                  Accepted
+                </Text>
               </Pressable>
             </View>
-          }
-          {!fromApps &&
+          )}
+          {!fromApps && (
             <ScrollView style={{ display: 'flex' }}>
               {onApplicants
-                ? (applicants && applicants.map((applicant, i) => (
-                  <Applicant
-                    key={i}
-                    userId={applicant}
-                    navigation={navigation}
-                    isAccepted={false}
-                    projectInfo={projectInfo}
-                    setAccepted={setAccepted}
-                    setApplicants={setApplicants}
-                    applicants={applicants}
-                    accepted={accepted}
-                  />
-                )))
-                : (accepted && accepted.map((applicant, i) => (
-                  <Applicant
-                    key={i}
-                    userId={applicant}
-                    navigation={navigation}
-                    isAccepted={true}
-                    projectInfo={projectInfo}
-                    setAccepted={setAccepted}
-                    setApplicants={setApplicants}
-                    applicants={applicants}
-                    accepted={accepted}
-                  />
-                )))}
+                ? applicants &&
+                  applicants.map((applicant, i) => (
+                    <Applicant
+                      key={i}
+                      userId={applicant}
+                      navigation={navigation}
+                      isAccepted={false}
+                      projectInfo={projectInfo}
+                      setAccepted={setAccepted}
+                      setApplicants={setApplicants}
+                      applicants={applicants}
+                      accepted={accepted}
+                    />
+                  ))
+                : accepted &&
+                  accepted.map((applicant, i) => (
+                    <Applicant
+                      key={i}
+                      userId={applicant}
+                      navigation={navigation}
+                      isAccepted={true}
+                      projectInfo={projectInfo}
+                      setAccepted={setAccepted}
+                      setApplicants={setApplicants}
+                      applicants={applicants}
+                      accepted={accepted}
+                    />
+                  ))}
             </ScrollView>
-          }
-          {(!onApplicants && !fromApps) &&
-            <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          )}
+          {!onApplicants && !fromApps && (
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
               <Pressable style={project.startProj} onPress={handleStartProj}>
-                <Text style={{ fontFamily: 'Poppins-Regular', fontSize: 18, alignSelf: 'center' }}>Start Project</Text>
+                <Text
+                  style={{
+                    fontFamily: 'Poppins-Regular',
+                    fontSize: 18,
+                    alignSelf: 'center',
+                  }}
+                >
+                  Start Project
+                </Text>
               </Pressable>
             </View>
-          }
+          )}
         </View>
-      }
+      )}
     </SafeAreaView>
   );
 }
@@ -263,8 +320,8 @@ export const project = StyleSheet.create({
     width: 150,
     height: 40,
     justifyContent: 'center',
-    borderRadius: 15
-  }
+    borderRadius: 15,
+  },
 });
 
 const details = StyleSheet.create({
@@ -284,7 +341,7 @@ const details = StyleSheet.create({
     marginLeft: 5,
     backgroundColor: POLISHED_PINE,
     borderRadius: 5,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   yellowButton: {
     padding: 5,

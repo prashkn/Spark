@@ -24,13 +24,15 @@ export default function CreatePost({ navigation, route }) {
   );
   const [open, setOpen] = React.useState(false);
   const [possibleSkills, setPossibleSkills] = React.useState(skillset_list);
-  const [timeline, setTimeline] = React.useState(route.params.timeline || 6);
+  const [timeline, setTimeline] = React.useState(
+    parseInt(route.params.timeline) || 6
+  );
   const toast = useToast();
   const user_id = route.params.user_id
     ? route.params.user_id
     : '63824360149a7a6b1f4eea69';
   const isCreating = route.params.isCreating || false;
-  const project_id = route.params.projectId || ''
+  const project_id = route.params.projectId || '';
 
   const verify = () => {
     console.log(members);
@@ -107,7 +109,7 @@ export default function CreatePost({ navigation, route }) {
         duration: 'zoom-in',
         duration: 2500,
       });
-      navigation.navigate('Details', {id: id, fromApps: false});
+      navigation.navigate('Details', { id: id, fromApps: false });
     }
   }
 
@@ -194,7 +196,10 @@ export default function CreatePost({ navigation, route }) {
         style={styles.dropdown}
         textStyle={styles.dd_text}
       />
-      <TouchableOpacity style={styles.btn} onPress={isCreating ? postToDB : () => editProject(project_id)}>
+      <TouchableOpacity
+        style={styles.btn}
+        onPress={isCreating ? postToDB : () => editProject(project_id)}
+      >
         <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
           {isCreating ? 'Post Brainstorm' : 'Update Brainstorm'}
         </Text>
