@@ -17,7 +17,7 @@ import { UserContext } from '../components/UserContext';
 export const Applications = ({ navigation }) => {
     const [applications, setApplications] = useState([]);
     const NUM_OF_SKELETONS = 7;
-    const {user} = useContext(UserContext)
+    const { user } = useContext(UserContext)
 
     const getApplications = async (id) => {
         //! get applications
@@ -29,9 +29,7 @@ export const Applications = ({ navigation }) => {
             if (result.data.length === 0) {
                 setApplications([]);
             } else {
-                for (let i = 0; i < result.data.length; i++) {
-                    setApplications(apps => [...apps, result.data[i]]);
-                }
+                setApplications(result.data);
             }
         } catch (err) {
             console.log(err);
@@ -53,11 +51,11 @@ export const Applications = ({ navigation }) => {
     useEffect(() => {
         getApplications(user._id);
     }, []);
-    
+
     navigation.addListener('focus', () => {
         // reset marker state
         getApplications(user._id);
-      });
+    });
 
     return (
         <SafeAreaView
