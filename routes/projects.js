@@ -83,7 +83,10 @@ router.put("/swiperight", async (req, res) => {
       await project.save();
     }
     const user = await User.findById(req.body.userId);
-    user.applications.push({"projectId": req.body.projectId, "status": "Under review"});
+    user.applications.push({
+      projectId: req.body.projectId,
+      status: "Under review",
+    });
     await user.save();
     return res.status(200).json({ message: "OK" });
   } catch (err) {
@@ -125,6 +128,7 @@ router.post("/create", async (req, res) => {
     const project = new Project({
       title: req.body.title,
       description: req.body.description,
+      summary: req.body.summary,
       skillset: req.body.skillset,
       timeline: req.body.timeline,
       creator: req.body.creator,
@@ -262,12 +266,15 @@ router.put("/:id", async (req, res) => {
     if (req.body.membersNeeded != null) {
       project.membersNeeded = req.body.membersNeeded;
     }
-    await project.save()
-    return res.status(200).json({ message: "Project modified", data: project })
+    if (req.body.summary != null) {
+      project.summary = req.body.summary;
+    }
+    await project.save();
+    return res.status(200).json({ message: "Project modified", data: project });
   } catch (err) {
     return res.status(500).json({ message: err.message, data: {} });
   }
-})
+});
 
 // Delete project (testing purposes)
 router.delete("/:id", async (req, res) => {
