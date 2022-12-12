@@ -31,7 +31,7 @@ export default function CreatePost({ navigation, route }) {
   const user_id = route.params.user_id
     ? route.params.user_id
     : '63824360149a7a6b1f4eea69';
-  const isCreating = route.params.isCreating || true;
+  const isCreating = route.params.isCreating ? route.params.isCreating : true;
   const project_id = route.params.projectId || '';
 
   const verify = () => {

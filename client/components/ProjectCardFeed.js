@@ -3,9 +3,8 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TouchableHighlight,
-  FlatList,
+  ScrollView,
 } from 'react-native';
 import { BLOND, POLISHED_PINE } from '../styles/palette';
 import UserAvatar from 'react-native-user-avatar';
@@ -45,20 +44,27 @@ export default function ProjectCardFeed({
         </View>
         <Text style={styles.bio}>{bio}</Text>
         <View style={styles.skills}>
-          <TouchableHighlight style={[styles.singleSkill, styles.members]}>
-            <Text style={[styles.pill, styles.members]}>{members_needed}</Text>
-          </TouchableHighlight>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <TouchableHighlight style={[styles.singleSkill, styles.members]}>
+              <Text style={[styles.pill, styles.members]}>
+                {members_needed}
+              </Text>
+            </TouchableHighlight>
 
-          {skillset &&
-            skillset.map((skill) => {
-              return (
-                <TouchableHighlight key={skill} style={styles.singleSkill}>
-                  <Text style={styles.pill}>{skill}</Text>
-                </TouchableHighlight>
-              );
-            })}
+            {skillset &&
+              skillset.map((skill) => {
+                return (
+                  <TouchableHighlight key={skill} style={styles.singleSkill}>
+                    <Text style={styles.pill}>
+                      {skill.substring(0, 1).toUpperCase() +
+                        skill.substring(1).toLowerCase()}
+                    </Text>
+                  </TouchableHighlight>
+                );
+              })}
+          </ScrollView>
         </View>
-        <Text style={{ fontFamily: 'Poppins-Regular' }}>{description}</Text>
+        <Text style={styles.description}>{description}</Text>
       </View>
     </View>
   );
@@ -82,6 +88,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 18,
     marginVertical: 10,
     marginTop: 25,
+    display: 'flex',
     flex: 1,
     marginBottom: 25,
     width: '85%',
@@ -103,7 +110,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   skills: {
-    flexDirection: 'row',
+    height: '21%',
+  },
+  description: {
+    fontFamily: 'Poppins-Regular',
   },
   singleSkill: {
     padding: 5,
