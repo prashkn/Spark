@@ -2,7 +2,7 @@ GET http://localhost:4000/api/users/
 
 ###
 
-DELETE http://localhost:4000/api/users/6374912fe6f7e60338cfd3c4
+DELETE http://localhost:4000/api/users/6396288568b6bb5238756f16
 
 ###
 
@@ -36,16 +36,21 @@ Content-Type: application/json
     "content": ["C++", "Java"]
 }
 
+###
+
+GET http://localhost:4000/api/users/applications?userId=63824360149a7a6b1f4eea69
+
+
 ######################################################################
 
 GET http://localhost:4000/api/projects/
 
 ###
-GET http://localhost:4000/api/projects/createdprojects?userId=63823c924a0de95cddc54052
+GET http://localhost:4000/api/projects/createdprojects?userId=63824360149a7a6b1f4eea69
 
 ###
 
-DELETE http://localhost:4000/api/projects/63756d1cfffc51284ca25e02
+DELETE http://localhost:4000/api/projects/639628bc68b6bb5238756f1d
 
 ###
 
@@ -61,8 +66,18 @@ PUT http://localhost:4000/api/projects/swiperight
 Content-Type: application/json
 
 {
-    "projectId": "63756d1cfffc51284ca25e02",
-    "userId": "63756a08cded4b52ec7c165d"
+    "projectId": "6385435223ef81b2d1b8ad1e",
+    "userId": "63824360149a7a6b1f4eea69"
+}
+
+### 
+
+PUT http://localhost:4000/api/projects/6385435223ef81b2d1b8ad1e
+Content-Type: application/json
+
+{
+    "title": "Sparky",
+    "membersNeeded": 5
 }
 
 ### 
@@ -85,4 +100,23 @@ Content-Type: application/json
     "skillset": ["C++", "Java"],
     "timeline": "3 months",
     "creator": "6375665d12675b2ff4af2405"
+}
+
+### 
+
+PUT http://localhost:4000/api/projects/check
+Content-Type: application/json
+
+{
+    "projectId": "6385435223ef81b2d1b8ad1e",
+    "userId": "63824360149a7a6b1f4eea69"
+}
+### 
+
+PUT http://localhost:4000/api/projects/uncheck
+Content-Type: application/json
+
+{
+    "projectId": "6385435223ef81b2d1b8ad1e",
+    "userId": "63824360149a7a6b1f4eea69"
 }

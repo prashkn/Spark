@@ -1,15 +1,23 @@
-import { View, Image, StyleSheet, TouchableHighlight } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import React from 'react';
-import { POLISHED_PINE } from '../styles/palette';
+import { MIDNIGHT_GREEN, POLISHED_PINE } from '../styles/palette';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function CreatePostButton({ navigation }) {
+export default function CreatePostButton({ navigation, user_id }) {
   return (
-    <TouchableHighlight
+    <TouchableOpacity
+      activeOpacity={0.8}
       style={styles.btn}
-      onPress={() => navigation.navigate('Create a Brainstorm')}
+      onPress={() =>
+        navigation.navigate('Create a Brainstorm', {
+          user_id: user_id,
+        })
+      }
     >
-      <Image source={require('../assets/create.png')} />
-    </TouchableHighlight>
+      {/*<Image style={styles.pencil} source={require('../assets/create.png')} />*/}
+      <Icon name={'edit'} size={35} color={'white'} />
+    </TouchableOpacity>
   );
 }
 
@@ -25,5 +33,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 1 },
     shadowColor: '#333',
     shadowOpacity: 0.7,
+  },
+  pencil: {
+    width: '40%',
+    height: '40%',
   },
 });

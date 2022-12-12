@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
 
     // Cool shadow
     shadowOffset: { width: 5, height: 5 },
-    shadowRadius: '10px',
-    shadowOpacity: 0.10,
+    shadowRadius: 10,
+    shadowOpacity: 0.1,
   },
   text: {
     fontFamily: 'Poppins-Regular',

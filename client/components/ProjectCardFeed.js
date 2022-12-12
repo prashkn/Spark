@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import { BLOND, POLISHED_PINE } from '../styles/palette';
+import UserAvatar from 'react-native-user-avatar';
 
 export default function ProjectCardFeed({
   title,
@@ -17,15 +18,15 @@ export default function ProjectCardFeed({
   skillset,
   members_needed,
   timeline,
-  image,
 }) {
   return (
     <View style={styles.card}>
       <View style={styles.cardContent}>
         <View style={styles.header}>
-          <Image
+          <UserAvatar
             style={styles.profilepic}
-            source={require('../assets/profile_pic_placeholder.png')}
+            size={50}
+            name={creator_name || 'John Doe'}
           />
           <View>
             <Text style={styles.title}>{title}</Text>
@@ -87,6 +88,8 @@ const styles = StyleSheet.create({
   },
   profilepic: {
     marginRight: 20,
+    paddingLeft: 3,
+    paddingRight: 3,
   },
   header: {
     flexDirection: 'row',

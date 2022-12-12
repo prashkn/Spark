@@ -82,7 +82,10 @@ router.put("/swiperight", async (req, res) => {
       project.applicants.push(req.body.userId);
       await project.save();
     }
-    res.status(200).json({ message: "OK" });
+    const user = await User.findById(req.body.userId);
+    user.applications.push({"projectId": req.body.projectId, "status": "Under review"});
+    await user.save();
+    return res.status(200).json({ message: "OK" });
   } catch (err) {
     return res.status(500).json({ message: err.message, data: {} });
   }
@@ -109,7 +112,7 @@ router.put("/swipeleft", async (req, res) => {
       project.uninterested.push(req.body.userId);
       await project.save();
     }
-    res.status(200).json({ message: "OK" });
+    return res.status(200).json({ message: "OK" });
   } catch (err) {
     return res.status(500).json({ message: err.message, data: {} });
   }
@@ -125,6 +128,7 @@ router.post("/create", async (req, res) => {
       skillset: req.body.skillset,
       timeline: req.body.timeline,
       creator: req.body.creator,
+      membersNeeded: req.body.membersNeeded,
       applicants: [],
       uninterested: [],
       participants: [],
@@ -161,16 +165,7 @@ router.get("/createdprojects", async (req, res) => {
         .status(400)
         .json({ message: "userId must be in present and valid." });
     }
-
     const data = await Project.find({ creator: req.query.userId });
-    /*
-    let data = [];
-    for (let i = 0; i < projects.length; i++) {
-      if (projects[i].creator == req.query.userId) {
-        data.push(projects[i]);
-      }
-    }
-    */
     return res.status(200).json({ message: "OK", data: data });
   } catch (err) {
     return res.status(500).json({ message: err.message, data: {} });
@@ -189,6 +184,14 @@ router.put("/check", async (req, res) => {
     }
     project.participants.push(req.body.userId);
     await project.save();
+    const user = await User.findById(req.body.userId);
+    for (let i = 0; i < user.applications.length; i++) {
+      if (user.applications[i].projectId == req.body.projectId) {
+        user.applications[i].status = "Accepted";
+        await user.save();
+        break;
+      }
+    }
     return res.status(200).json({ message: "OK", data: {} });
   } catch (err) {
     return res.status(500).json({ message: err.message, data: {} });
@@ -207,6 +210,14 @@ router.put("/uncheck", async (req, res) => {
     }
     project.applicants.push(req.body.userId);
     await project.save();
+    const user = await User.findById(req.body.userId);
+    for (let i = 0; i < user.applications.length; i++) {
+      if (user.applications[i].projectId == req.body.projectId) {
+        user.applications[i].status = "Under review";
+        await user.save();
+        break;
+      }
+    }
     return res.status(200).json({ message: "OK", data: {} });
   } catch (err) {
     return res.status(500).json({ message: err.message, data: {} });
@@ -225,6 +236,38 @@ router.get("/:id", async (req, res) => {
     return res.status(500).json({ message: err.message, data: {} });
   }
 });
+
+// Modify a project
+//body: {}
+router.put("/:id", async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (project == null) {
+      return res
+        .status(404)
+        .json({ message: "Project does not exist", data: {} });
+    }
+    if (req.body.title != null) {
+      project.title = req.body.title;
+    }
+    if (req.body.description != null) {
+      project.description = req.body.description;
+    }
+    if (req.body.skillset != null) {
+      project.skillset = req.body.skillset;
+    }
+    if (req.body.timeline != null) {
+      project.timeline = req.body.timeline;
+    }
+    if (req.body.membersNeeded != null) {
+      project.membersNeeded = req.body.membersNeeded;
+    }
+    await project.save()
+    return res.status(200).json({ message: "Project modified", data: project })
+  } catch (err) {
+    return res.status(500).json({ message: err.message, data: {} });
+  }
+})
 
 // Delete project (testing purposes)
 router.delete("/:id", async (req, res) => {

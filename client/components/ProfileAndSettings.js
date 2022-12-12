@@ -30,7 +30,7 @@ export default function ProfileAndSettings() {
       })}
     >
       <Stack.Screen
-        name="Profile"
+        name="Profile Page"
         component={Profile}
         options={{
           // Hide header on profile page

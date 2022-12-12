@@ -33,7 +33,7 @@ const linking = {
   prefixes: [],
   config: {
     screens: {
-      Login: '/login',
+      Login: 'login',
       // YourBasicInformation: 'createaccount',
       // SignUp: 'signup-old',
       SignUpRoot: {
@@ -47,9 +47,9 @@ const linking = {
       Root: {
         path: '',
         screens: {
-          'Home/Create': { path: '', screens: { Home: 'home' } },
-          Projects: 'projects',
-          'Profile/Settings': {
+          Home: { path: '', screens: { Home: 'home' } },
+          'My Brainstorms': 'brainstorms',
+          Profile: {
             path: 'profile',
             screens: { Profile: '', Settings: 'settings' },
           },
@@ -60,6 +60,8 @@ const linking = {
 };
 
 const Stack = createNativeStackNavigator();
+import { ToastProvider } from 'react-native-toast-notifications';
+import { POLISHED_PINE } from './styles/palette';
 
 export default function App() {
   const [fontsLoaded] = useFonts(poppinsFontMapping);
@@ -77,17 +79,12 @@ export default function App() {
   );
 
   useEffect(() => {
-    console.log('render app');
     const auth = getAuth();
 
     onAuthStateChanged(auth, (user) => {
-      console.log('user state changed');
-      console.log(user);
       setFirebaseUser(user);
       getUserInfoFromDatabase(user)
         .then((userFromDatabase) => {
-          console.log('got user from database');
-          console.log(userFromDatabase);
           setUser(userFromDatabase);
         })
         .catch((error) => {
@@ -103,35 +100,40 @@ export default function App() {
   }
 
   return (
-    <UserContext.Provider value={userContextValue}>
-      <NavigationContainer linking={linking}>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {/* <Stack.Group screenOptions={{ headerShown: false }}> */}
-          {firebaseUser === null ? (
-            <>
-              <Stack.Screen
-                name="Login"
-                component={Login}
-                options={{
-                  title: 'Login',
-                  // When logging out, a pop animation feels intuitive
-                  // You can remove this if you want the default 'push' animation
-                  animationTypeForReplace:
-                    firebaseUser === null ? 'pop' : 'push',
-                }}
-              />
-              <Stack.Screen name="SignUpRoot" component={SignUp}></Stack.Screen>
-            </>
-          ) : (
-            <>
-              <Stack.Screen name="Root" component={Tabs} />
-            </>
-          )}
-          {/* <Tabs /> */}
-          {/* </Stack.Group> */}
-        </Stack.Navigator>
-        {/* <Stack.Group></Stack.Group> */}
-      </NavigationContainer>
-    </UserContext.Provider>
+    <ToastProvider offsetTop={50} successColor={POLISHED_PINE}>
+      <UserContext.Provider value={userContextValue}>
+        <NavigationContainer linking={linking}>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            {/* <Stack.Group screenOptions={{ headerShown: false }}> */}
+            {firebaseUser === null ? (
+              <>
+                <Stack.Screen
+                  name="Login"
+                  component={Login}
+                  options={{
+                    title: 'Login',
+                    // When logging out, a pop animation feels intuitive
+                    // You can remove this if you want the default 'push' animation
+                    animationTypeForReplace:
+                      firebaseUser === null ? 'pop' : 'push',
+                  }}
+                />
+                <Stack.Screen
+                  name="SignUpRoot"
+                  component={SignUp}
+                ></Stack.Screen>
+              </>
+            ) : (
+              <>
+                <Stack.Screen name="Root" component={Tabs} />
+              </>
+            )}
+            {/* <Tabs /> */}
+            {/* </Stack.Group> */}
+          </Stack.Navigator>
+          {/* <Stack.Group></Stack.Group> */}
+        </NavigationContainer>
+      </UserContext.Provider>
+    </ToastProvider>
   );
 }

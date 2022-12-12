@@ -12,6 +12,9 @@ Change user info:
 PUT /users/:id
 body: {field, content}
 
+Get user's project applications:
+GET /users/applications?userId=XXX
+
 Load home feed:
 GET /projects/homepage?userId=XXX
 
@@ -26,6 +29,10 @@ body: {projectId, userId}
 Creating a new project:
 POST /projects/create
 body: {title, description, skillset, timeline, creator}
+
+Modify a project:
+PUT /projects/:id
+body: Any combination of: {title, description, skillset, timeline, membersNeeded}
 
 Get the projects a user created:
 GET /projects/createdprojects?userId=XXX
