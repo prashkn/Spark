@@ -79,7 +79,6 @@ export default function Home({ navigation }) {
 
   //call endpoint on rejection
   const swipeLeft = async (project_id, user_id) => {
-    /*
     try {
       const requestOptions = {
         method: 'PUT',
@@ -94,12 +93,10 @@ export default function Home({ navigation }) {
     } catch (err) {
       console.log(err);
     }
-    */
   };
 
   //call endpoint on accept
   const swipeRight = async (project_id, user_id) => {
-    /*
     try {
       const requestOptions = {
         method: 'PUT',
@@ -116,7 +113,7 @@ export default function Home({ navigation }) {
       console.log(res.json());
     } catch (err) {
       console.log(err);
-    }*/
+    }
   };
 
   //apply filter
@@ -192,6 +189,10 @@ export default function Home({ navigation }) {
                 setItems={setPossibleSkills}
                 style={styles.dropdown}
                 textStyle={styles.dd_text}
+                dropDownContainerStyle={{
+                  width: '80%',
+                  borderColor: GAINSBORO,
+                }}
               />
             </View>
             <TouchableOpacity
@@ -251,14 +252,14 @@ export default function Home({ navigation }) {
                   setCounter={setCounter}
                   swipeLeft={swipeLeft}
                   project_id={projectInfo[counter]._id}
-                  //user_id={user._id || ''}
+                  user_id={user._id}
                 />
                 <AcceptProject
                   counter={counter}
                   setCounter={setCounter}
                   swipeRight={swipeRight}
                   project_id={projectInfo[counter]._id}
-                  //user_id={user._id || ''}
+                  user_id={user._id}
                 />
               </View>
             </>
@@ -340,10 +341,11 @@ const styles = StyleSheet.create({
     borderRadius: '5%',
   },
   dropdown: {
-    width: '90%',
+    width: '80%',
     alignSelf: 'center',
     borderRadius: '5%',
-    borderWidth: 0,
+    borderWidth: 1,
+    borderColor: GAINSBORO,
     marginBottom: '50%',
   },
   dd_text: {

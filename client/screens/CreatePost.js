@@ -212,6 +212,10 @@ export default function CreatePost({ navigation, route }) {
         setItems={setPossibleSkills}
         style={styles.dropdown}
         textStyle={styles.dd_text}
+        dropDownContainerStyle={{
+          borderWidth: 1,
+          borderColor: GAINSBORO,
+        }}
       />
       <TouchableOpacity
         style={styles.btn}
