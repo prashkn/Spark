@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
+  Alert,
 } from 'react-native';
 import { BLOND, MIDNIGHT_GREEN, POLISHED_PINE, MUSTARD } from '../styles/palette';
 import { useEffect, useState } from 'react';
@@ -38,11 +39,26 @@ export function ProjectDetail({ navigation, route }) {
   useEffect(() => {
     getProject(id)
   }, [])
-  
+
   navigation.addListener('focus', () => {
     // reset marker state
     getProject(id)
-});
+  });
+
+  function handleStartProj() {
+    if (projectInfo.membersNeeded > accepted.length) {
+      Alert.alert('Warning!', 'You have not accepted the amount of participants you described in the description. Are you sure you want to start this project?', [
+        { text: 'Yes' },
+        { text: 'Cancel', style: 'cancel' },
+      ]);
+    }
+    if (projectInfo.membersNeeded < accepted.length) {
+      Alert.alert('Warning!', 'You have accepted more than the amount of participants you described in the description. Are you sure you want to start this project?', [
+        { text: 'Yes' },
+        { text: 'Cancel', style: 'cancel' },
+      ]);
+    }
+  }
 
   return (
     <SafeAreaView
@@ -184,7 +200,7 @@ export function ProjectDetail({ navigation, route }) {
           }
           {(!onApplicants && !fromApps) &&
             <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <Pressable style={project.startProj}>
+              <Pressable style={project.startProj} onPress={handleStartProj}>
                 <Text style={{ fontFamily: 'Poppins-Regular', fontSize: 18, alignSelf: 'center' }}>Start Project</Text>
               </Pressable>
             </View>
