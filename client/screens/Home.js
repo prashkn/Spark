@@ -4,9 +4,10 @@ import {
   TouchableOpacity,
   Button,
   Text,
-  ScrollView,
+  Image,
 } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../components/UserContext';
 import Modal from 'react-native-modal';
 import AcceptProject from '../components/AcceptProject';
 import CreatePostButton from '../components/CreatePostButton';
@@ -21,7 +22,7 @@ import { BASE_URL } from '../data/util';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function Home({ navigation, user_id = 't' }) {
+export default function Home({ navigation }) {
   DropDownPicker.setMode('BADGE');
   DropDownPicker.setListMode('SCROLLVIEW');
   const [projectInfo, setProjectInfo] = useState([]); //holds all projects
@@ -32,6 +33,7 @@ export default function Home({ navigation, user_id = 't' }) {
   const [open, setOpen] = useState(false);
   const [skillsets, setSkillsets] = useState([]);
   const [possibleSkills, setPossibleSkills] = useState(skillset_list);
+  const { user } = useContext(UserContext);
 
   //initialize home screen with information
   const getAllInfo = async (user_id) => {
@@ -112,8 +114,10 @@ export default function Home({ navigation, user_id = 't' }) {
 
   //on first render
   useEffect(() => {
-    getAllInfo(user_id);
-    if (projectInfo !== []) setLoading(false);
+    console.log('user');
+    console.log(user || '');
+    if (user !== null) getAllInfo(user._id).then(setLoading(false));
+    else getAllInfo('');
   }, []);
 
   //on counter changing
@@ -165,6 +169,10 @@ export default function Home({ navigation, user_id = 't' }) {
       </Modal>
       <View style={styles.container}>
         {/* <Logo width={'15%'} height={'15%'} /> */}
+        <Image
+          source={require('../assets/spark_logo.png')}
+          style={styles.logo}
+        />
         {loading && (
           <>
             <Skeleton animation="wave" width={'80%'} height={'50%'} />
@@ -179,7 +187,7 @@ export default function Home({ navigation, user_id = 't' }) {
             <ProjectCardFeed
               description={projectInfo[counter].description}
               skillset={projectInfo[counter].skillset}
-              bio={projectInfo[counter].bio || 'Project bio here'}
+              bio={projectInfo[counter].summary || 'Project bio here'}
               creator_name={creator.name || 'No User'}
               creator_username={creator.username ? `@${creator.username}` : ''}
               image={creator.image}
@@ -196,14 +204,14 @@ export default function Home({ navigation, user_id = 't' }) {
                 setCounter={setCounter}
                 swipeLeft={swipeLeft}
                 project_id={projectInfo[counter]._id}
-                user_id={user_id}
+                //user_id={user._id || ''}
               />
               <AcceptProject
                 counter={counter}
                 setCounter={setCounter}
                 swipeRight={swipeRight}
                 project_id={projectInfo[counter]._id}
-                user_id={user_id}
+                //user_id={user._id || ''}
               />
             </View>
           </>
@@ -222,7 +230,7 @@ export default function Home({ navigation, user_id = 't' }) {
         <CreatePostButton
           style={styles.postBtn}
           navigation={navigation}
-          user_id={user_id}
+          //user_id={user._id || ''}
         />
       </View>
     </View>
@@ -258,10 +266,10 @@ const styles = StyleSheet.create({
     marginLeft: '3%',
     marginBottom: '3%',
   },
-  img: {
-    marginTop: '-5%',
-    width: '20%',
-    height: '10%',
+  logo: {
+    width: 50,
+    height: 50,
+    marginBottom: '5%',
   },
   actions: {
     flexDirection: 'row',
