@@ -29,9 +29,10 @@ export default function CreatePost({ navigation, route }) {
   const toast = useToast();
   const { user } = useContext(UserContext);
   const isCreating =
-    route.params.isCreating === false ? route.params.isCreating : true;
+    route.params.isCreating === false ? route.params.isCreating : true; //is this render posting a new project, or editing an old one?
   const project_id = route.params.projectId || '';
 
+  //verify that all fields are valid
   const verify = () => {
     console.log(members);
     if (title === '' || summary === '') {
@@ -53,6 +54,7 @@ export default function CreatePost({ navigation, route }) {
     return true;
   };
 
+  //post project to db
   const postToDB = async () => {
     const shouldPost = verify();
     if (shouldPost) {
@@ -85,6 +87,7 @@ export default function CreatePost({ navigation, route }) {
     }
   };
 
+  //put project to db
   async function editProject(id) {
     const shouldPost = verify();
     if (shouldPost) {

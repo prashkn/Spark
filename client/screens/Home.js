@@ -1,11 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Button,
-  Text,
-  Image,
-} from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
 import { useEffect, useState, useContext } from 'react';
 import { UserContext } from '../components/UserContext';
 import Modal from 'react-native-modal';
@@ -34,13 +27,13 @@ export default function Home({ navigation }) {
   const [projectInfo, setProjectInfo] = useState([]); //holds all projects
   const [creator, setCreator] = useState({}); //holds the creator of the project
   const [counter, setCounter] = useState(0); //determines where in the array of projects we should
-  const [loading, setLoading] = useState(true);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [skillsets, setSkillsets] = useState([]);
-  const [possibleSkills, setPossibleSkills] = useState(skillset_list);
-  const { user } = useContext(UserContext);
-  const toast = useToast();
+  const [loading, setLoading] = useState(true); //determines whether or not the home page is loading
+  const [modalVisible, setModalVisible] = useState(false); //whether or not the modal is open
+  const [open, setOpen] = useState(false); //whether or not the dropdown is open
+  const [skillsets, setSkillsets] = useState([]); //holds the skillsets the user is filtering by
+  const [possibleSkills, setPossibleSkills] = useState(skillset_list); //holds all the possible skillsets
+  const { user } = useContext(UserContext); //grab the user data
+  const toast = useToast(); //toast library for displaying toast message
 
   //initialize home screen with information
   const getAllInfo = async (user_id) => {
@@ -77,7 +70,7 @@ export default function Home({ navigation }) {
     }
   };
 
-  //call endpoint on rejection
+  //call endpoint when user rejects a project
   const swipeLeft = async (project_id, user_id) => {
     try {
       const requestOptions = {
@@ -95,7 +88,7 @@ export default function Home({ navigation }) {
     }
   };
 
-  //call endpoint on accept
+  //call endpoint when user accepts a project
   const swipeRight = async (project_id, user_id) => {
     try {
       const requestOptions = {
@@ -144,7 +137,7 @@ export default function Home({ navigation }) {
     setProjectInfo(new_project_info);
   };
 
-  //on first render
+  //on render
   useEffect(() => {
     console.log('user');
     console.log(user || '');
@@ -275,11 +268,7 @@ export default function Home({ navigation }) {
           >
             <Icon name={'tune'} color={'white'} size={35} />
           </TouchableOpacity>
-          <CreatePostButton
-            style={styles.postBtn}
-            navigation={navigation}
-            //user_id={user._id || ''}
-          />
+          <CreatePostButton style={styles.postBtn} navigation={navigation} />
         </View>
       </View>
     )

@@ -9,11 +9,7 @@ export default function CreatePostButton({ navigation, user_id }) {
     <TouchableOpacity
       activeOpacity={0.8}
       style={styles.btn}
-      onPress={() =>
-        navigation.navigate('Your Brainstorm', {
-          user_id: user_id,
-        })
-      }
+      onPress={() => navigation.navigate('Your Brainstorm')}
     >
       {/*<Image style={styles.pencil} source={require('../assets/create.png')} />*/}
       <Icon name={'edit'} size={35} color={'white'} />
