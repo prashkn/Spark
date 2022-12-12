@@ -19,7 +19,6 @@ import { Applicant } from './Applicant';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { BASE_URL } from '../data/util';
-import SendSMS from 'react-native-sms';
 import { useToast } from 'react-native-toast-notifications';
 
 export function ProjectDetail({ navigation, route }) {
