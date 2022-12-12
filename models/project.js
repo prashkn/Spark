@@ -1,8 +1,9 @@
 // Load required packages
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
 // Define our project schema
-var ProjectSchema = new mongoose.Schema({
+var ProjectSchema = new mongoose.Schema(
+  {
     title: String,
     description: String,
     skillset: [String],
@@ -11,8 +12,11 @@ var ProjectSchema = new mongoose.Schema({
     membersNeeded: Number,
     applicants: [String],
     uninterested: [String],
-    participants: [String]
-}, {versionKey: false});
+    participants: [String],
+    summary: String,
+  },
+  { versionKey: false }
+);
 
 // Export the Mongoose model
-module.exports = mongoose.model('Project', ProjectSchema);
+module.exports = mongoose.model("Project", ProjectSchema);

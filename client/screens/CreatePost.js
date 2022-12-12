@@ -30,7 +30,8 @@ export default function CreatePost({ navigation, route }) {
   );
   const toast = useToast();
   const { user } = useContext(UserContext);
-  const isCreating = route.params.isCreating ? route.params.isCreating : true;
+  const isCreating =
+    route.params.isCreating === false ? route.params.isCreating : true;
   const project_id = route.params.projectId || '';
 
   const verify = () => {
@@ -65,6 +66,7 @@ export default function CreatePost({ navigation, route }) {
         },
         body: JSON.stringify({
           title: title,
+          summary: biography,
           description: description,
           skillset: skillsets,
           timeline: timeline,
@@ -94,6 +96,7 @@ export default function CreatePost({ navigation, route }) {
         },
         body: JSON.stringify({
           title: title,
+          summary: biography,
           description: description,
           skillset: skillsets,
           timeline: timeline,
