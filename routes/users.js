@@ -28,12 +28,12 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-// Login authentication
-// query: {email, password}
-router.get("/login", async (req, res) => {
+// Get user by email
+// query: {email}
+router.get("/getUser", async (req, res) => {
   try {
-    if (req.query.email == null || req.query.password == null) {
-      return res.status(400).json({ message: "Email and password must be in query params"})
+    if (req.query.email == null ) {
+      return res.status(400).json({ message: "Email must be in query params"})
     }
     const user = await User.find({ email: req.query.email });
     if (user.length == 0) {
@@ -41,13 +41,7 @@ router.get("/login", async (req, res) => {
         .status(200)
         .json({ message: "Email does not exist", data: {} });
     } else {
-      if (user[0].password != req.query.password) {
-        return res
-          .status(200)
-          .json({ message: "Password is incorrect", data: {} });
-      } else {
-        return res.status(200).json({ message: "Success", data: user[0] });
-      }
+      return res.status(200).json({ message: "Success", data: user[0] });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message, data: {} });
@@ -87,7 +81,8 @@ router.post("/create", async (req, res) => {
       name: req.body.name,
       username: req.body.username,
       email: req.body.email,
-      password: req.body.password,
+      location: req.body.location,
+      experience: req.body.experience,
       bio: req.body.bio,
       skills: req.body.skills,
       projects: [],

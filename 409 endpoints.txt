@@ -1,5 +1,5 @@
-Login authentication:
-GET /users/login?email=XXX&password=XXX
+Get user by email:
+GET /users/getUser?email=XXX
 
 Create new user:
 POST /users/create
