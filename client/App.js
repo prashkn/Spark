@@ -40,10 +40,9 @@ const linking = {
         path: 'signup',
         screens: {
           YourBasicInformation: '',
-          // YourBackground: '',
+          YourBackground: 'your-background',
         },
       },
-      // YourBackground: 'your-background',
       Root: {
         path: '',
         screens: {
@@ -55,7 +54,7 @@ const linking = {
           'My Applications': {path: 'applications', screens: {Applications: ''}},
           Profile: {
             path: 'profile',
-            screens: { Profile: '', Settings: 'settings' },
+            screens: { "Profile Page": '', Settings: 'settings' },
           },
         },
       },

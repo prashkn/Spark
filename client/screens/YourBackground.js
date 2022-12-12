@@ -165,8 +165,6 @@ export default function YourBackground({ navigation }) {
           paddingHorizontal: 20,
         }}
       >
-        <Text>{JSON.stringify(newUserInfo)}</Text>
-        <Text>{JSON.stringify(fieldsValid)}</Text>
         <Text style={{ fontFamily: 'Poppins-Bold', fontSize: 24 }}>
           Your Background
         </Text>
