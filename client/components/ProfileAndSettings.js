@@ -33,6 +33,7 @@ export default function ProfileAndSettings() {
         name="Profile Page"
         component={Profile}
         options={{
+          title: 'Profile',
           // Hide header on profile page
           headerShown: false,
         }}

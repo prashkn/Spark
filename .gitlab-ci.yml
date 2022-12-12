@@ -4,16 +4,15 @@ image: google/cloud-sdk:alpine
 default:
   # Functions that should be executed before the script is run
   before_script:
-    - apk add nodejs npm
-    - npm i -g firebase-tools
-
     # Copy service account details
     - echo $FIREBASE_SERVICE_ACCOUNT > "service_account.json"
 
 deploy-client:
+  image: node:16-alpine
   stage: deploy
 
   script:
+    - npm i -g firebase-tools
     - cd client
     - npm i
     # - export NODE_OPTIONS=--openssl-legacy-provider
@@ -33,6 +32,7 @@ deploy-api:
     changes:
       - "client/**/*"
   script:
+    - apk add nodejs npm
     # Install Docker
     # - apk add --update docker openrc
 
