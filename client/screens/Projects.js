@@ -50,9 +50,13 @@ export default function Projects({ navigation }) {
   }
 
   useEffect(() => {
-    //! change to variable
     getProjects(user._id);
   }, []);
+  
+  navigation.addListener('focus', () => {
+    // reset marker state
+    getProjects(user._id);
+  });
 
   return (
     <SafeAreaView
