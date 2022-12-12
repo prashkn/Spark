@@ -31,6 +31,7 @@ deploy-api:
   only:
     changes:
       - "!(client)/**/*"
+      - "*"
   script:
     - apk add nodejs npm
     # Install Docker
