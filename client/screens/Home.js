@@ -153,7 +153,7 @@ export default function Home({ navigation }) {
     console.log(user || '');
     if (user !== null) getAllInfo(user._id).then(setLoading(false));
     else getAllInfo('').then(setLoading(false));
-  }, []);
+  }, [user]);
 
   //on counter changing
   useEffect(() => {
