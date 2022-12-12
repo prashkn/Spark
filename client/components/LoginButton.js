@@ -15,6 +15,7 @@ export default function LoginButton(props) {
           justifyContent: 'center',
           alignItems: 'center',
           marginBottom: 10,
+          zIndex: -1
         },
       ]}
       onPress={props.onPress}

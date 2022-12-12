@@ -13,10 +13,18 @@ import {
 import { SPARK_API } from './BackendURL';
 import { UserContext } from '../components/UserContext';
 import WarningMessage from '../components/WarningMessage';
+import { skillset_list } from '../data/skillsets';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 export default function YourBackground({ navigation }) {
   const { newUserInfo, setNewUserInfo } = useContext(NewUserInfoContext);
   const [progress, setProgress] = useState(90);
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownValue, setDropdownValue] = useState(null);
+  const [possibleSkills, setPossibleSkills] = useState(skillset_list);
+
+  const [selectedSkills, setSelectedSkills] = useState([]);
 
   const { setUser } = useContext(UserContext);
 
@@ -35,6 +43,17 @@ export default function YourBackground({ navigation }) {
     }
   }, []);
 
+  useEffect(() => {
+    if (dropdownValue === null) {
+      return;
+    }
+    setSelectedSkills(
+      skillset_list
+        .filter((item) => dropdownValue.includes(item.value))
+        .map((skill) => skill.label)
+    );
+  }, [dropdownValue]);
+
   const [fieldsValid, setFieldsValid] = useState({
     bio: true,
     experience: true,
@@ -46,7 +65,7 @@ export default function YourBackground({ navigation }) {
 
     let allFieldsValid = true;
 
-    let newFieldsValid = {...fieldsValid};
+    let newFieldsValid = { ...fieldsValid };
 
     // Check if bio is valid
     if (newUserInfo.bio === undefined || newUserInfo.bio.length === 0) {
@@ -83,8 +102,9 @@ export default function YourBackground({ navigation }) {
       .then(async () => {
         const newUserToBackend = {
           ...newUserInfo,
-          password: '',
-          skills: newUserInfo.experience,
+          password: '', // Important: don't pass password to backend
+          experience: newUserInfo.experience,
+          skills: selectedSkills,
         };
         console.log(newUserToBackend);
 
@@ -160,6 +180,7 @@ export default function YourBackground({ navigation }) {
           height: '100%',
         }}
         contentContainerStyle={{
+          width: '100%',
           maxWidth: 600,
           marginHorizontal: 'auto',
           paddingHorizontal: 20,
@@ -184,10 +205,20 @@ export default function YourBackground({ navigation }) {
           }}
         >
           {/* TODO: Add asterisks */}
-          <LoginTextInput placeholder="Headline" />
-          <LoginTextInput placeholder="Current Role" />
+          {/* <LoginTextInput placeholder="Headline" />
+          <LoginTextInput placeholder="Current Role" /> */}
           <LoginTextInput
-            placeholder="About me"
+            placeholder="Location"
+            // multiline={true}
+            // scrollEnabled={true}
+            // style={{ height: 125, paddingTop: 10 }}
+            onChangeText={(text) => {
+              setNewUserInfo({ ...newUserInfo, location: text });
+            }}
+          />
+
+          <LoginTextInput
+            placeholder="Bio"
             multiline={true}
             scrollEnabled={true}
             style={{ height: 125, paddingTop: 10 }}
@@ -200,6 +231,61 @@ export default function YourBackground({ navigation }) {
             <WarningMessage message="Please enter a bio." />
           )}
 
+          <DropDownPicker
+            multiple={true}
+            min={0}
+            open={dropdownOpen}
+            value={dropdownValue}
+            items={possibleSkills}
+            setOpen={setDropdownOpen}
+            setValue={setDropdownValue}
+            setItems={setPossibleSkills}
+            mode="BADGE"
+            zIndex={3}
+            style={{
+              borderWidth: 1,
+              backgroundColor: '#F6F6F6',
+              borderColor: '#E8E8E8',
+              minHeight: 50,
+              borderRadius: 8,
+              padding: 10,
+              width: '100%',
+              marginBottom: 10,
+            }}
+            extendableBadgeContainer={true}
+            dropDownContainerStyle={{
+              borderColor: '#E8E8E8',
+              // backgroundColor: 'red',
+              borderRadius: 8,
+              // maxHeight: 300,
+            }}
+            dropDownDirection="AUTO"
+            placeholder="Skills"
+            placeholderStyle={{
+              // fontFamily: 'Poppins-Medium',
+              // fontSize: 16,
+              color: '#BDBDBD',
+            }}
+            textStyle={{
+              fontFamily: 'Poppins-Medium',
+              fontSize: 16,
+              color: 'black',
+              // color: 'red',
+            }}
+            showBadgeDot={false}
+            badgeStyle={{ borderRadius: 6 }}
+            // badgeTextStyle={{color: 'purple'}}
+            labelStyle={{ color: 'red' }}
+            customItemLabelStyle={{ fontStyle: 'italic' }}
+            listChildLabelStyle={{ fontStyle: 'italic' }}
+            iconContainerStyle={{ display: 'none' }}
+            // listItemLabelStyle={{fontStyle: 'italic'}}
+            // selectedItemContainerStyle={{backgroundColor: 'red'}}
+            // setItems={setPossibleSkills}
+            // style={styles.dropdown}
+            // textStyle={styles.dd_text}
+          />
+
           <LoginTextInput
             placeholder="Experience"
             multiline={true}
@@ -211,7 +297,7 @@ export default function YourBackground({ navigation }) {
           />
 
           {fieldsValid.experience === false && (
-            <WarningMessage message="Please select experience." />
+            <WarningMessage message="Please enter your experience." />
           )}
         </View>
 
