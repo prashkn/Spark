@@ -13,7 +13,7 @@ export default function Profile({ navigation }) {
 
   // Ensure user is loaded
   if (user === null) {
-    return <></>
+    return <></>;
   }
 
   return (
@@ -40,20 +40,25 @@ export default function Profile({ navigation }) {
           />
 
           {/* Sub-container with name, username, and location */}
+
           <View style={styles.userInfoTextArea}>
             <Text style={styles.name}>{user.name}</Text>
             <Text style={styles.poppinsSmall}>@{user.username}</Text>
 
             {/* Container for location pin and location name */}
-            <View style={styles.locationContainer}>
-              <Icon
-                name="map-marker"
-                size={30}
-                color={MIDNIGHT_GREEN}
-                style={styles.locationPin}
-              ></Icon>
-              <Text style={styles.poppinsSmall}>Mount Vernon, Virginia</Text>
-            </View>
+            {user.location !== undefined && (
+              <View style={styles.locationContainer}>
+                <Icon
+                  name="map-marker"
+                  size={30}
+                  color={MIDNIGHT_GREEN}
+                  style={styles.locationPin}
+                ></Icon>
+                <Text style={styles.poppinsSmall}>
+                  {user.location}
+                </Text>
+              </View>
+            )}
           </View>
         </View>
         {[
