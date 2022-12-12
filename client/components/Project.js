@@ -32,7 +32,7 @@ export default function Project({ projectId, status }) {
         <View style={styles.info}>
           <Text style={styles.title}>{proj.title}</Text>
           <Text numberOfLines={2} style={styles.description}>
-            {proj.description}
+            {proj.summary}
           </Text>
           {status &&
             <Text numberOfLines={2} style={{ ...styles.description, color: statusColor }}>
