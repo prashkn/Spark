@@ -24,7 +24,7 @@ export default function CreatePostButton({ navigation, user_id }) {
 const styles = StyleSheet.create({
   btn: {
     borderRadius: '50%',
-    backgroundColor: POLISHED_PINE,
+    backgroundColor: MIDNIGHT_GREEN,
     height: 60,
     width: 60,
     justifyContent: 'center',

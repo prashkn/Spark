@@ -20,13 +20,13 @@ import {
   MUSTARD,
   MIDNIGHT_GREEN,
 } from '../styles/palette';
-// import Logo from '../assets/spark_logo.svg';
 import { Skeleton } from '@rneui/themed';
 import EmptyFeed from '../components/EmptyFeed';
 import { skillset_list } from '../data/skillsets';
 import { BASE_URL } from '../data/util';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useToast } from 'react-native-toast-notifications';
 
 export default function Home({ navigation }) {
   DropDownPicker.setMode('BADGE');
@@ -40,6 +40,7 @@ export default function Home({ navigation }) {
   const [skillsets, setSkillsets] = useState([]);
   const [possibleSkills, setPossibleSkills] = useState(skillset_list);
   const { user } = useContext(UserContext);
+  const toast = useToast();
 
   //initialize home screen with information
   const getAllInfo = async (user_id) => {
@@ -118,6 +119,34 @@ export default function Home({ navigation }) {
     }*/
   };
 
+  //apply filter
+  const applyFilters = async (keywords) => {
+    toast.show('Filter Applied!', {
+      type: 'success',
+      placement: 'top',
+      duration: 'zoom-in',
+      duration: 1000,
+    });
+
+    const projs = await getProjectInfo(user._id || '');
+    setCounter(0);
+    if (keywords.length === 0) return;
+
+    let new_project_info = [];
+
+    projs.forEach((project) => {
+      if (
+        keywords.some((elem) =>
+          project.skillset.map((skill) => skill.toLowerCase()).includes(elem)
+        )
+      ) {
+        new_project_info.push(project);
+      }
+    });
+
+    setProjectInfo(new_project_info);
+  };
+
   //on first render
   useEffect(() => {
     console.log('user');
@@ -129,126 +158,130 @@ export default function Home({ navigation }) {
   //on counter changing
   useEffect(() => {
     if (projectInfo[counter]) getCreatorInfo(projectInfo[counter].creator);
-    //.log('counter' + counter);
-    //console.log(projectInfo[counter]);
   }, [counter]);
 
   return (
-    <View style={styles.screen}>
-      <Modal
-        isVisible={modalVisible}
-        animationIn={'slideInUp'}
-        onBackdropPress={() => setModalVisible(!modalVisible)}
-      >
-        <View style={styles.modal}>
-          <Text style={styles.modal_title}>Filter brainstorms by:</Text>
-          <View style={styles.singleinput}>
-            <Text
-              style={{
-                fontFamily: 'Poppins-Regular',
-                marginBottom: '1%',
-                marginTop: '1%',
-                fontSize: 15,
+    user && (
+      <View style={styles.screen}>
+        <Modal
+          isVisible={modalVisible}
+          animationIn={'slideInUp'}
+          onBackdropPress={() => setModalVisible(!modalVisible)}
+        >
+          <View style={styles.modal}>
+            <Text style={styles.modal_title}>Filter brainstorms by:</Text>
+            <View style={styles.singleinput}>
+              <Text
+                style={{
+                  fontFamily: 'Poppins-Regular',
+                  marginBottom: '1%',
+                  marginTop: '1%',
+                  fontSize: 15,
+                }}
+              >
+                Skillsets:
+              </Text>
+              <DropDownPicker
+                multiple={true}
+                min={1}
+                open={open}
+                value={skillsets}
+                items={possibleSkills}
+                setOpen={setOpen}
+                setValue={setSkillsets}
+                setItems={setPossibleSkills}
+                style={styles.dropdown}
+                textStyle={styles.dd_text}
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => {
+                console.log(skillsets);
+                applyFilters(skillsets);
+                setModalVisible(!modalVisible);
               }}
             >
-              Skillsets:
-            </Text>
-            <DropDownPicker
-              multiple={true}
-              min={1}
-              open={open}
-              value={skillsets}
-              items={possibleSkills}
-              setOpen={setOpen}
-              setValue={setSkillsets}
-              setItems={setPossibleSkills}
-              style={styles.dropdown}
-              textStyle={styles.dd_text}
-            />
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 15,
+                  fontFamily: 'Poppins-Bold',
+                }}
+              >
+                Apply Filters
+              </Text>
+            </TouchableOpacity>
           </View>
-          {/* dont show on feed empty view */}
+        </Modal>
+        <View style={styles.container}>
+          <Image
+            source={require('../assets/spark_logo.png')}
+            style={styles.logo}
+          />
+          {loading && (
+            <>
+              <Skeleton animation="wave" width={'80%'} height={'50%'} />
+              <View style={styles.actions}>
+                <DeclineProject />
+                <AcceptProject />
+              </View>
+            </>
+          )}
+          {!loading && projectInfo[counter] && (
+            <>
+              <ProjectCardFeed
+                description={projectInfo[counter].description}
+                skillset={projectInfo[counter].skillset}
+                bio={projectInfo[counter].summary || 'Project bio here'}
+                creator_name={creator.name || 'No User'}
+                creator_username={
+                  creator.username ? `@${creator.username}` : ''
+                }
+                title={projectInfo[counter].title}
+                timeline={`${projectInfo[counter].timeline} months`}
+                members_needed={`${
+                  projectInfo[counter].members_needed || 5
+                } members`}
+              />
+
+              <View style={styles.actions}>
+                <DeclineProject
+                  counter={counter}
+                  setCounter={setCounter}
+                  swipeLeft={swipeLeft}
+                  project_id={projectInfo[counter]._id}
+                  //user_id={user._id || ''}
+                />
+                <AcceptProject
+                  counter={counter}
+                  setCounter={setCounter}
+                  swipeRight={swipeRight}
+                  project_id={projectInfo[counter]._id}
+                  //user_id={user._id || ''}
+                />
+              </View>
+            </>
+          )}
+          {!loading && counter >= projectInfo.length && <EmptyFeed />}
+        </View>
+
+        <View style={styles.bottomButtons}>
           <TouchableOpacity
-            style={styles.btn}
+            activeOpacity={0.8}
+            style={styles.filter}
             onPress={() => setModalVisible(!modalVisible)}
           >
-            <Text
-              style={{
-                fontWeight: 'bold',
-                fontSize: 15,
-                fontFamily: 'Poppins-Bold',
-              }}
-            >
-              Apply Filters
-            </Text>
+            <Icon name={'tune'} color={'white'} size={35} />
           </TouchableOpacity>
+          <CreatePostButton
+            style={styles.postBtn}
+            navigation={navigation}
+            //user_id={user._id || ''}
+          />
         </View>
-      </Modal>
-      <View style={styles.container}>
-        {/* <Logo width={'15%'} height={'15%'} /> */}
-        <Image
-          source={require('../assets/spark_logo.png')}
-          style={styles.logo}
-        />
-        {loading && (
-          <>
-            <Skeleton animation="wave" width={'80%'} height={'50%'} />
-            <View style={styles.actions}>
-              <DeclineProject />
-              <AcceptProject />
-            </View>
-          </>
-        )}
-        {!loading && projectInfo[counter] && (
-          <>
-            <ProjectCardFeed
-              description={projectInfo[counter].description}
-              skillset={projectInfo[counter].skillset}
-              bio={projectInfo[counter].summary || 'Project bio here'}
-              creator_name={creator.name || 'No User'}
-              creator_username={creator.username ? `@${creator.username}` : ''}
-              title={projectInfo[counter].title}
-              timeline={`${projectInfo[counter].timeline} months`}
-              members_needed={`${
-                projectInfo[counter].members_needed || 5
-              } members`}
-            />
-
-            <View style={styles.actions}>
-              <DeclineProject
-                counter={counter}
-                setCounter={setCounter}
-                swipeLeft={swipeLeft}
-                project_id={projectInfo[counter]._id}
-                //user_id={user._id || ''}
-              />
-              <AcceptProject
-                counter={counter}
-                setCounter={setCounter}
-                swipeRight={swipeRight}
-                project_id={projectInfo[counter]._id}
-                //user_id={user._id || ''}
-              />
-            </View>
-          </>
-        )}
-        {!loading && counter >= projectInfo.length && <EmptyFeed />}
       </View>
-
-      <View style={styles.bottomButtons}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          style={styles.filter}
-          onPress={() => setModalVisible(!modalVisible)}
-        >
-          <Icon name={'tune'} color={'white'} size={35} />
-        </TouchableOpacity>
-        <CreatePostButton
-          style={styles.postBtn}
-          navigation={navigation}
-          //user_id={user._id || ''}
-        />
-      </View>
-    </View>
+    )
   );
 }
 
@@ -263,7 +296,7 @@ const styles = StyleSheet.create({
   },
   filter: {
     borderRadius: '50%',
-    backgroundColor: POLISHED_PINE,
+    backgroundColor: MIDNIGHT_GREEN,
     height: 60,
     width: 60,
     justifyContent: 'center',

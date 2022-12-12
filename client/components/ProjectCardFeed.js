@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
   TouchableHighlight,
+  FlatList,
 } from 'react-native';
 import { BLOND, POLISHED_PINE } from '../styles/palette';
 import UserAvatar from 'react-native-user-avatar';
