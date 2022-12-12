@@ -15,9 +15,10 @@ export default function ProfileInfoBox(props) {
       </View>
 
       {/* Content */}
-      <View>
+      {/* <View>
         <Text style={[styles.text, styles.contentText]}>{props.children}</Text>
-      </View>
+      </View> */}
+      {props.children}
     </View>
   );
 }

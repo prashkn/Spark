@@ -70,4 +70,13 @@ export default StyleSheet.create({
     width: '100%',
     marginHorizontal: 'auto',
   },
+
+  text: {
+    fontFamily: 'Poppins-Regular',
+    color: MIDNIGHT_GREEN,
+  },
+
+  boxContentText: {
+    fontSize: 15
+  } 
 });

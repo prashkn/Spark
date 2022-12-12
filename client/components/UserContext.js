@@ -12,7 +12,7 @@ export async function getUserInfoFromDatabase(user) {
   }
 
   const loginResponse = await fetch(
-    `${SPARK_API}/users/login?email=${user.email}&password=`
+    `${SPARK_API}/users/getUser?email=${user.email}`
   );
 
   const body = await loginResponse.json();
