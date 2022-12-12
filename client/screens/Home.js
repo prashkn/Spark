@@ -151,7 +151,13 @@ export default function Home({ navigation, user_id = 't' }) {
             style={styles.btn}
             onPress={() => setModalVisible(!modalVisible)}
           >
-            <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                fontSize: 15,
+                fontFamily: 'Poppins-Bold',
+              }}
+            >
               Update Filters
             </Text>
           </TouchableOpacity>
@@ -286,6 +292,7 @@ const styles = StyleSheet.create({
   },
   dd_text: {
     fontSize: 14,
+    fontFamily: 'Poppins-Regular',
     color: POLISHED_PINE,
   },
   btn: {
@@ -299,5 +306,6 @@ const styles = StyleSheet.create({
     marginTop: '8%',
     fontSize: 20,
     marginBottom: '5%',
+    fontFamily: 'Poppins-Bold',
   },
 });
