@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
     Pressable,
     SafeAreaView,
@@ -11,11 +11,13 @@ import Project from '../components/Project';
 import { BLOND, MIDNIGHT_GREEN } from '../styles/palette';
 import { Skeleton } from '@rneui/themed';
 import { BASE_URL } from '../data/util';
+import { UserContext } from '../components/UserContext';
 
 
 export const Applications = ({ navigation }) => {
     const [applications, setApplications] = useState([]);
     const NUM_OF_SKELETONS = 7;
+    const {user} = useContext(UserContext)
 
     const getApplications = async (id) => {
         //! get applications
@@ -50,7 +52,7 @@ export const Applications = ({ navigation }) => {
 
     useEffect(() => {
         //! change to variable
-        getApplications('63823c924a0de95cddc54052');
+        getApplications(user._id);
     }, []);
 
     return (

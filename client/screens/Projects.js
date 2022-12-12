@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Pressable,
   SafeAreaView,
@@ -11,9 +11,11 @@ import Project from '../components/Project';
 import { BLOND, MIDNIGHT_GREEN } from '../styles/palette';
 import { Skeleton } from '@rneui/themed';
 import { BASE_URL } from '../data/util';
+import { UserContext } from '../components/UserContext';
 
 export default function Projects({ navigation }) {
   const [projectIds, setProjectIds] = useState([]);
+  const {user} = useContext(UserContext)
   const NUM_OF_SKELETONS = 7;
 
   const getProjects = async (id) => {
@@ -49,7 +51,7 @@ export default function Projects({ navigation }) {
 
   useEffect(() => {
     //! change to variable
-    getProjects('63823c924a0de95cddc54052');
+    getProjects(user._id);
   }, []);
 
   // if (projects.length !== 0) {

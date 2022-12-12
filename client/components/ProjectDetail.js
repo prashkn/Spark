@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Alert,
+  Linking
 } from 'react-native';
 import {
   BLOND,
@@ -18,6 +19,8 @@ import { Applicant } from './Applicant';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { BASE_URL } from '../data/util';
+import SendSMS from 'react-native-sms';
+import { useToast } from 'react-native-toast-notifications';
 
 export function ProjectDetail({ navigation, route }) {
   const id = route.params.id;
@@ -26,6 +29,8 @@ export function ProjectDetail({ navigation, route }) {
   const [onApplicants, setOnApplicants] = useState(true);
   const [accepted, setAccepted] = useState();
   const [applicants, setApplicants] = useState();
+  const toast = useToast();
+  const [bodySMS, setBodySMS] = useState('Hello this a test from my app. ignore it lol');
 
   async function getProject(id) {
     try {
@@ -48,20 +53,41 @@ export function ProjectDetail({ navigation, route }) {
     getProject(id);
   });
 
+  async function sendMessage() {
+    let numbers = ''
+    for (let i = 0; i < accepted.length; i++) {
+      try {
+        const info = await fetch(`${BASE_URL}/users/${accepted[i]}`);
+        const result = await info.json();
+        if (numbers === '') {
+          numbers = result.data.number
+        } else {
+          numbers = numbers + "," + result.data.number
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    console.log(numbers)
+    Linking.openURL(`sms:/open?addresses=${numbers}&body=`);
+  }
+
   function handleStartProj() {
     if (projectInfo.membersNeeded > accepted.length) {
       Alert.alert(
         'Warning!',
         'You have not accepted the amount of participants you described in the description. Are you sure you want to start this project?',
-        [{ text: 'Yes' }, { text: 'Cancel', style: 'cancel' }]
+        [{ text: 'Yes', onPress: { sendMessage } }, { text: 'Cancel', style: 'cancel' }]
       );
-    }
-    if (projectInfo.membersNeeded < accepted.length) {
+    } else if (projectInfo.membersNeeded < accepted.length) {
       Alert.alert(
         'Warning!',
         'You have accepted more than the amount of participants you described in the description. Are you sure you want to start this project?',
-        [{ text: 'Yes' }, { text: 'Cancel', style: 'cancel' }]
+        [{ text: 'Yes', onPress: { sendMessage } }, { text: 'Cancel', style: 'cancel' }]
       );
+    } else {
+      sendMessage()
     }
   }
 
@@ -212,33 +238,33 @@ export function ProjectDetail({ navigation, route }) {
             <ScrollView style={{ display: 'flex' }}>
               {onApplicants
                 ? applicants &&
-                  applicants.map((applicant, i) => (
-                    <Applicant
-                      key={i}
-                      userId={applicant}
-                      navigation={navigation}
-                      isAccepted={false}
-                      projectInfo={projectInfo}
-                      setAccepted={setAccepted}
-                      setApplicants={setApplicants}
-                      applicants={applicants}
-                      accepted={accepted}
-                    />
-                  ))
+                applicants.map((applicant, i) => (
+                  <Applicant
+                    key={i}
+                    userId={applicant}
+                    navigation={navigation}
+                    isAccepted={false}
+                    projectInfo={projectInfo}
+                    setAccepted={setAccepted}
+                    setApplicants={setApplicants}
+                    applicants={applicants}
+                    accepted={accepted}
+                  />
+                ))
                 : accepted &&
-                  accepted.map((applicant, i) => (
-                    <Applicant
-                      key={i}
-                      userId={applicant}
-                      navigation={navigation}
-                      isAccepted={true}
-                      projectInfo={projectInfo}
-                      setAccepted={setAccepted}
-                      setApplicants={setApplicants}
-                      applicants={applicants}
-                      accepted={accepted}
-                    />
-                  ))}
+                accepted.map((applicant, i) => (
+                  <Applicant
+                    key={i}
+                    userId={applicant}
+                    navigation={navigation}
+                    isAccepted={true}
+                    projectInfo={projectInfo}
+                    setAccepted={setAccepted}
+                    setApplicants={setApplicants}
+                    applicants={applicants}
+                    accepted={accepted}
+                  />
+                ))}
             </ScrollView>
           )}
           {!onApplicants && !fromApps && (

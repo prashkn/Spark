@@ -13,7 +13,13 @@ import AcceptProject from '../components/AcceptProject';
 import CreatePostButton from '../components/CreatePostButton';
 import DeclineProject from '../components/DeclineProject';
 import ProjectCardFeed from '../components/ProjectCardFeed';
-import { BLOND, GAINSBORO, POLISHED_PINE, MUSTARD } from '../styles/palette';
+import {
+  BLOND,
+  GAINSBORO,
+  POLISHED_PINE,
+  MUSTARD,
+  MIDNIGHT_GREEN,
+} from '../styles/palette';
 // import Logo from '../assets/spark_logo.svg';
 import { Skeleton } from '@rneui/themed';
 import EmptyFeed from '../components/EmptyFeed';
@@ -137,6 +143,16 @@ export default function Home({ navigation }) {
         <View style={styles.modal}>
           <Text style={styles.modal_title}>Filter brainstorms by:</Text>
           <View style={styles.singleinput}>
+            <Text
+              style={{
+                fontFamily: 'Poppins-Regular',
+                marginBottom: '1%',
+                marginTop: '1%',
+                fontSize: 15,
+              }}
+            >
+              Skillsets:
+            </Text>
             <DropDownPicker
               multiple={true}
               min={1}
@@ -162,7 +178,7 @@ export default function Home({ navigation }) {
                 fontFamily: 'Poppins-Bold',
               }}
             >
-              Update Filters
+              Apply Filters
             </Text>
           </TouchableOpacity>
         </View>
@@ -278,7 +294,7 @@ const styles = StyleSheet.create({
     backgroundColor: BLOND,
   },
   modal: {
-    flex: 0.5,
+    flex: 0.55,
     alignItems: 'center',
     backgroundColor: '#e7e8e8',
     borderRadius: '15%',
@@ -291,7 +307,7 @@ const styles = StyleSheet.create({
     borderRadius: '5%',
   },
   dropdown: {
-    width: '80%',
+    width: '90%',
     alignSelf: 'center',
     borderRadius: '5%',
     borderWidth: 0,
