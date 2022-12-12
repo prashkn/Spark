@@ -90,33 +90,18 @@ export default function YourBackground({ navigation }) {
           }}
         >
           {/* TODO: Add asterisks */}
-          <LoginTextInput placeholder="Headline"></LoginTextInput>
-          <LoginTextInput placeholder="Current Role"></LoginTextInput>
+          <LoginTextInput placeholder="Headline" />
+          <LoginTextInput placeholder="Current Role" />
           <LoginTextInput
             placeholder="About me"
             multiline={true}
             style={{ height: 125 }}
-          ></LoginTextInput>
+          />
           <LoginTextInput
             placeholder="Experience"
             multiline={true}
             style={{ height: 125 }}
-          ></LoginTextInput>
-          <LoginTextInput
-            placeholder="Experience"
-            multiline={true}
-            style={{ height: 125 }}
-          ></LoginTextInput>
-          <LoginTextInput
-            placeholder="Experience"
-            multiline={true}
-            style={{ height: 125 }}
-          ></LoginTextInput>
-          <LoginTextInput
-            placeholder="Experience"
-            multiline={true}
-            style={{ height: 125 }}
-          ></LoginTextInput>
+          />
         </View>
 
         <LoginButton
