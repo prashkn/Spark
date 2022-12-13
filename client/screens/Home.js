@@ -178,7 +178,6 @@ export default function Home({ navigation }) {
               style={styles.dropdown}
               textStyle={styles.dd_text}
               dropDownContainerStyle={{
-                // width: '100%',
                 borderColor: GAINSBORO,
               }}
             />
@@ -259,9 +258,13 @@ export default function Home({ navigation }) {
           >
             <Icon name={'tune'} color={'white'} size={35} />
           </TouchableOpacity>
-          {projectInfo[counter] &&
-            <CreatePostButton style={styles.postBtn} navigation={navigation} project_id={projectInfo[counter]._id} />
-          }
+          {projectInfo[counter] && (
+            <CreatePostButton
+              style={styles.postBtn}
+              navigation={navigation}
+              project_id={projectInfo[counter]._id}
+            />
+          )}
         </View>
       </View>
     )

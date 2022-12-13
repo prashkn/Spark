@@ -24,7 +24,8 @@ export default function ProjectCardFeed({
       <View style={styles.cardContent}>
         <View style={styles.header}>
           <UserAvatar
-            style={styles.profilepic}
+            style={{ width: 70, height: 70, borderRadius: 50, marginRight: 20 }}
+            size={50}
             name={creator_name || 'John Doe'}
           />
           <View>
@@ -100,12 +101,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     fontFamily: 'Poppins-Bold',
-  },
-  profilepic: {
-    marginRight: 20,
-    borderRadius: '50%',
-    width: 70,
-    height: 70,
   },
   header: {
     flexDirection: 'row',
