@@ -85,6 +85,7 @@ router.post("/create", async (req, res) => {
       email: req.body.email,
       location: req.body.location,
       experience: req.body.experience,
+      number: req.body.number,
       bio: req.body.bio,
       skills: req.body.skills,
       projects: [],
