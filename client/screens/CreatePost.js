@@ -169,11 +169,10 @@ export default function CreatePost({ navigation, route }) {
         </Text>
         {Platform.OS === 'web' && (
           <TextInput
-            style={[styles.input, { paddingBottom: 20, paddingTop: 20 }]}
-            value={description}
-            onChangeText={setDescription}
+            value={members}
+            onChangeText={(value) => setMembers(value)}
             placeholder={'Description'}
-            keyboardType="numeric"
+            keyboardType="number-pad"
           />
         )}
         {Platform.OS !== 'web' && (
