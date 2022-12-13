@@ -82,7 +82,6 @@ export default function Home({ navigation }) {
         body: JSON.stringify({ projectId: project_id, userId: user_id }),
       };
       const res = await fetch(`${BASE_URL}/projects/swipeleft`, requestOptions);
-      console.log(res.json());
     } catch (err) {
       console.log(err);
     }
@@ -103,7 +102,6 @@ export default function Home({ navigation }) {
         `${BASE_URL}/projects/swiperight`,
         requestOptions
       );
-      console.log(res.json());
     } catch (err) {
       console.log(err);
     }
@@ -139,8 +137,6 @@ export default function Home({ navigation }) {
 
   //on render
   useEffect(() => {
-    console.log('user');
-    console.log(user || '');
     if (user !== null) getAllInfo(user._id).then(setLoading(false));
     else getAllInfo('').then(setLoading(false));
   }, [user]);
@@ -191,7 +187,6 @@ export default function Home({ navigation }) {
             <TouchableOpacity
               style={styles.btn}
               onPress={() => {
-                console.log(skillsets);
                 applyFilters(skillsets);
                 setModalVisible(!modalVisible);
               }}

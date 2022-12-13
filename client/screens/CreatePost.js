@@ -34,7 +34,6 @@ export default function CreatePost({ navigation, route }) {
 
   //verify that all fields are valid
   const verify = () => {
-    console.log(members);
     if (title === '' || summary === '') {
       Alert.alert('Invalid Form', 'All fields must be non-empty.', [
         { text: 'Ok' },
@@ -58,8 +57,6 @@ export default function CreatePost({ navigation, route }) {
   const postToDB = async () => {
     const shouldPost = verify();
     if (shouldPost) {
-      console.log('SUMMARY on post');
-      console.log(summary);
       await fetch(`${BASE_URL}/projects/create`, {
         method: 'POST',
         headers: {
@@ -91,8 +88,6 @@ export default function CreatePost({ navigation, route }) {
   async function editProject(id) {
     const shouldPost = verify();
     if (shouldPost) {
-      console.log('SUMMARY');
-      console.log(summary);
       await fetch(`${BASE_URL}/projects/${id}`, {
         method: 'PUT',
         headers: {

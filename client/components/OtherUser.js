@@ -30,7 +30,6 @@ export const OtherUser = ({ navigation, route }) => {
           <Pressable
             style={{ display: 'flex', flexDirection: 'row', flex: 2 }}
             onPress={() => {
-              //console.log(projectInfo);
               navigation.navigate('Details', {
                 id: projectInfo._id,
                 fromApps: false,
@@ -45,7 +44,7 @@ export const OtherUser = ({ navigation, route }) => {
         <View style={styles.userInfoContainer}>
           {/* Profile pic */}
           <UserAvatar
-            style={{width: 100, height: 100, borderRadius: 50}}
+            style={{ width: 100, height: 100, borderRadius: 50 }}
             size={50}
             name={userInfo.name || 'John Doe'}
           />
