@@ -32,8 +32,8 @@ router.delete("/:id", async (req, res) => {
 // query: {email}
 router.get("/getUser", async (req, res) => {
   try {
-    if (req.query.email == null ) {
-      return res.status(400).json({ message: "Email must be in query params"})
+    if (req.query.email == null) {
+      return res.status(400).json({ message: "Email must be in query params" });
     }
     const user = await User.find({ email: req.query.email });
     if (user.length == 0) {
@@ -50,10 +50,12 @@ router.get("/getUser", async (req, res) => {
 
 // Get Applications
 // query: {userId}
-router.get("/applications", async (req,res) => {
+router.get("/applications", async (req, res) => {
   try {
     if (req.query.userId == null) {
-      return res.status(400).json({ message: "userId must be in query params" });
+      return res
+        .status(400)
+        .json({ message: "userId must be in query params" });
     }
     const user = await User.findById(req.query.userId);
     if (user == null) {
@@ -86,7 +88,7 @@ router.post("/create", async (req, res) => {
       bio: req.body.bio,
       skills: req.body.skills,
       projects: [],
-      applications: []
+      applications: [],
     });
 
     await user.save();

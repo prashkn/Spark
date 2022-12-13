@@ -85,7 +85,7 @@ export const OtherUser = ({ navigation, route }) => {
             header={profileInfoBox.header}
             style={styles.profileInfoBox}
           >
-            {profileInfoBox.content}
+            <Text>{profileInfoBox.content}</Text>
           </ProfileInfoBox>
         ))}
         <StatusBar style="dark" />

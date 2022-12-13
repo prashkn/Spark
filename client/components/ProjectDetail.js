@@ -55,6 +55,7 @@ export function ProjectDetail({ navigation, route }) {
       try {
         const info = await fetch(`${BASE_URL}/users/${accepted[i]}`);
         const result = await info.json();
+        console.log(result);
         if (numbers === '') {
           numbers = result.data.number;
         } else {
@@ -64,7 +65,7 @@ export function ProjectDetail({ navigation, route }) {
         console.log(err);
       }
     }
-
+    console.log(numbers);
     Linking.openURL(`sms:/open?addresses=${numbers}&body=`);
   }
 

@@ -42,7 +42,8 @@ export default function Profile({ navigation }) {
             style={styles.profilePic}
   />*/}
           <UserAvatar
-            style={styles.profilePic}
+            style={{ width: 100, height: 100, borderRadius: 50 }}
+            size={50}
             name={user.name || 'John Doe'}
           />
 
