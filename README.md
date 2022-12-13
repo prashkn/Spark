@@ -12,6 +12,8 @@ Spark connects ideas to teams. Users can post their own 'brainstorms', and swipe
 
 ## How to run
 
+### App View
+
 Best viewing on iOS simulator, or iPhone. Download Expo Go on your phone and follow the instructions below!
 
 Go into the client directory:
@@ -27,3 +29,7 @@ npm start
 ```
 
 There are a few options. You can scan the given QR code on your phone and run the app like that (must be on the same wifi as your pc/laptop). You can also run a simulator.
+
+### Web View
+
+You can also view the app from the web (Best used on phones): https://cs409-spark.web.app/xw
