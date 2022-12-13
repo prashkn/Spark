@@ -258,13 +258,7 @@ export default function Home({ navigation }) {
           >
             <Icon name={'tune'} color={'white'} size={35} />
           </TouchableOpacity>
-          {projectInfo[counter] && (
-            <CreatePostButton
-              style={styles.postBtn}
-              navigation={navigation}
-              project_id={projectInfo[counter]._id}
-            />
-          )}
+          <CreatePostButton style={styles.postBtn} navigation={navigation} />
         </View>
       </View>
     )

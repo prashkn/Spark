@@ -37,7 +37,6 @@ export default function CreatePost({ navigation, route }) {
   const { user } = useContext(UserContext);
   const isCreating =
     route.params.isCreating === false ? route.params.isCreating : true; //is this render posting a new project, or editing an old one?
-  const project_id = route.params.projectId || '';
 
   //verify that all fields are valid
   const verify = () => {
@@ -211,7 +210,7 @@ export default function CreatePost({ navigation, route }) {
             style={styles.input}
           />
         )}
-        {Platform.OS !== 'web' &&
+        {Platform.OS !== 'web' && (
           <NumericInput
             value={timeline}
             onChange={(value) => setTimeline(value)}
@@ -226,7 +225,7 @@ export default function CreatePost({ navigation, route }) {
             rightButtonBackgroundColor={POLISHED_PINE}
             leftButtonBackgroundColor={POLISHED_PINE}
           />
-        }
+        )}
       </View>
       <DropDownPicker
         multiple={true}
@@ -246,7 +245,11 @@ export default function CreatePost({ navigation, route }) {
       />
       <TouchableOpacity
         style={styles.btn}
-        onPress={isCreating ? postToDB : () => editProject(project_id)}
+        onPress={
+          isCreating
+            ? postToDB
+            : () => editProject(route.params.projectId || '')
+        }
       >
         <Text
           style={{
@@ -295,7 +298,5 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 30,
   },
-  membersInput: {
-
-  }
+  membersInput: {},
 });
