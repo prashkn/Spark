@@ -72,7 +72,8 @@ export default function ProjectCardFeed({
 
 const styles = StyleSheet.create({
   card: {
-    flex: 0.55,
+    height: 400,
+    //flex: 0.5,
     width: '90%',
     backgroundColor: 'white',
     minHeight: '35%',

@@ -234,9 +234,7 @@ export default function Home({ navigation }) {
                 }
                 title={projectInfo[counter].title}
                 timeline={`${projectInfo[counter].timeline} months`}
-                members_needed={`${
-                  projectInfo[counter].members_needed || 5
-                } members`}
+                members_needed={`${projectInfo[counter].membersNeeded} members`}
               />
 
               <View style={styles.actions}>
