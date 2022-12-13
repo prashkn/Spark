@@ -156,34 +156,32 @@ export default function Home({ navigation }) {
         >
           <View style={styles.modal}>
             <Text style={styles.modal_title}>Filter brainstorms by:</Text>
-            <View style={styles.singleinput}>
-              <Text
-                style={{
-                  fontFamily: 'Poppins-Regular',
-                  marginBottom: '1%',
-                  marginTop: '1%',
-                  fontSize: 15,
-                }}
-              >
-                Skillsets:
-              </Text>
-              <DropDownPicker
-                multiple={true}
-                min={1}
-                open={open}
-                value={skillsets}
-                items={possibleSkills}
-                setOpen={setOpen}
-                setValue={setSkillsets}
-                setItems={setPossibleSkills}
-                style={styles.dropdown}
-                textStyle={styles.dd_text}
-                dropDownContainerStyle={{
-                  width: '80%',
-                  borderColor: GAINSBORO,
-                }}
-              />
-            </View>
+            <Text
+              style={{
+                fontFamily: 'Poppins-Regular',
+                marginBottom: '1%',
+                marginTop: '1%',
+                fontSize: 15,
+              }}
+            >
+              Skillsets:
+            </Text>
+            <DropDownPicker
+              multiple={true}
+              min={1}
+              open={open}
+              value={skillsets}
+              items={possibleSkills}
+              setOpen={setOpen}
+              setValue={setSkillsets}
+              setItems={setPossibleSkills}
+              style={styles.dropdown}
+              textStyle={styles.dd_text}
+              dropDownContainerStyle={{
+                // width: '100%',
+                borderColor: GAINSBORO,
+              }}
+            />
             <TouchableOpacity
               style={styles.btn}
               onPress={() => {
@@ -261,7 +259,9 @@ export default function Home({ navigation }) {
           >
             <Icon name={'tune'} color={'white'} size={35} />
           </TouchableOpacity>
-          <CreatePostButton style={styles.postBtn} navigation={navigation} />
+          {projectInfo[counter] &&
+            <CreatePostButton style={styles.postBtn} navigation={navigation} project_id={projectInfo[counter]._id} />
+          }
         </View>
       </View>
     )

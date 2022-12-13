@@ -4,7 +4,7 @@ import { MIDNIGHT_GREEN, POLISHED_PINE } from '../styles/palette';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function CreatePostButton({ navigation, user_id }) {
+export default function CreatePostButton({ navigation, project_id }) {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
@@ -16,6 +16,9 @@ export default function CreatePostButton({ navigation, user_id }) {
           members: 3,
           skillsets: [],
           timeline: 6,
+          description: '',
+          isCreating: true,
+          projectId: project_id
         })
       }
     >

@@ -171,8 +171,9 @@ export default function CreatePost({ navigation, route }) {
           <TextInput
             value={members}
             onChangeText={(value) => setMembers(value)}
-            placeholder={'Description'}
+            placeholder={'Members'}
             keyboardType="number-pad"
+            style={styles.input}
           />
         )}
         {Platform.OS !== 'web' && (
@@ -201,20 +202,31 @@ export default function CreatePost({ navigation, route }) {
         >
           Timeline: {timeline} months
         </Text>
-        <NumericInput
-          value={timeline}
-          onChange={(value) => setTimeline(value)}
-          totalWidth={240}
-          totalHeight={30}
-          iconSize={25}
-          step={1}
-          valueType="real"
-          rounded
-          textColor={POLISHED_PINE}
-          iconStyle={{ color: 'white' }}
-          rightButtonBackgroundColor={POLISHED_PINE}
-          leftButtonBackgroundColor={POLISHED_PINE}
-        />
+        {Platform.OS === 'web' && (
+          <TextInput
+            value={timeline}
+            onChangeText={(value) => setTimeline(value)}
+            placeholder={'Time length'}
+            keyboardType="number-pad"
+            style={styles.input}
+          />
+        )}
+        {Platform.OS !== 'web' &&
+          <NumericInput
+            value={timeline}
+            onChange={(value) => setTimeline(value)}
+            totalWidth={240}
+            totalHeight={30}
+            iconSize={25}
+            step={1}
+            valueType="real"
+            rounded
+            textColor={POLISHED_PINE}
+            iconStyle={{ color: 'white' }}
+            rightButtonBackgroundColor={POLISHED_PINE}
+            leftButtonBackgroundColor={POLISHED_PINE}
+          />
+        }
       </View>
       <DropDownPicker
         multiple={true}
@@ -283,4 +295,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 30,
   },
+  membersInput: {
+
+  }
 });

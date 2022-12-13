@@ -19,7 +19,6 @@ export const Applications = ({ navigation }) => {
   const { user } = useContext(UserContext);
 
   const getApplications = async (id) => {
-    //! get applications
     try {
       const info = await fetch(`${BASE_URL}/users/applications?userId=${id}`);
       const result = await info.json();
