@@ -13,6 +13,7 @@ export default function YourBasicInformation({ navigation }) {
 
   const [nameValid, setNameValid] = useState(null);
   const [emailValid, setEmailValid] = useState(null);
+  const [phoneNumberValid, setPhoneNumberValid] = useState(null);
   const [passwordValid, setPasswordValid] = useState(null);
   const [usernameValid, setUsernameValid] = useState(null);
 
@@ -28,6 +29,14 @@ export default function YourBasicInformation({ navigation }) {
     } else {
       // Set back to true in case user comes back
       setEmailValid(true);
+    }
+
+    if (newUserInfo.number === undefined || newUserInfo.length < 10) {
+      // TODO: Check if it's a real number
+      setPhoneNumberValid(false);
+      allFieldsValid = false
+    } else {
+      setPhoneNumberValid(true);
     }
 
     // TODO: Check if email is valid (does user with email exist in DB?)
@@ -165,6 +174,20 @@ export default function YourBasicInformation({ navigation }) {
 
           {emailValid === false && (
             <WarningMessage message="Please enter a valid email address." />
+          )}
+
+          <LoginTextInput
+            placeholder="Phone number"
+            keyboardType="phone-pad"
+            onChangeText={(text) => {
+              setNewUserInfo({ ...newUserInfo, number: text });
+            }}
+            onSubmitEditing={submitForm}
+            returnKeyType="done"
+          />
+
+          {phoneNumberValid === false && (
+            <WarningMessage message="Please enter a valid phone number." />
           )}
 
           <LoginTextInput
