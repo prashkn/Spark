@@ -1,4 +1,11 @@
-import { View, TextInput, StyleSheet, Text, Alert } from 'react-native';
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Text,
+  Alert,
+  Platform,
+} from 'react-native';
 import React, { useContext } from 'react';
 import { POLISHED_PINE, GAINSBORO, MUSTARD } from '../styles/palette';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -160,20 +167,31 @@ export default function CreatePost({ navigation, route }) {
         >
           Members needed: {members}
         </Text>
-        <NumericInput
-          value={members}
-          onChange={(value) => setMembers(value)}
-          totalWidth={240}
-          totalHeight={30}
-          iconSize={25}
-          step={1}
-          valueType="real"
-          rounded
-          textColor={POLISHED_PINE}
-          iconStyle={{ color: 'white' }}
-          rightButtonBackgroundColor={POLISHED_PINE}
-          leftButtonBackgroundColor={POLISHED_PINE}
-        />
+        {Platform.OS === 'web' && (
+          <TextInput
+            style={[styles.input, { paddingBottom: 20, paddingTop: 20 }]}
+            value={description}
+            onChangeText={setDescription}
+            placeholder={'Description'}
+            keyboardType="numeric"
+          />
+        )}
+        {Platform.OS !== 'web' && (
+          <NumericInput
+            value={members}
+            onChange={(value) => setMembers(value)}
+            totalWidth={240}
+            totalHeight={30}
+            iconSize={25}
+            step={1}
+            valueType="real"
+            rounded
+            textColor={POLISHED_PINE}
+            iconStyle={{ color: 'white' }}
+            rightButtonBackgroundColor={POLISHED_PINE}
+            leftButtonBackgroundColor={POLISHED_PINE}
+          />
+        )}
         <Text
           style={{
             color: 'gray',
