@@ -7,6 +7,7 @@ import { UserContext } from '../../components/UserContext';
 import { BLOND, GAINSBORO, MIDNIGHT_GREEN } from '../../styles/palette';
 import styles from './Profile-styles';
 import ProfileInfoBox from './ProfileInfoBox';
+import UserAvatar from 'react-native-user-avatar';
 
 export default function Profile({ navigation }) {
   const { user } = useContext(UserContext);
@@ -35,9 +36,14 @@ export default function Profile({ navigation }) {
         {/* User info container with pic, name, username, and location */}
         <View style={styles.userInfoContainer}>
           {/* Profile pic */}
+          {/*
           <Image
             source={require('../../assets/george-washington.jpg')}
             style={styles.profilePic}
+  />*/}
+          <UserAvatar
+            style={styles.profilePic}
+            name={user.name || 'John Doe'}
           />
 
           {/* Sub-container with name, username, and location */}
